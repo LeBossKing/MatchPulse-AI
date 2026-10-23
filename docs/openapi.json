@@ -1091,15 +1091,15 @@
     }
   },
   "info": {
-    "description": "Version 1 event/API contract for synthetic football match analysis. Match reads are implemented; event processing returns 501 until Task 4.",
+    "description": "Synthetic football analysis with a deterministic three-stage mock workflow, canonical evidence, audience/language templates, and actual execution traces.",
     "title": "MatchPulse AI API",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "openapi": "3.1.0",
   "paths": {
     "/events/process": {
       "post": {
-        "description": "Validate a canonical event selector. Task 3 returns 501, never fake analysis.",
+        "description": "Run the three mock stages for a canonical event and presentation preferences.",
         "operationId": "process_event_events_process_post",
         "requestBody": {
           "content": {
@@ -1131,7 +1131,7 @@
                 }
               }
             },
-            "description": "Reserved success contract. Implemented by the workflow in Task 4."
+            "description": "Processed event, evidence, validation, and actual mock stage traces."
           },
           "404": {
             "content": {
@@ -1161,17 +1161,7 @@
                 }
               }
             },
-            "description": "Invalid demo fixture."
-          },
-          "501": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            },
-            "description": "Workflow is not implemented yet."
+            "description": "Invalid fixture or unavailable workflow."
           }
         },
         "summary": "Process Event",

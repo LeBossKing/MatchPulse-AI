@@ -1,4 +1,5 @@
 from app.models.error import ErrorResponse
+from app.models.insight import ProcessEventResponse
 from app.models.match import DemoEventsResponse, DemoMatchResponse
 import app.services.demo_repository as repository
 
@@ -17,12 +18,13 @@ def test_match_and_event_reads_return_validated_synthetic_data(client):
     assert events.events[6].pressure is None and events.events[6].lines_broken is None
 
 
-def test_valid_selector_is_explicitly_not_implemented_yet(client):
+def test_valid_selector_executes_the_mock_workflow(client):
     response = client.post("/events/process", json=SELECTOR)
-    assert response.status_code == 501
-    body = ErrorResponse.model_validate(response.json())
-    assert body.error.code == "processing_not_implemented"
-    assert "agent_trace" not in response.json()
+    assert response.status_code == 200
+    body = ProcessEventResponse.model_validate(response.json())
+    assert body.result_source == "runtime" and body.provider == "mock"
+    assert body.insight is not None
+    assert len(body.agent_trace) == 3
 
 
 def test_unknown_match_and_event_have_distinct_errors(client):
@@ -58,7 +60,7 @@ def test_personalization_does_not_mutate_initial_match_state(client):
             response = client.post(
                 "/events/process", json=SELECTOR | {"audience": audience, "language": language}
             )
-            assert response.status_code == 501
+            assert response.status_code == 200
     assert client.get("/matches/demo").json() == before
 
 
@@ -75,6 +77,7 @@ def test_invalid_fixture_produces_a_structured_server_error(client, monkeypatch,
 def test_openapi_declares_success_and_current_error_contracts(client):
     schema = client.get("/openapi.json").json()
     operation = schema["paths"]["/events/process"]["post"]
-    assert {"200", "404", "422", "500", "501"}.issubset(operation["responses"])
+    assert {"200", "404", "422", "500"}.issubset(operation["responses"])
+    assert "501" not in operation["responses"]
     assert operation["responses"]["200"]["content"]["application/json"]["schema"]["$ref"].endswith("ProcessEventResponse")
     assert client.get("/health").json()["status"] == "ok"

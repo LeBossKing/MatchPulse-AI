@@ -17,7 +17,7 @@ Teams and players are fictional labels. The roster is deliberately partial. The 
 
 The main pass is from `(27,58)` to `(67,39)`: expected distance **44.28 normalized units** and forward progression **40 units**. Its line-break annotation does not identify a specific midfield/defensive formation line or provide player tracking.
 
-For future prefix statistics at evt-064: Atlas 4/4 completed passes, Harbor no attempts. At the end of the excerpt: Atlas 4/5, Harbor 1/1; Harbor has one interception and Atlas one recovery.
+For prefix statistics at evt-064: Atlas 4/4 completed passes, Harbor no attempts. At the end of the excerpt: Atlas 4/5, Harbor 1/1; Harbor has one interception and Atlas one recovery. The mock workflow calculates these prefixes per request.
 
 ## Member 2 review
 

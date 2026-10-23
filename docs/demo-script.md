@@ -31,4 +31,10 @@ The foundation screen is a development checkpoint. Match analysis and model exec
 
 ## Task 3 checkpoint
 
-The read endpoints supply the proposed fixture and initial statistics. Test a valid event selector in Swagger: 501 is the expected response until Task 4. The eight JSON examples define the intended output shape and presentation variants; they are not evidence of agent execution. Member 2 reviews the fixture and claims before the team finalizes the demo story.
+The read endpoints supply the proposed fixture and initial statistics. The eight JSON examples define the output shape and presentation variants; they are not evidence of agent execution. Member 2 reviews the fixture and claims before the team finalizes the demo story.
+
+## Task 4 checkpoint
+
+Run the Postman collection or use Swagger to process `evt-064`. Expect HTTP 200, length 44.28 normalized units, progression +40, and three measured mock stage traces. Switch to Fan/French and verify unchanged source facts. Process `evt-067` to show missing annotations and a limited validation result; process `evt-065` to preserve the unsuccessful outcome. Return to `evt-064` and confirm its prefix statistics have not increased.
+
+This checkpoint uses deterministic Python rules and templates. No LLM or Azure request is executed. Selecting the future Azure provider returns an explicitly labelled mock fallback. The React screen still checks the backend connection; dashboard construction and its processing controls follow in Tasks 5 and 7.

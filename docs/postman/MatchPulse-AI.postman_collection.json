@@ -1,0 +1,660 @@
+{
+  "info": {
+    "name": "MatchPulse AI — Task 4 mock workflow",
+    "description": "Start FastAPI with LLM_PROVIDER=mock, then run this collection in order. Uses synthetic events, checks actual mock execution, and requires no credentials. base_url defaults to the local backend.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "noauth"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 — Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/health"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Backend is healthy\", function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json().status).to.equal(\"ok\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 — Initial match state",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/matches/demo"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Initial sequence state remains zero\", function () {",
+              "  pm.response.to.have.status(200);",
+              "  const stats = pm.response.json().statistics;",
+              "  pm.expect(stats.event_count).to.equal(0);",
+              "  pm.expect(stats.through_event_id).to.equal(null);",
+              "  stats.teams.forEach(team => { pm.expect(team.passes_attempted).to.equal(0); pm.expect(team.pass_accuracy_pct).to.equal(null); });",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 — Canonical events",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/matches/demo/events"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Eight canonical events\", function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json().events).to.have.lengthOf(8);",
+              "  pm.expect(pm.response.json().main_event_id).to.equal(\"evt-064\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 — Main pass / Analyst / English",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/events/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_id\": \"match-demo-01\",\n  \"event_id\": \"evt-064\",\n  \"audience\": \"analyst\",\n  \"language\": \"en\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "const body = pm.response.json();",
+              "pm.test(\"Actual runtime mock workflow\", function () {",
+              "  pm.expect(body.result_source).to.equal(\"runtime\");",
+              "  pm.expect(body.provider).to.equal(\"mock\");",
+              "  pm.expect(body.data_source).to.equal(\"synthetic\");",
+              "  pm.expect(body.insight).to.not.equal(null);",
+              "});",
+              "pm.test(\"Three ordered completed stages\", function () {",
+              "  pm.expect(body.agent_trace.map(step => step.agent)).to.deep.equal([\"match_intelligence\", \"tactical_explainer\", \"trust_personalization\"]);",
+              "  body.agent_trace.forEach(step => { pm.expect(step.status).to.equal(\"completed\"); pm.expect(step.duration_ms).to.be.at.least(0); });",
+              "});",
+              "pm.test(\"Evidence matches canonical response sources\", function () {",
+              "  body.evidence.forEach(item => {",
+              "    const source = item.source === \"event\" ? body.event : body.statistics;",
+              "    const actual = item.field.split(\".\").reduce((value, key) => value[key], source);",
+              "    pm.expect(item.value).to.deep.equal(actual);",
+              "  });",
+              "});",
+              "pm.test(\"Agreed main-pass facts\", function () {",
+              "  pm.expect(body.statistics.pass_length).to.equal(44.28);",
+              "  pm.expect(body.statistics.forward_progression).to.equal(40);",
+              "  pm.expect(body.match_statistics.event_count).to.equal(4);",
+              "  pm.expect(body.match_statistics.teams[0].passes_completed).to.equal(4);",
+              "  pm.expect(body.validation.status).to.equal(\"validated\");",
+              "  pm.expect(body.insight.importance).to.equal(\"high\");",
+              "});",
+              "pm.collectionVariables.set(\"main_facts\", JSON.stringify({event: body.event, statistics: body.statistics, match_statistics: body.match_statistics, evidence: body.evidence}));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 — Main pass / Fan / French",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/events/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_id\": \"match-demo-01\",\n  \"event_id\": \"evt-064\",\n  \"audience\": \"fan\",\n  \"language\": \"fr\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "const body = pm.response.json();",
+              "pm.test(\"Actual runtime mock workflow\", function () {",
+              "  pm.expect(body.result_source).to.equal(\"runtime\");",
+              "  pm.expect(body.provider).to.equal(\"mock\");",
+              "  pm.expect(body.data_source).to.equal(\"synthetic\");",
+              "  pm.expect(body.insight).to.not.equal(null);",
+              "});",
+              "pm.test(\"Three ordered completed stages\", function () {",
+              "  pm.expect(body.agent_trace.map(step => step.agent)).to.deep.equal([\"match_intelligence\", \"tactical_explainer\", \"trust_personalization\"]);",
+              "  body.agent_trace.forEach(step => { pm.expect(step.status).to.equal(\"completed\"); pm.expect(step.duration_ms).to.be.at.least(0); });",
+              "});",
+              "pm.test(\"Evidence matches canonical response sources\", function () {",
+              "  body.evidence.forEach(item => {",
+              "    const source = item.source === \"event\" ? body.event : body.statistics;",
+              "    const actual = item.field.split(\".\").reduce((value, key) => value[key], source);",
+              "    pm.expect(item.value).to.deep.equal(actual);",
+              "  });",
+              "});",
+              "pm.test(\"French fan presentation preserves facts\", function () {",
+              "  pm.expect(body.audience).to.equal(\"fan\");",
+              "  pm.expect(body.language).to.equal(\"fr\");",
+              "  pm.expect(body.insight.explanation).to.include(\"ballon\");",
+              "  const previous = pm.collectionVariables.get(\"main_facts\");",
+              "  if (previous) pm.expect(JSON.stringify({event: body.event, statistics: body.statistics, match_statistics: body.match_statistics, evidence: body.evidence})).to.equal(previous);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 — Unsuccessful pass",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/events/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_id\": \"match-demo-01\",\n  \"event_id\": \"evt-065\",\n  \"audience\": \"analyst\",\n  \"language\": \"en\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "const body = pm.response.json();",
+              "pm.test(\"Actual runtime mock workflow\", function () {",
+              "  pm.expect(body.result_source).to.equal(\"runtime\");",
+              "  pm.expect(body.provider).to.equal(\"mock\");",
+              "  pm.expect(body.data_source).to.equal(\"synthetic\");",
+              "  pm.expect(body.insight).to.not.equal(null);",
+              "});",
+              "pm.test(\"Three ordered completed stages\", function () {",
+              "  pm.expect(body.agent_trace.map(step => step.agent)).to.deep.equal([\"match_intelligence\", \"tactical_explainer\", \"trust_personalization\"]);",
+              "  body.agent_trace.forEach(step => { pm.expect(step.status).to.equal(\"completed\"); pm.expect(step.duration_ms).to.be.at.least(0); });",
+              "});",
+              "pm.test(\"Evidence matches canonical response sources\", function () {",
+              "  body.evidence.forEach(item => {",
+              "    const source = item.source === \"event\" ? body.event : body.statistics;",
+              "    const actual = item.field.split(\".\").reduce((value, key) => value[key], source);",
+              "    pm.expect(item.value).to.deep.equal(actual);",
+              "  });",
+              "});",
+              "pm.test(\"No invented completed gain\", function () {",
+              "  pm.expect(body.event.successful).to.equal(false);",
+              "  pm.expect(body.insight.importance).to.equal(\"low\");",
+              "  pm.expect(body.insight.explanation).to.include(\"not completed\");",
+              "  pm.expect(body.match_statistics.teams[0].pass_accuracy_pct).to.equal(80);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 — Interception",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/events/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_id\": \"match-demo-01\",\n  \"event_id\": \"evt-066\",\n  \"audience\": \"analyst\",\n  \"language\": \"en\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "const body = pm.response.json();",
+              "pm.test(\"Actual runtime mock workflow\", function () {",
+              "  pm.expect(body.result_source).to.equal(\"runtime\");",
+              "  pm.expect(body.provider).to.equal(\"mock\");",
+              "  pm.expect(body.data_source).to.equal(\"synthetic\");",
+              "  pm.expect(body.insight).to.not.equal(null);",
+              "});",
+              "pm.test(\"Three ordered completed stages\", function () {",
+              "  pm.expect(body.agent_trace.map(step => step.agent)).to.deep.equal([\"match_intelligence\", \"tactical_explainer\", \"trust_personalization\"]);",
+              "  body.agent_trace.forEach(step => { pm.expect(step.status).to.equal(\"completed\"); pm.expect(step.duration_ms).to.be.at.least(0); });",
+              "});",
+              "pm.test(\"Evidence matches canonical response sources\", function () {",
+              "  body.evidence.forEach(item => {",
+              "    const source = item.source === \"event\" ? body.event : body.statistics;",
+              "    const actual = item.field.split(\".\").reduce((value, key) => value[key], source);",
+              "    pm.expect(item.value).to.deep.equal(actual);",
+              "  });",
+              "});",
+              "pm.test(\"Point event has no pass metrics\", function () {",
+              "  pm.expect(body.overlay.kind).to.equal(\"point\");",
+              "  pm.expect(body.statistics.pass_length).to.equal(null);",
+              "  pm.expect(body.statistics.forward_progression).to.equal(null);",
+              "  pm.expect(body.match_statistics.teams[1].interceptions).to.equal(1);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 — Missing tactical annotations",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/events/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_id\": \"match-demo-01\",\n  \"event_id\": \"evt-067\",\n  \"audience\": \"analyst\",\n  \"language\": \"en\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "const body = pm.response.json();",
+              "pm.test(\"Actual runtime mock workflow\", function () {",
+              "  pm.expect(body.result_source).to.equal(\"runtime\");",
+              "  pm.expect(body.provider).to.equal(\"mock\");",
+              "  pm.expect(body.data_source).to.equal(\"synthetic\");",
+              "  pm.expect(body.insight).to.not.equal(null);",
+              "});",
+              "pm.test(\"Three ordered completed stages\", function () {",
+              "  pm.expect(body.agent_trace.map(step => step.agent)).to.deep.equal([\"match_intelligence\", \"tactical_explainer\", \"trust_personalization\"]);",
+              "  body.agent_trace.forEach(step => { pm.expect(step.status).to.equal(\"completed\"); pm.expect(step.duration_ms).to.be.at.least(0); });",
+              "});",
+              "pm.test(\"Evidence matches canonical response sources\", function () {",
+              "  body.evidence.forEach(item => {",
+              "    const source = item.source === \"event\" ? body.event : body.statistics;",
+              "    const actual = item.field.split(\".\").reduce((value, key) => value[key], source);",
+              "    pm.expect(item.value).to.deep.equal(actual);",
+              "  });",
+              "});",
+              "pm.test(\"Unknown values remain unknown\", function () {",
+              "  pm.expect(body.event.pressure).to.equal(null);",
+              "  pm.expect(body.event.lines_broken).to.equal(null);",
+              "  pm.expect(body.statistics.forward_progression).to.equal(16);",
+              "  pm.expect(body.validation.status).to.equal(\"limited\");",
+              "  pm.expect(body.evidence.some(item => [\"pressure\", \"lines_broken\"].includes(item.field))).to.equal(false);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 — Final recovery",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/events/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_id\": \"match-demo-01\",\n  \"event_id\": \"evt-068\",\n  \"audience\": \"analyst\",\n  \"language\": \"en\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "const body = pm.response.json();",
+              "pm.test(\"Actual runtime mock workflow\", function () {",
+              "  pm.expect(body.result_source).to.equal(\"runtime\");",
+              "  pm.expect(body.provider).to.equal(\"mock\");",
+              "  pm.expect(body.data_source).to.equal(\"synthetic\");",
+              "  pm.expect(body.insight).to.not.equal(null);",
+              "});",
+              "pm.test(\"Three ordered completed stages\", function () {",
+              "  pm.expect(body.agent_trace.map(step => step.agent)).to.deep.equal([\"match_intelligence\", \"tactical_explainer\", \"trust_personalization\"]);",
+              "  body.agent_trace.forEach(step => { pm.expect(step.status).to.equal(\"completed\"); pm.expect(step.duration_ms).to.be.at.least(0); });",
+              "});",
+              "pm.test(\"Evidence matches canonical response sources\", function () {",
+              "  body.evidence.forEach(item => {",
+              "    const source = item.source === \"event\" ? body.event : body.statistics;",
+              "    const actual = item.field.split(\".\").reduce((value, key) => value[key], source);",
+              "    pm.expect(item.value).to.deep.equal(actual);",
+              "  });",
+              "});",
+              "pm.test(\"Final sequence totals\", function () {",
+              "  pm.expect(body.overlay.kind).to.equal(\"point\");",
+              "  pm.expect(body.match_statistics.event_count).to.equal(8);",
+              "  pm.expect(body.match_statistics.teams[0].recoveries).to.equal(1);",
+              "  pm.expect(body.match_statistics.teams[0].pass_accuracy_pct).to.equal(80);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "10 — Rewind to first event",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/events/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_id\": \"match-demo-01\",\n  \"event_id\": \"evt-061\",\n  \"audience\": \"analyst\",\n  \"language\": \"en\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "const body = pm.response.json();",
+              "pm.test(\"Actual runtime mock workflow\", function () {",
+              "  pm.expect(body.result_source).to.equal(\"runtime\");",
+              "  pm.expect(body.provider).to.equal(\"mock\");",
+              "  pm.expect(body.data_source).to.equal(\"synthetic\");",
+              "  pm.expect(body.insight).to.not.equal(null);",
+              "});",
+              "pm.test(\"Three ordered completed stages\", function () {",
+              "  pm.expect(body.agent_trace.map(step => step.agent)).to.deep.equal([\"match_intelligence\", \"tactical_explainer\", \"trust_personalization\"]);",
+              "  body.agent_trace.forEach(step => { pm.expect(step.status).to.equal(\"completed\"); pm.expect(step.duration_ms).to.be.at.least(0); });",
+              "});",
+              "pm.test(\"Evidence matches canonical response sources\", function () {",
+              "  body.evidence.forEach(item => {",
+              "    const source = item.source === \"event\" ? body.event : body.statistics;",
+              "    const actual = item.field.split(\".\").reduce((value, key) => value[key], source);",
+              "    pm.expect(item.value).to.deep.equal(actual);",
+              "  });",
+              "});",
+              "pm.test(\"Rewind restores prefix totals\", function () {",
+              "  pm.expect(body.match_statistics.event_count).to.equal(1);",
+              "  pm.expect(body.match_statistics.teams[0].passes_attempted).to.equal(1);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "11 — Repeat main event",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/events/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_id\": \"match-demo-01\",\n  \"event_id\": \"evt-064\",\n  \"audience\": \"analyst\",\n  \"language\": \"en\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "const body = pm.response.json();",
+              "pm.test(\"Actual runtime mock workflow\", function () {",
+              "  pm.expect(body.result_source).to.equal(\"runtime\");",
+              "  pm.expect(body.provider).to.equal(\"mock\");",
+              "  pm.expect(body.data_source).to.equal(\"synthetic\");",
+              "  pm.expect(body.insight).to.not.equal(null);",
+              "});",
+              "pm.test(\"Three ordered completed stages\", function () {",
+              "  pm.expect(body.agent_trace.map(step => step.agent)).to.deep.equal([\"match_intelligence\", \"tactical_explainer\", \"trust_personalization\"]);",
+              "  body.agent_trace.forEach(step => { pm.expect(step.status).to.equal(\"completed\"); pm.expect(step.duration_ms).to.be.at.least(0); });",
+              "});",
+              "pm.test(\"Evidence matches canonical response sources\", function () {",
+              "  body.evidence.forEach(item => {",
+              "    const source = item.source === \"event\" ? body.event : body.statistics;",
+              "    const actual = item.field.split(\".\").reduce((value, key) => value[key], source);",
+              "    pm.expect(item.value).to.deep.equal(actual);",
+              "  });",
+              "});",
+              "pm.test(\"Replaying does not double-count\", function () {",
+              "  pm.expect(body.match_statistics.event_count).to.equal(4);",
+              "  const previous = pm.collectionVariables.get(\"main_facts\");",
+              "  if (previous) pm.expect(JSON.stringify({event: body.event, statistics: body.statistics, match_statistics: body.match_statistics, evidence: body.evidence})).to.equal(previous);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "12 — Initial state stays unchanged",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/matches/demo"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Initial sequence state remains zero\", function () {",
+              "  pm.response.to.have.status(200);",
+              "  const stats = pm.response.json().statistics;",
+              "  pm.expect(stats.event_count).to.equal(0);",
+              "  pm.expect(stats.through_event_id).to.equal(null);",
+              "  stats.teams.forEach(team => { pm.expect(team.passes_attempted).to.equal(0); pm.expect(team.pass_accuracy_pct).to.equal(null); });",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "13 — Unknown event / 404",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/events/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_id\": \"match-demo-01\",\n  \"event_id\": \"missing-event\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Typed unknown-event error\", function () {",
+              "  pm.response.to.have.status(404);",
+              "  pm.expect(pm.response.json().error.code).to.equal(\"event_not_found\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "14 — Unsupported audience / 422",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/events/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_id\": \"match-demo-01\",\n  \"event_id\": \"evt-064\",\n  \"audience\": \"coach\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Typed validation error\", function () {",
+              "  pm.response.to.have.status(422);",
+              "  pm.expect(pm.response.json().error.code).to.equal(\"invalid_request\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

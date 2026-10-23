@@ -7,9 +7,10 @@ from app import __version__
 from app.api.health import router as health_router
 from app.api.matches import router as matches_router
 from app.api.events import router as events_router
-from app.api.errors import fixture_error, http_error, request_validation_error
+from app.api.errors import fixture_error, http_error, request_validation_error, workflow_error
 from app.config import get_settings
 from app.services.demo_repository import FixtureLoadError
+from app.services.workflow import WorkflowError
 
 
 def create_app() -> FastAPI:
@@ -18,8 +19,8 @@ def create_app() -> FastAPI:
         title="MatchPulse AI API",
         version=__version__,
         description=(
-            "Version 1 event/API contract for synthetic football match analysis. "
-            "Match reads are implemented; event processing returns 501 until Task 4."
+            "Synthetic football analysis with a deterministic three-stage mock workflow, "
+            "canonical evidence, audience/language templates, and actual execution traces."
         ),
     )
     application.add_middleware(
@@ -35,6 +36,7 @@ def create_app() -> FastAPI:
     application.add_exception_handler(RequestValidationError, request_validation_error)
     application.add_exception_handler(HTTPException, http_error)
     application.add_exception_handler(FixtureLoadError, fixture_error)
+    application.add_exception_handler(WorkflowError, workflow_error)
     return application
 
 

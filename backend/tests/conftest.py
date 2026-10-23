@@ -16,6 +16,7 @@ def fixture_data():
 @pytest.fixture
 def client(monkeypatch):
     monkeypatch.setenv("APP_ENV", "test")
+    monkeypatch.setenv("LLM_PROVIDER", "mock")
     get_settings.cache_clear()
     load_demo_fixture.cache_clear()
     with TestClient(create_app()) as test_client:

@@ -15,7 +15,7 @@ export interface paths {
         put?: never;
         /**
          * Process Event
-         * @description Validate a canonical event selector. Task 3 returns 501, never fake analysis.
+         * @description Run the three mock stages for a canonical event and presentation preferences.
          */
         post: operations["process_event_events_process_post"];
         delete?: never;
@@ -515,7 +515,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Reserved success contract. Implemented by the workflow in Task 4. */
+            /** @description Processed event, evidence, validation, and actual mock stage traces. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -542,17 +542,8 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Invalid demo fixture. */
+            /** @description Invalid fixture or unavailable workflow. */
             500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Workflow is not implemented yet. */
-            501: {
                 headers: {
                     [name: string]: unknown;
                 };

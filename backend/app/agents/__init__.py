@@ -1,1 +1,1 @@
-"""Agent workflow modules will be implemented in Task 4."""
+"""Three deterministic mock stages: intelligence, explanation, and trust/personalization."""
