@@ -1,1 +1,1 @@
-"""Validated API models. Match events will be defined in Task 3."""
+"""The versioned event, fixture, insight, and HTTP contracts."""

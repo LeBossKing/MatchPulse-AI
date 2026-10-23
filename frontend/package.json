@@ -10,7 +10,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate:api": "npm exec --yes --package=openapi-typescript@7.13.0 -- openapi-typescript ../docs/openapi.json -o src/types/generated-api.d.ts"
   },
   "dependencies": {
     "react": "^19.3.1",

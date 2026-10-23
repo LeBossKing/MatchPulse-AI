@@ -1,0 +1,362 @@
+{
+  "$defs": {
+    "MatchEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "attacking_direction": {
+          "enum": [
+            "left_to_right",
+            "right_to_left"
+          ],
+          "title": "Attacking Direction",
+          "type": "string"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Point"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "event_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "event_type": {
+          "enum": [
+            "pass",
+            "interception",
+            "recovery"
+          ],
+          "title": "Event Type",
+          "type": "string"
+        },
+        "lines_broken": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lines Broken"
+        },
+        "match_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Match Id",
+          "type": "string"
+        },
+        "minute": {
+          "maximum": 150,
+          "minimum": 0,
+          "title": "Minute",
+          "type": "integer"
+        },
+        "period": {
+          "maximum": 2,
+          "minimum": 1,
+          "title": "Period",
+          "type": "integer"
+        },
+        "player_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Player Id",
+          "type": "string"
+        },
+        "pressure": {
+          "anyOf": [
+            {
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pressure"
+        },
+        "second": {
+          "maximum": 59,
+          "minimum": 0,
+          "title": "Second",
+          "type": "integer"
+        },
+        "start": {
+          "$ref": "#/$defs/Point"
+        },
+        "successful": {
+          "title": "Successful",
+          "type": "boolean"
+        },
+        "target_player_id": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Player Id"
+        },
+        "team_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Team Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "match_id",
+        "period",
+        "minute",
+        "second",
+        "event_type",
+        "team_id",
+        "player_id",
+        "attacking_direction",
+        "start",
+        "successful"
+      ],
+      "title": "MatchEvent",
+      "type": "object"
+    },
+    "MatchMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "away_team": {
+          "$ref": "#/$defs/Team"
+        },
+        "coordinate_origin": {
+          "const": "top_left",
+          "default": "top_left",
+          "title": "Coordinate Origin",
+          "type": "string"
+        },
+        "coordinate_system": {
+          "const": "normalized_0_100",
+          "default": "normalized_0_100",
+          "title": "Coordinate System",
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "home_team": {
+          "$ref": "#/$defs/Team"
+        },
+        "match_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Match Id",
+          "type": "string"
+        },
+        "players": {
+          "items": {
+            "$ref": "#/$defs/Player"
+          },
+          "minItems": 2,
+          "title": "Players",
+          "type": "array"
+        },
+        "score": {
+          "$ref": "#/$defs/Score"
+        }
+      },
+      "required": [
+        "match_id",
+        "home_team",
+        "away_team",
+        "players",
+        "score",
+        "description"
+      ],
+      "title": "MatchMetadata",
+      "type": "object"
+    },
+    "Player": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "player_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Player Id",
+          "type": "string"
+        },
+        "team_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Team Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "player_id",
+        "team_id",
+        "name"
+      ],
+      "title": "Player",
+      "type": "object"
+    },
+    "Point": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "title": "Point",
+      "type": "object"
+    },
+    "Score": {
+      "additionalProperties": false,
+      "properties": {
+        "away": {
+          "minimum": 0,
+          "title": "Away",
+          "type": "integer"
+        },
+        "home": {
+          "minimum": 0,
+          "title": "Home",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "home",
+        "away"
+      ],
+      "title": "Score",
+      "type": "object"
+    },
+    "Team": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "team_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Team Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "team_id",
+        "name"
+      ],
+      "title": "Team",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "annotation_note": {
+      "title": "Annotation Note",
+      "type": "string"
+    },
+    "data_source": {
+      "const": "synthetic",
+      "default": "synthetic",
+      "title": "Data Source",
+      "type": "string"
+    },
+    "events": {
+      "items": {
+        "$ref": "#/$defs/MatchEvent"
+      },
+      "minItems": 1,
+      "title": "Events",
+      "type": "array"
+    },
+    "main_event_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+      "title": "Main Event Id",
+      "type": "string"
+    },
+    "match": {
+      "$ref": "#/$defs/MatchMetadata"
+    },
+    "review_status": {
+      "default": "pending_review",
+      "enum": [
+        "pending_review",
+        "approved"
+      ],
+      "title": "Review Status",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "annotation_note",
+    "match",
+    "main_event_id",
+    "events"
+  ],
+  "title": "DemoFixture",
+  "type": "object"
+}

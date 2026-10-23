@@ -1,9 +1,9 @@
 from typing import Literal
 
-from pydantic import BaseModel
+from app.models.common import ContractModel
 
 
-class HealthResponse(BaseModel):
+class HealthResponse(ContractModel):
     status: Literal["ok"] = "ok"
     service: Literal["matchpulse-api"] = "matchpulse-api"
     version: str

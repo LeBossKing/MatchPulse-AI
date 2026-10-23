@@ -1,0 +1,1270 @@
+{
+  "components": {
+    "schemas": {
+      "AgentTraceStep": {
+        "additionalProperties": false,
+        "properties": {
+          "agent": {
+            "enum": [
+              "match_intelligence",
+              "tactical_explainer",
+              "trust_personalization"
+            ],
+            "title": "Agent",
+            "type": "string"
+          },
+          "duration_ms": {
+            "minimum": 0.0,
+            "title": "Duration Ms",
+            "type": "number"
+          },
+          "output": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "title": "Output",
+            "type": "object"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "skipped",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "summary": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "agent",
+          "status",
+          "duration_ms",
+          "summary",
+          "output"
+        ],
+        "title": "AgentTraceStep",
+        "type": "object"
+      },
+      "ApiError": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/ErrorDetail"
+            },
+            "title": "Details",
+            "type": "array"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "details"
+        ],
+        "title": "ApiError",
+        "type": "object"
+      },
+      "DemoEventsResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "data_source": {
+            "const": "synthetic",
+            "default": "synthetic",
+            "title": "Data Source",
+            "type": "string"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/MatchEvent"
+            },
+            "title": "Events",
+            "type": "array"
+          },
+          "main_event_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Main Event Id",
+            "type": "string"
+          },
+          "match_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Match Id",
+            "type": "string"
+          },
+          "review_status": {
+            "enum": [
+              "pending_review",
+              "approved"
+            ],
+            "title": "Review Status",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version",
+          "match_id",
+          "data_source",
+          "review_status",
+          "main_event_id",
+          "events"
+        ],
+        "title": "DemoEventsResponse",
+        "type": "object"
+      },
+      "DemoMatchResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "annotation_note": {
+            "title": "Annotation Note",
+            "type": "string"
+          },
+          "data_source": {
+            "const": "synthetic",
+            "default": "synthetic",
+            "title": "Data Source",
+            "type": "string"
+          },
+          "match": {
+            "$ref": "#/components/schemas/MatchMetadata"
+          },
+          "review_status": {
+            "enum": [
+              "pending_review",
+              "approved"
+            ],
+            "title": "Review Status",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/MatchStatistics"
+          }
+        },
+        "required": [
+          "schema_version",
+          "data_source",
+          "review_status",
+          "annotation_note",
+          "match",
+          "statistics"
+        ],
+        "title": "DemoMatchResponse",
+        "type": "object"
+      },
+      "ErrorDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "title": "Field",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "field",
+          "message",
+          "type"
+        ],
+        "title": "ErrorDetail",
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ApiError"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version",
+          "error"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "EventStatistics": {
+        "additionalProperties": false,
+        "properties": {
+          "forward_progression": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": -100.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Forward Progression"
+          },
+          "pass_length": {
+            "anyOf": [
+              {
+                "maximum": 142.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pass Length"
+          },
+          "units": {
+            "const": "normalized_pitch_units",
+            "default": "normalized_pitch_units",
+            "title": "Units",
+            "type": "string"
+          }
+        },
+        "required": [
+          "units",
+          "pass_length",
+          "forward_progression"
+        ],
+        "title": "EventStatistics",
+        "type": "object"
+      },
+      "EvidenceItem": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "field": {
+            "pattern": "^[a-z_]+(?:\\.[a-z_]+)*$",
+            "title": "Field",
+            "type": "string"
+          },
+          "source": {
+            "enum": [
+              "event",
+              "statistics"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "source",
+          "field",
+          "value"
+        ],
+        "title": "EvidenceItem",
+        "type": "object"
+      },
+      "HealthResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "environment": {
+            "enum": [
+              "development",
+              "test",
+              "production"
+            ],
+            "title": "Environment",
+            "type": "string"
+          },
+          "service": {
+            "const": "matchpulse-api",
+            "default": "matchpulse-api",
+            "title": "Service",
+            "type": "string"
+          },
+          "status": {
+            "const": "ok",
+            "default": "ok",
+            "title": "Status",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "service",
+          "version",
+          "environment"
+        ],
+        "title": "HealthResponse",
+        "type": "object"
+      },
+      "Insight": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence_ids": {
+            "items": {
+              "maxLength": 64,
+              "minLength": 1,
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Evidence Ids",
+            "type": "array"
+          },
+          "explanation": {
+            "maxLength": 1200,
+            "minLength": 1,
+            "title": "Explanation",
+            "type": "string"
+          },
+          "importance": {
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Importance",
+            "type": "string"
+          },
+          "interpretation": {
+            "anyOf": [
+              {
+                "maxLength": 600,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interpretation"
+          },
+          "title": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "explanation",
+          "interpretation",
+          "importance",
+          "evidence_ids"
+        ],
+        "title": "Insight",
+        "type": "object"
+      },
+      "JsonValue": {},
+      "MatchEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "attacking_direction": {
+            "enum": [
+              "left_to_right",
+              "right_to_left"
+            ],
+            "title": "Attacking Direction",
+            "type": "string"
+          },
+          "end": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Point"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "event_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Event Id",
+            "type": "string"
+          },
+          "event_type": {
+            "enum": [
+              "pass",
+              "interception",
+              "recovery"
+            ],
+            "title": "Event Type",
+            "type": "string"
+          },
+          "lines_broken": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lines Broken"
+          },
+          "match_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Match Id",
+            "type": "string"
+          },
+          "minute": {
+            "maximum": 150.0,
+            "minimum": 0.0,
+            "title": "Minute",
+            "type": "integer"
+          },
+          "period": {
+            "maximum": 2.0,
+            "minimum": 1.0,
+            "title": "Period",
+            "type": "integer"
+          },
+          "player_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Player Id",
+            "type": "string"
+          },
+          "pressure": {
+            "anyOf": [
+              {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pressure"
+          },
+          "second": {
+            "maximum": 59.0,
+            "minimum": 0.0,
+            "title": "Second",
+            "type": "integer"
+          },
+          "start": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "successful": {
+            "title": "Successful",
+            "type": "boolean"
+          },
+          "target_player_id": {
+            "anyOf": [
+              {
+                "maxLength": 64,
+                "minLength": 1,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Player Id"
+          },
+          "team_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Team Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_id",
+          "match_id",
+          "period",
+          "minute",
+          "second",
+          "event_type",
+          "team_id",
+          "player_id",
+          "target_player_id",
+          "attacking_direction",
+          "start",
+          "end",
+          "successful",
+          "pressure",
+          "lines_broken"
+        ],
+        "title": "MatchEvent",
+        "type": "object"
+      },
+      "MatchMetadata": {
+        "additionalProperties": false,
+        "properties": {
+          "away_team": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "coordinate_origin": {
+            "const": "top_left",
+            "default": "top_left",
+            "title": "Coordinate Origin",
+            "type": "string"
+          },
+          "coordinate_system": {
+            "const": "normalized_0_100",
+            "default": "normalized_0_100",
+            "title": "Coordinate System",
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Description",
+            "type": "string"
+          },
+          "home_team": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "match_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Match Id",
+            "type": "string"
+          },
+          "players": {
+            "items": {
+              "$ref": "#/components/schemas/Player"
+            },
+            "minItems": 2,
+            "title": "Players",
+            "type": "array"
+          },
+          "score": {
+            "$ref": "#/components/schemas/Score"
+          }
+        },
+        "required": [
+          "match_id",
+          "home_team",
+          "away_team",
+          "players",
+          "score",
+          "coordinate_system",
+          "coordinate_origin",
+          "description"
+        ],
+        "title": "MatchMetadata",
+        "type": "object"
+      },
+      "MatchStatistics": {
+        "additionalProperties": false,
+        "properties": {
+          "event_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Event Count",
+            "type": "integer"
+          },
+          "scope": {
+            "const": "demo_sequence",
+            "default": "demo_sequence",
+            "title": "Scope",
+            "type": "string"
+          },
+          "teams": {
+            "items": {
+              "$ref": "#/components/schemas/TeamStatistics"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "title": "Teams",
+            "type": "array"
+          },
+          "through_event_id": {
+            "anyOf": [
+              {
+                "maxLength": 64,
+                "minLength": 1,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Through Event Id"
+          }
+        },
+        "required": [
+          "scope",
+          "event_count",
+          "through_event_id",
+          "teams"
+        ],
+        "title": "MatchStatistics",
+        "type": "object"
+      },
+      "Overlay": {
+        "additionalProperties": false,
+        "properties": {
+          "end": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Point"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "kind": {
+            "enum": [
+              "pass",
+              "point"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "start": {
+            "$ref": "#/components/schemas/Point"
+          }
+        },
+        "required": [
+          "kind",
+          "start",
+          "end"
+        ],
+        "title": "Overlay",
+        "type": "object"
+      },
+      "Player": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "player_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Player Id",
+            "type": "string"
+          },
+          "team_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Team Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "player_id",
+          "team_id",
+          "name"
+        ],
+        "title": "Player",
+        "type": "object"
+      },
+      "Point": {
+        "additionalProperties": false,
+        "properties": {
+          "x": {
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "X",
+            "type": "number"
+          },
+          "y": {
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Y",
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "title": "Point",
+        "type": "object"
+      },
+      "ProcessEventRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "audience": {
+            "default": "analyst",
+            "enum": [
+              "fan",
+              "analyst"
+            ],
+            "title": "Audience",
+            "type": "string"
+          },
+          "event_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Event Id",
+            "type": "string"
+          },
+          "language": {
+            "default": "en",
+            "enum": [
+              "en",
+              "fr"
+            ],
+            "title": "Language",
+            "type": "string"
+          },
+          "match_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Match Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "match_id",
+          "event_id"
+        ],
+        "title": "ProcessEventRequest",
+        "type": "object"
+      },
+      "ProcessEventResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "agent_trace": {
+            "items": {
+              "$ref": "#/components/schemas/AgentTraceStep"
+            },
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Agent Trace",
+            "type": "array"
+          },
+          "audience": {
+            "enum": [
+              "fan",
+              "analyst"
+            ],
+            "title": "Audience",
+            "type": "string"
+          },
+          "data_source": {
+            "const": "synthetic",
+            "default": "synthetic",
+            "title": "Data Source",
+            "type": "string"
+          },
+          "event": {
+            "$ref": "#/components/schemas/MatchEvent"
+          },
+          "event_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Event Id",
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceItem"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "insight": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Insight"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "language": {
+            "enum": [
+              "en",
+              "fr"
+            ],
+            "title": "Language",
+            "type": "string"
+          },
+          "match_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Match Id",
+            "type": "string"
+          },
+          "match_statistics": {
+            "$ref": "#/components/schemas/MatchStatistics"
+          },
+          "overlay": {
+            "$ref": "#/components/schemas/Overlay"
+          },
+          "provider": {
+            "enum": [
+              "mock",
+              "azure",
+              "fallback"
+            ],
+            "title": "Provider",
+            "type": "string"
+          },
+          "result_source": {
+            "default": "runtime",
+            "enum": [
+              "runtime",
+              "example"
+            ],
+            "title": "Result Source",
+            "type": "string"
+          },
+          "review_status": {
+            "enum": [
+              "pending_review",
+              "approved"
+            ],
+            "title": "Review Status",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/EventStatistics"
+          },
+          "status": {
+            "const": "processed",
+            "default": "processed",
+            "title": "Status",
+            "type": "string"
+          },
+          "validation": {
+            "$ref": "#/components/schemas/ValidationResult"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "result_source",
+          "data_source",
+          "review_status",
+          "match_id",
+          "event_id",
+          "event",
+          "audience",
+          "language",
+          "provider",
+          "statistics",
+          "match_statistics",
+          "insight",
+          "evidence",
+          "validation",
+          "overlay",
+          "agent_trace",
+          "warnings"
+        ],
+        "title": "ProcessEventResponse",
+        "type": "object"
+      },
+      "Score": {
+        "additionalProperties": false,
+        "properties": {
+          "away": {
+            "minimum": 0.0,
+            "title": "Away",
+            "type": "integer"
+          },
+          "home": {
+            "minimum": 0.0,
+            "title": "Home",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "home",
+          "away"
+        ],
+        "title": "Score",
+        "type": "object"
+      },
+      "Team": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "team_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Team Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "team_id",
+          "name"
+        ],
+        "title": "Team",
+        "type": "object"
+      },
+      "TeamStatistics": {
+        "additionalProperties": false,
+        "properties": {
+          "interceptions": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Interceptions",
+            "type": "integer"
+          },
+          "pass_accuracy_pct": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pass Accuracy Pct"
+          },
+          "passes_attempted": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Passes Attempted",
+            "type": "integer"
+          },
+          "passes_completed": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Passes Completed",
+            "type": "integer"
+          },
+          "recoveries": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Recoveries",
+            "type": "integer"
+          },
+          "team_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "title": "Team Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "team_id",
+          "passes_attempted",
+          "passes_completed",
+          "pass_accuracy_pct",
+          "interceptions",
+          "recoveries"
+        ],
+        "title": "TeamStatistics",
+        "type": "object"
+      },
+      "ValidationResult": {
+        "additionalProperties": false,
+        "properties": {
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "validated",
+              "limited",
+              "rejected"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "unsupported_claims": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Unsupported Claims",
+            "type": "array"
+          }
+        },
+        "required": [
+          "status",
+          "unsupported_claims",
+          "limitations"
+        ],
+        "title": "ValidationResult",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "Version 1 event/API contract for synthetic football match analysis. Match reads are implemented; event processing returns 501 until Task 4.",
+    "title": "MatchPulse AI API",
+    "version": "0.2.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/events/process": {
+      "post": {
+        "description": "Validate a canonical event selector. Task 3 returns 501, never fake analysis.",
+        "operationId": "process_event_events_process_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "main_event": {
+                  "summary": "Main synthetic pass, analyst audience, English",
+                  "value": {
+                    "audience": "analyst",
+                    "event_id": "evt-064",
+                    "language": "en",
+                    "match_id": "match-demo-01"
+                  }
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/ProcessEventRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcessEventResponse"
+                }
+              }
+            },
+            "description": "Reserved success contract. Implemented by the workflow in Task 4."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unknown match or event."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid demo fixture."
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Workflow is not implemented yet."
+          }
+        },
+        "summary": "Process Event",
+        "tags": [
+          "events"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Report API availability; this does not verify Azure or model access.",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/matches/demo": {
+      "get": {
+        "description": "Return metadata and zeroed statistics before replay starts.",
+        "operationId": "demo_match_matches_demo_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoMatchResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid demo fixture."
+          }
+        },
+        "summary": "Demo Match",
+        "tags": [
+          "matches"
+        ]
+      }
+    },
+    "/matches/demo/events": {
+      "get": {
+        "description": "Return canonical events; missing tactical annotations remain null.",
+        "operationId": "demo_events_matches_demo_events_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoEventsResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid demo fixture."
+          }
+        },
+        "summary": "Demo Events",
+        "tags": [
+          "matches"
+        ]
+      }
+    }
+  }
+}

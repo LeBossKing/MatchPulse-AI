@@ -1,0 +1,172 @@
+{
+  "$defs": {
+    "Point": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "title": "Point",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attacking_direction": {
+      "enum": [
+        "left_to_right",
+        "right_to_left"
+      ],
+      "title": "Attacking Direction",
+      "type": "string"
+    },
+    "end": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Point"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "event_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+      "title": "Event Id",
+      "type": "string"
+    },
+    "event_type": {
+      "enum": [
+        "pass",
+        "interception",
+        "recovery"
+      ],
+      "title": "Event Type",
+      "type": "string"
+    },
+    "lines_broken": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Lines Broken"
+    },
+    "match_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+      "title": "Match Id",
+      "type": "string"
+    },
+    "minute": {
+      "maximum": 150,
+      "minimum": 0,
+      "title": "Minute",
+      "type": "integer"
+    },
+    "period": {
+      "maximum": 2,
+      "minimum": 1,
+      "title": "Period",
+      "type": "integer"
+    },
+    "player_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+      "title": "Player Id",
+      "type": "string"
+    },
+    "pressure": {
+      "anyOf": [
+        {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Pressure"
+    },
+    "second": {
+      "maximum": 59,
+      "minimum": 0,
+      "title": "Second",
+      "type": "integer"
+    },
+    "start": {
+      "$ref": "#/$defs/Point"
+    },
+    "successful": {
+      "title": "Successful",
+      "type": "boolean"
+    },
+    "target_player_id": {
+      "anyOf": [
+        {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Target Player Id"
+    },
+    "team_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+      "title": "Team Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_id",
+    "match_id",
+    "period",
+    "minute",
+    "second",
+    "event_type",
+    "team_id",
+    "player_id",
+    "attacking_direction",
+    "start",
+    "successful"
+  ],
+  "title": "MatchEvent",
+  "type": "object"
+}

@@ -2,15 +2,18 @@
 
 Agentic AI prototype transforming synthetic football events into explainable tactical insights, with evidence validation, an interactive dashboard, and personalized Fan/Analyst experiences in English and French.
 
-## Current milestone: project foundation
+## Current milestone: event and API contract (Task 3)
 
 Implemented:
-- React + TypeScript + Vite frontend with a responsive connection screen.
-- FastAPI backend with a typed `GET /health` response and interactive API documentation.
-- Real frontend-to-backend connection checking, a five-second timeout, retry, and error states.
-- Backend-only environment configuration, safe examples, and local CORS settings.
+- The React/Vite connection screen and FastAPI foundation.
+- Version 1 Pydantic event, fixture, request, response, evidence, trace, and error models.
+- Read-only demo match/event endpoints and a validated synthetic eight-event fixture.
+- OpenAPI and JSON Schema exports, generated TypeScript types, and contract tests.
+- Eight illustrative processing responses covering both audience modes, both languages, failed passes, regains, and missing annotations.
 
-Next: agree on the event/API contract, implement the mock agent workflow, then build the match dashboard. Match analysis, AI agents, and Azure calls are not implemented in this foundation. A successful health check confirms API connectivity only.
+`POST /events/process` validates the event selector and returns **501 Not Implemented** for a valid known event. This is intentional for Task 3; the working mock agent workflow is Task 4. Example responses are marked `result_source: "example"` and must not be shown as real execution.
+
+The fixture is **pending Member 2 review**. Geometry and evidence links are checked automatically; tactical interpretations and authored annotations still need team validation.
 
 ## Prerequisites
 
@@ -58,7 +61,7 @@ cp .env.example .env
 npm run dev
 ```
 
-Open <http://localhost:5173>. The page should show **Backend connected**, API version `0.1.0`, and environment `development`.
+Open <http://localhost:5173>. The page should show **Backend connected**, API version `0.2.0`, and environment `development`.
 
 The dev server uses port 5173 and fails clearly if it is occupied. This keeps it consistent with the backend's allowed origins.
 
@@ -89,9 +92,44 @@ npm run build
 curl http://127.0.0.1:8000/health
 ```
 
-Also stop the backend and click **Check connection**: the page must show **Backend unavailable**. Restart FastAPI and retry to recover. Agent/statistics tests will be added alongside those implementations in later tasks.
+Also stop the backend and click **Check connection**: the page must show **Backend unavailable**. Restart FastAPI and retry to recover. The frontend remains the foundation connection screen; the match dashboard follows in Task 5.
 
 For `npm run preview`, set `FRONTEND_ORIGIN=http://localhost:4173` in `backend/.env` and restart the backend, since Vite preview uses a different origin.
+
+## Check and regenerate the contract
+
+From `backend/`, with the virtual environment activated:
+
+```bash
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
+python scripts/export_contract.py --check
+```
+
+After changing backend models, regenerate the checked-in API artifacts:
+
+```bash
+# In backend/
+python scripts/export_contract.py
+```
+
+```bash
+# In frontend/
+npm run generate:api
+npm run lint
+npm run build
+```
+
+The type generator runs as a pinned isolated CLI because its TypeScript 5 peer dependency differs from the app's TypeScript 6 compiler. Normal app startup uses the checked-in types; the first generator run needs network access. Commit model changes, schema exports, and generated TypeScript together.
+
+Try the read endpoints with the backend running:
+
+```bash
+curl http://127.0.0.1:8000/matches/demo
+curl http://127.0.0.1:8000/matches/demo/events
+```
+
+See [the contract](docs/api-contract.md) for processing requests, response examples, validation rules, and current endpoint status.
 
 ## Project layout
 
@@ -99,12 +137,12 @@ For `npm run preview`, set `FRONTEND_ORIGIN=http://localhost:4173` in `backend/.
 - `backend/app/models/`: Pydantic request/response models.
 - `backend/app/agents/`: reserved for the three agent roles and orchestrator.
 - `backend/app/services/`: reserved for deterministic statistics and model providers.
-- `backend/data/`: validated synthetic match fixtures, supplied in Task 3.
-- `backend/tests/`: tests added with the event processing implementation.
+- `backend/data/`: the synthetic fixture, example responses, and review notes.
+- `backend/tests/`: event, API, fixture, evidence, and example consistency tests.
 - `frontend/src/api/`: typed HTTP client.
 - `frontend/src/components/`: interface components.
 - `frontend/src/hooks/`: connection and application hooks.
-- `frontend/src/types/`: TypeScript API types.
+- `frontend/src/types/`: generated API types and convenient named aliases.
 - `frontend/src/data/`: future sample data aligned with the agreed contract.
 - `docs/`: architecture, API contract status, and demo plan.
 

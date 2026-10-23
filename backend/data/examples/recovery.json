@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0.0",
+  "status": "processed",
+  "result_source": "example",
+  "data_source": "synthetic",
+  "review_status": "pending_review",
+  "match_id": "match-demo-01",
+  "event_id": "evt-068",
+  "event": {
+    "event_id": "evt-068",
+    "match_id": "match-demo-01",
+    "period": 2,
+    "minute": 63,
+    "second": 38,
+    "event_type": "recovery",
+    "team_id": "atlas",
+    "player_id": "player-06",
+    "target_player_id": null,
+    "attacking_direction": "left_to_right",
+    "start": {
+      "x": 62.0,
+      "y": 45.0
+    },
+    "end": null,
+    "successful": true,
+    "pressure": null,
+    "lines_broken": null
+  },
+  "audience": "analyst",
+  "language": "en",
+  "provider": "mock",
+  "statistics": {
+    "units": "normalized_pitch_units",
+    "pass_length": null,
+    "forward_progression": null
+  },
+  "match_statistics": {
+    "scope": "demo_sequence",
+    "event_count": 8,
+    "through_event_id": "evt-068",
+    "teams": [
+      {
+        "team_id": "atlas",
+        "passes_attempted": 5,
+        "passes_completed": 4,
+        "pass_accuracy_pct": 80.0,
+        "interceptions": 0,
+        "recoveries": 1
+      },
+      {
+        "team_id": "harbor",
+        "passes_attempted": 1,
+        "passes_completed": 1,
+        "pass_accuracy_pct": 100.0,
+        "interceptions": 1,
+        "recoveries": 0
+      }
+    ]
+  },
+  "insight": {
+    "title": "A recorded recovery",
+    "explanation": "Atlas records a successful recovery at normalized coordinates (62, 45).",
+    "interpretation": "The event does not establish the positions of the other players.",
+    "importance": "medium",
+    "evidence_ids": [
+      "ev-successful",
+      "ev-start-x",
+      "ev-start-y"
+    ]
+  },
+  "evidence": [
+    {
+      "evidence_id": "ev-successful",
+      "source": "event",
+      "field": "successful",
+      "value": true
+    },
+    {
+      "evidence_id": "ev-start-x",
+      "source": "event",
+      "field": "start.x",
+      "value": 62.0
+    },
+    {
+      "evidence_id": "ev-start-y",
+      "source": "event",
+      "field": "start.y",
+      "value": 45.0
+    }
+  ],
+  "validation": {
+    "status": "limited",
+    "unsupported_claims": [],
+    "limitations": [
+      "Pressure and/or lines_broken are not supplied; the explanation must stay within the available event facts."
+    ]
+  },
+  "overlay": {
+    "kind": "point",
+    "start": {
+      "x": 62.0,
+      "y": 45.0
+    },
+    "end": null
+  },
+  "agent_trace": [
+    {
+      "agent": "match_intelligence",
+      "status": "completed",
+      "duration_ms": 0.0,
+      "summary": "Illustrative contract output only; this agent was not executed.",
+      "output": {
+        "statistics": {
+          "units": "normalized_pitch_units",
+          "pass_length": null,
+          "forward_progression": null
+        }
+      }
+    },
+    {
+      "agent": "tactical_explainer",
+      "status": "completed",
+      "duration_ms": 0.0,
+      "summary": "Illustrative contract output only; this agent was not executed.",
+      "output": {
+        "title": "A recorded recovery"
+      }
+    },
+    {
+      "agent": "trust_personalization",
+      "status": "completed",
+      "duration_ms": 0.0,
+      "summary": "Illustrative contract output only; this agent was not executed.",
+      "output": {
+        "validation_status": "limited",
+        "audience": "analyst",
+        "language": "en"
+      }
+    }
+  ],
+  "warnings": [
+    "Illustrative contract example: no agents or model were executed."
+  ]
+}

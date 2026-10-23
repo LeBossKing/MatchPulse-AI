@@ -1,0 +1,711 @@
+{
+  "$defs": {
+    "AgentTraceStep": {
+      "additionalProperties": false,
+      "properties": {
+        "agent": {
+          "enum": [
+            "match_intelligence",
+            "tactical_explainer",
+            "trust_personalization"
+          ],
+          "title": "Agent",
+          "type": "string"
+        },
+        "duration_ms": {
+          "minimum": 0,
+          "title": "Duration Ms",
+          "type": "number"
+        },
+        "output": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Output",
+          "type": "object"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "skipped",
+            "failed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "summary": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent",
+        "status",
+        "duration_ms",
+        "summary",
+        "output"
+      ],
+      "title": "AgentTraceStep",
+      "type": "object"
+    },
+    "EventStatistics": {
+      "additionalProperties": false,
+      "properties": {
+        "forward_progression": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": -100,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Forward Progression"
+        },
+        "pass_length": {
+          "anyOf": [
+            {
+              "maximum": 142,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pass Length"
+        },
+        "units": {
+          "const": "normalized_pitch_units",
+          "default": "normalized_pitch_units",
+          "title": "Units",
+          "type": "string"
+        }
+      },
+      "required": [
+        "units",
+        "pass_length",
+        "forward_progression"
+      ],
+      "title": "EventStatistics",
+      "type": "object"
+    },
+    "EvidenceItem": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "field": {
+          "pattern": "^[a-z_]+(?:\\.[a-z_]+)*$",
+          "title": "Field",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "event",
+            "statistics"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "source",
+        "field",
+        "value"
+      ],
+      "title": "EvidenceItem",
+      "type": "object"
+    },
+    "Insight": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_ids": {
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "explanation": {
+          "maxLength": 1200,
+          "minLength": 1,
+          "title": "Explanation",
+          "type": "string"
+        },
+        "importance": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Importance",
+          "type": "string"
+        },
+        "interpretation": {
+          "anyOf": [
+            {
+              "maxLength": 600,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Interpretation"
+        },
+        "title": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "explanation",
+        "interpretation",
+        "importance",
+        "evidence_ids"
+      ],
+      "title": "Insight",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "MatchEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "attacking_direction": {
+          "enum": [
+            "left_to_right",
+            "right_to_left"
+          ],
+          "title": "Attacking Direction",
+          "type": "string"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Point"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "event_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "event_type": {
+          "enum": [
+            "pass",
+            "interception",
+            "recovery"
+          ],
+          "title": "Event Type",
+          "type": "string"
+        },
+        "lines_broken": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lines Broken"
+        },
+        "match_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Match Id",
+          "type": "string"
+        },
+        "minute": {
+          "maximum": 150,
+          "minimum": 0,
+          "title": "Minute",
+          "type": "integer"
+        },
+        "period": {
+          "maximum": 2,
+          "minimum": 1,
+          "title": "Period",
+          "type": "integer"
+        },
+        "player_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Player Id",
+          "type": "string"
+        },
+        "pressure": {
+          "anyOf": [
+            {
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pressure"
+        },
+        "second": {
+          "maximum": 59,
+          "minimum": 0,
+          "title": "Second",
+          "type": "integer"
+        },
+        "start": {
+          "$ref": "#/$defs/Point"
+        },
+        "successful": {
+          "title": "Successful",
+          "type": "boolean"
+        },
+        "target_player_id": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Player Id"
+        },
+        "team_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Team Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "match_id",
+        "period",
+        "minute",
+        "second",
+        "event_type",
+        "team_id",
+        "player_id",
+        "target_player_id",
+        "attacking_direction",
+        "start",
+        "end",
+        "successful",
+        "pressure",
+        "lines_broken"
+      ],
+      "title": "MatchEvent",
+      "type": "object"
+    },
+    "MatchStatistics": {
+      "additionalProperties": false,
+      "properties": {
+        "event_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Event Count",
+          "type": "integer"
+        },
+        "scope": {
+          "const": "demo_sequence",
+          "default": "demo_sequence",
+          "title": "Scope",
+          "type": "string"
+        },
+        "teams": {
+          "items": {
+            "$ref": "#/$defs/TeamStatistics"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "title": "Teams",
+          "type": "array"
+        },
+        "through_event_id": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Through Event Id"
+        }
+      },
+      "required": [
+        "scope",
+        "event_count",
+        "through_event_id",
+        "teams"
+      ],
+      "title": "MatchStatistics",
+      "type": "object"
+    },
+    "Overlay": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Point"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "kind": {
+          "enum": [
+            "pass",
+            "point"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "start": {
+          "$ref": "#/$defs/Point"
+        }
+      },
+      "required": [
+        "kind",
+        "start",
+        "end"
+      ],
+      "title": "Overlay",
+      "type": "object"
+    },
+    "Point": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "title": "Point",
+      "type": "object"
+    },
+    "TeamStatistics": {
+      "additionalProperties": false,
+      "properties": {
+        "interceptions": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Interceptions",
+          "type": "integer"
+        },
+        "pass_accuracy_pct": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pass Accuracy Pct"
+        },
+        "passes_attempted": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Passes Attempted",
+          "type": "integer"
+        },
+        "passes_completed": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Passes Completed",
+          "type": "integer"
+        },
+        "recoveries": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Recoveries",
+          "type": "integer"
+        },
+        "team_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+          "title": "Team Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "team_id",
+        "passes_attempted",
+        "passes_completed",
+        "pass_accuracy_pct",
+        "interceptions",
+        "recoveries"
+      ],
+      "title": "TeamStatistics",
+      "type": "object"
+    },
+    "ValidationResult": {
+      "additionalProperties": false,
+      "properties": {
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "validated",
+            "limited",
+            "rejected"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "unsupported_claims": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unsupported Claims",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status",
+        "unsupported_claims",
+        "limitations"
+      ],
+      "title": "ValidationResult",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_trace": {
+      "items": {
+        "$ref": "#/$defs/AgentTraceStep"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "title": "Agent Trace",
+      "type": "array"
+    },
+    "audience": {
+      "enum": [
+        "fan",
+        "analyst"
+      ],
+      "title": "Audience",
+      "type": "string"
+    },
+    "data_source": {
+      "const": "synthetic",
+      "default": "synthetic",
+      "title": "Data Source",
+      "type": "string"
+    },
+    "event": {
+      "$ref": "#/$defs/MatchEvent"
+    },
+    "event_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+      "title": "Event Id",
+      "type": "string"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/EvidenceItem"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "insight": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Insight"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "language": {
+      "enum": [
+        "en",
+        "fr"
+      ],
+      "title": "Language",
+      "type": "string"
+    },
+    "match_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$",
+      "title": "Match Id",
+      "type": "string"
+    },
+    "match_statistics": {
+      "$ref": "#/$defs/MatchStatistics"
+    },
+    "overlay": {
+      "$ref": "#/$defs/Overlay"
+    },
+    "provider": {
+      "enum": [
+        "mock",
+        "azure",
+        "fallback"
+      ],
+      "title": "Provider",
+      "type": "string"
+    },
+    "result_source": {
+      "default": "runtime",
+      "enum": [
+        "runtime",
+        "example"
+      ],
+      "title": "Result Source",
+      "type": "string"
+    },
+    "review_status": {
+      "enum": [
+        "pending_review",
+        "approved"
+      ],
+      "title": "Review Status",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "statistics": {
+      "$ref": "#/$defs/EventStatistics"
+    },
+    "status": {
+      "const": "processed",
+      "default": "processed",
+      "title": "Status",
+      "type": "string"
+    },
+    "validation": {
+      "$ref": "#/$defs/ValidationResult"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "status",
+    "result_source",
+    "data_source",
+    "review_status",
+    "match_id",
+    "event_id",
+    "event",
+    "audience",
+    "language",
+    "provider",
+    "statistics",
+    "match_statistics",
+    "insight",
+    "evidence",
+    "validation",
+    "overlay",
+    "agent_trace",
+    "warnings"
+  ],
+  "title": "ProcessEventResponse",
+  "type": "object"
+}

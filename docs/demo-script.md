@@ -4,7 +4,7 @@ The final submission video targets 110-115 seconds. The team must validate the s
 
 ## Main story
 
-Show a successful forward pass, explain the available evidence, and adapt the insight for Analyst and Fan audiences in English and French. A claim that the pass bypassed a midfield line requires an explicit source annotation or suitable defender-position data.
+Show a successful forward pass, explain the available evidence, and adapt the insight for Analyst and Fan audiences in English and French. The proposed fixture uses the pass at 63:24 (evt-064), annotated as bypassing one opposition line. Identifying that line specifically as midfield would require additional source evidence.
 
 Member 2 provides the validated fixture and expected facts. Member 3 finalizes the acceptance checklist, narrative, and video timing. Member 1 implements the scenario.
 
@@ -19,7 +19,7 @@ Member 2 provides the validated fixture and expected facts. Member 3 finalizes t
 | 80-100 s | Inspect the actual agent trace and a missing-data example. |
 | 100-115 s | State the benefit and technologies actually implemented. |
 
-## Foundation acceptance check (current checkpoint)
+## Foundation acceptance check
 
 1. Start both apps with the documented commands.
 2. Open the frontend and verify `Backend connected` with the expected API metadata.
@@ -28,3 +28,7 @@ Member 2 provides the validated fixture and expected facts. Member 3 finalizes t
 5. Verify the page at desktop and mobile widths.
 
 The foundation screen is a development checkpoint. Match analysis and model execution will be demonstrated after the later implementation tasks are complete.
+
+## Task 3 checkpoint
+
+The read endpoints supply the proposed fixture and initial statistics. Test a valid event selector in Swagger: 501 is the expected response until Task 4. The eight JSON examples define the intended output shape and presentation variants; they are not evidence of agent execution. Member 2 reviews the fixture and claims before the team finalizes the demo story.
