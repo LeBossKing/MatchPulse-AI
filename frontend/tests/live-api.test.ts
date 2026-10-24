@@ -1,98 +1,27 @@
 // @vitest-environment node
-import { spawn } from 'node:child_process'
-import type { ChildProcess } from 'node:child_process'
-import { createServer } from 'node:net'
-import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { demoServer } from './demo-server'
 
 // Explicit opt-in: starts a real local FastAPI process in mock mode. Never Azure.
 // The normal frontend test suite remains independent of Python installation.
 describe.runIf(process.env.MATCHPULSE_RUN_API_TESTS === '1')(
   'real FastAPI HTTP integration',
   () => {
-    let server: ChildProcess
+    let server: Awaited<ReturnType<typeof demoServer>> | undefined
     let base: string
     let client: typeof import('../src/api/client')
 
     beforeAll(async () => {
-      const socket = createServer()
-      await new Promise<void>((resolve) =>
-        socket.listen(0, '127.0.0.1', resolve),
-      )
-      const address = socket.address()
-      if (!address || typeof address === 'string')
-        throw new Error('No test port')
-      const port = address.port
-      await new Promise<void>((resolve, reject) =>
-        socket.close((error) => (error ? reject(error) : resolve())),
-      )
-      const backend = fileURLToPath(new URL('../../backend/', import.meta.url))
-      const python =
-        process.platform === 'win32'
-          ? `${backend}.venv/Scripts/python.exe`
-          : `${backend}.venv/bin/python`
-      server = spawn(
-        python,
-        [
-          '-m',
-          'uvicorn',
-          'app.main:app',
-          '--host',
-          '127.0.0.1',
-          '--port',
-          String(port),
-        ],
-        {
-          cwd: backend,
-          stdio: 'ignore',
-          env: {
-            ...process.env,
-            APP_ENV: 'test',
-            LLM_PROVIDER: 'mock',
-            AZURE_OPENAI_ENDPOINT: '',
-            AZURE_OPENAI_DEPLOYMENT: '',
-            AZURE_OPENAI_API_KEY: '',
-            AZURE_OPENAI_TIMEOUT_SECONDS: '15',
-            AZURE_OPENAI_MAX_OUTPUT_TOKENS: '2048',
-            FRONTEND_ORIGIN: 'http://localhost:5173',
-          },
-        },
-      )
-      base = `http://127.0.0.1:${port}`
-      let started = false
-      let launchError = false
-      server.on('error', () => {
-        launchError = true
-      })
-      for (let count = 0; count < 60; count++) {
-        try {
-          if ((await fetch(`${base}/health`)).ok) {
-            started = true
-            break
-          }
-        } catch {
-          /* Wait for uvicorn. */
-        }
-        if (launchError) break
-        await new Promise((resolve) => setTimeout(resolve, 100))
-      }
-      if (!started)
-        throw new Error(
-          'FastAPI could not start. Install backend/requirements-dev.txt in backend/.venv first.',
-        )
+      server = await demoServer()
+      await server.start()
+      base = server.url
       vi.stubEnv('VITE_API_BASE_URL', base)
       vi.resetModules()
       client = await import('../src/api/client')
     }, 10000)
 
     afterAll(async () => {
-      if (server && server.exitCode === null) {
-        const exited = new Promise<void>((resolve) =>
-          server.once('exit', () => resolve()),
-        )
-        server.kill()
-        await exited
-      }
+      await server?.stop()
       vi.unstubAllEnvs()
     })
 

@@ -2,7 +2,7 @@
 
 Agentic AI prototype transforming synthetic football events into explainable tactical insights, with evidence validation, an interactive dashboard, and personalized Fan/Analyst experiences in English and French.
 
-## Current milestone: connected React dashboard (Task 7)
+## Current milestone: demo scenario verification (Task 8)
 
 Implemented:
 - A responsive React/Vite match dashboard and FastAPI foundation.
@@ -21,6 +21,8 @@ Implemented:
 - API mode that loads match/events from FastAPI and posts selections and preferences for runtime analysis.
 - Schema and source-consistency checks in the browser, loading/error states, explicit retry, cancellation, session caching, and replay that waits for processing.
 - Provider provenance, measured runtime traces, visible backend fallback warnings, and a separate offline sample mode.
+- A connected React/FastAPI demo rehearsal covering personalization, evidence, sequence totals, explicit samples, actual configuration fallback, and API outage/recovery.
+- A single automated verification command and a team acceptance checklist for the final demo.
 
 `POST /events/process` returns **200** for a valid known event, with `result_source: "runtime"`. The default `LLM_PROVIDER=mock` runs entirely locally. A configured `azure` provider calls one deployment for a structured tactical candidate; geometry, evidence, trust checks, and narrative templates remain local. The static Task 3 examples remain marked `result_source: "example"` and are never loaded as runtime results.
 
@@ -101,6 +103,14 @@ Restart the relevant dev server after changing its environment file. Local envir
 From `backend/`, run `python scripts/check_azure.py` to check configuration without network access. Once configured, `python scripts/check_azure.py --live` makes one token-consuming Azure request and applies the same local trust checks as the API. Only `status: live_verified` completes that deployment check; an HTTP 200 from the normal API can be a labelled mock fallback.
 
 ## Verify the application
+
+For the complete Task 8 checks, install `backend/requirements-dev.txt` into `backend/.venv` and run `npm ci` in `frontend/`. Then, from the repository root:
+
+```bash
+python scripts/verify_demo.py
+```
+
+This runs backend and frontend tests, real HTTP scenario tests, contract/sample checks, lint, and the production build without Azure model calls. See [scenario testing and the manual demo checklist](docs/testing.md) for final acceptance.
 
 ```bash
 # In frontend/

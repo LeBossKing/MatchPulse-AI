@@ -57,3 +57,7 @@ Set `LLM_PROVIDER=azure`, restart FastAPI, and process `evt-064` through Postman
 Start FastAPI with the configured provider, then open the React dashboard in API mode. Confirm the main event has a runtime provider badge and measured traces. Change audience/language and choose `evt-067` to show limited context, then a regain to show null pass metrics. Revisit a prior selection and identify its cached result; use **Run analysis again** for a new execution.
 
 Replay waits for each API result before continuing. Rapid manual selections must never display a previous event's explanation under the new event. Stop FastAPI and rerun an analysis to show an explicit error, then deliberately select **Samples** to demonstrate the independent offline examples. Restart FastAPI and return to API mode. Include the provider and cache provenance in the recording; source events remain synthetic and pending team review until approved.
+
+## Task 8 checkpoint
+
+Run `python scripts/verify_demo.py` from the repository root and complete [the scenario acceptance checklist](testing.md) on the demonstration machine. The automated rehearsal uses the rendered React app and a real local FastAPI process in mock/configuration-fallback modes; it sends no Azure request. Record actual Azure provenance separately during rehearsal. Member 2 approves authored annotations and interpretations; Member 3 confirms the final narrative and video timing before Task 9.

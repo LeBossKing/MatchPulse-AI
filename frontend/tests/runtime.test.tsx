@@ -154,7 +154,9 @@ it('shows API errors, then opens explicitly labelled samples without hidden proc
   expect(screen.queryByText('SAMPLE DATA')).toBeNull()
   const count = transport.mock.calls.length
   fireEvent.click(screen.getByRole('button', { name: 'Use sample data' }))
-  await screen.findByText('SAMPLE DATA')
+  await waitFor(() =>
+    expect(screen.getByTestId('provenance').textContent).toBe('SAMPLE DATA'),
+  )
   expect(transport.mock.calls.length).toBe(count)
   fireEvent.click(screen.getByRole('button', { name: 'API mode', exact: true }))
   await screen.findByRole('heading', { name: 'The match could not be loaded' })

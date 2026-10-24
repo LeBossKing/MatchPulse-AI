@@ -68,7 +68,9 @@ For real local HTTP integration, install backend dependencies into `backend/.ven
 MATCHPULSE_RUN_API_TESTS=1 npm run test
 ```
 
-This opt-in test launches FastAPI on a temporary local port in **mock mode**, validates all 32 event/audience/language variants through the actual TypeScript HTTP client, verifies POST CORS preflight, and checks structured 404 behavior. It overrides Azure settings to prevent model calls. The normal suite skips these two tests so frontend-only development needs no Python installation.
+This opt-in test launches FastAPI on a temporary local port in **mock mode**, validates all 32 event/audience/language variants through the actual TypeScript HTTP client, verifies POST CORS preflight, and checks structured 404 behavior. It overrides Azure settings to prevent model calls. The normal suite skips connected tests so frontend-only development needs no Python installation.
+
+Task 8 adds three opt-in rendered React scenario tests, including a real backend outage/restart and actual configuration fallback. See [the complete test runner and manual acceptance](testing.md); the normal suite skips all five connected tests.
 
 From `backend/`:
 
