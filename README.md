@@ -2,7 +2,7 @@
 
 Agentic AI prototype transforming synthetic football events into explainable tactical insights, with evidence validation, an interactive dashboard, and personalized Fan/Analyst experiences in English and French.
 
-## Current milestone: React dashboard with sample data (Task 5)
+## Current milestone: Azure environment and provider (Task 6)
 
 Implemented:
 - A responsive React/Vite match dashboard and FastAPI foundation.
@@ -16,8 +16,12 @@ Implemented:
 - An SVG pitch with source-coordinate overlays, sequence trails, event selection, timed replay, seeking, and speed controls.
 - English/French Fan/Analyst presentation, evidence and trust tabs, sequence statistics, filters, and expandable illustrative agent outputs.
 - Thirty-two typed, reproducible sample views exported from the canonical mock workflow. Sample mode works without the backend.
+- An Azure OpenAI v1 Responses adapter with strict structured candidates, local trust checks, bounded connection/read timeouts, and visible mock fallback.
+- An offline configuration checker and an explicit one-request live preflight that never substitutes a mock result.
 
-`POST /events/process` now returns **200** for a valid known event, with `result_source: "runtime"`. Processing uses deterministic Python rules and templates; no model or Azure request is made. The static Task 3 examples remain marked `result_source: "example"` and are never loaded as runtime results.
+`POST /events/process` returns **200** for a valid known event, with `result_source: "runtime"`. The default `LLM_PROVIDER=mock` runs entirely locally. A configured `azure` provider calls one deployment for a structured tactical candidate; geometry, evidence, trust checks, and narrative templates remain local. The static Task 3 examples remain marked `result_source: "example"` and are never loaded as runtime results.
+
+Azure access is **not established by installing this code or by `/health`**. Complete the [Azure setup and live verification](docs/azure-setup.md) in your own subscription. No resource or deployment is created automatically.
 
 The fixture is **pending Member 2 review**. Geometry and evidence links are checked automatically; tactical interpretations and authored annotations still need team validation.
 
@@ -71,7 +75,7 @@ npm run dev
 
 Open <http://localhost:5173>. The dashboard starts at the main synthetic event, `evt-064` at 63:24, in Analyst/English mode. Expect length `44.28`, progression `+40`, and one source-annotated line bypassed.
 
-The dashboard works even when FastAPI is stopped. To check the backend separately, click **API connection** in the sidebar. With FastAPI running, that panel should show **Backend connected**, API version `0.3.0`, and environment `development`.
+The dashboard works even when FastAPI is stopped. To check the backend separately, click **API connection** in the sidebar. With FastAPI running, that panel should show **Backend connected**, API version `0.4.0`, and environment `development`.
 
 The dev server uses port 5173 and fails clearly if it is occupied. This keeps it consistent with the backend's allowed origins.
 
@@ -81,13 +85,17 @@ The dev server uses port 5173 and fails clearly if it is occupied. This keeps it
 | --- | --- | --- |
 | `backend/.env` | `APP_ENV` | `development`, `test`, or `production`; defaults to `development`. |
 | `backend/.env` | `FRONTEND_ORIGIN` | Additional allowed browser origin; defaults to `http://localhost:5173`. |
-| `backend/.env` | `LLM_PROVIDER` | Defaults to `mock`. Selecting `azure` currently produces a visible mock fallback; Azure is not implemented yet. |
-| `backend/.env` | `AZURE_OPENAI_ENDPOINT` | Future backend-only Azure endpoint. |
-| `backend/.env` | `AZURE_OPENAI_DEPLOYMENT` | Future backend-only Azure model deployment name. |
-| `backend/.env` | `AZURE_OPENAI_API_KEY` | Future backend-only Azure credential. |
+| `backend/.env` | `LLM_PROVIDER` | `mock` by default; set `azure` after the live preflight succeeds. Missing/invalid Azure settings produce a visible fallback. |
+| `backend/.env` | `AZURE_OPENAI_ENDPOINT` | Backend-only HTTPS resource endpoint on `openai.azure.com` or `services.ai.azure.com`, optionally ending in `/openai/v1/`. |
+| `backend/.env` | `AZURE_OPENAI_DEPLOYMENT` | Your actual model deployment name, not the model catalog ID. |
+| `backend/.env` | `AZURE_OPENAI_API_KEY` | Backend-only resource key. Never put it in a `VITE_*` variable. |
+| `backend/.env` | `AZURE_OPENAI_TIMEOUT_SECONDS` | HTTP timeout per operation, 2–60 seconds; default 15. Connection timeout is capped at 5 seconds. |
+| `backend/.env` | `AZURE_OPENAI_MAX_OUTPUT_TOKENS` | Output token limit, 256–8192; default 2048. |
 | `frontend/.env` | `VITE_API_BASE_URL` | Public API URL; defaults to `http://127.0.0.1:8000`. |
 
 Restart the relevant dev server after changing its environment file. Local environment files and virtual environments are ignored by Git. Configuration examples remain tracked. `VITE_*` values are exposed to the browser; keep all credentials in backend configuration.
+
+From `backend/`, run `python scripts/check_azure.py` to check configuration without network access. Once configured, `python scripts/check_azure.py --live` makes one token-consuming Azure request and applies the same local trust checks as the API. Only `status: live_verified` completes that deployment check; an HTTP 200 from the normal API can be a labelled mock fallback.
 
 ## Verify the application
 
@@ -159,7 +167,7 @@ Change `audience` to `fan`, `language` to `fr`, or `event_id` to `evt-067` to in
 
 Import [the Postman collection](docs/postman/MatchPulse-AI.postman_collection.json) to run the success, personalization, missing-data, failed-pass, regain, 404, and 422 checks. Its `base_url` variable defaults to `http://127.0.0.1:8000`.
 
-See [workflow design and acceptance checks](docs/mock-workflow.md) for trust rules, importance thresholds, fallback behavior, and remaining Azure/frontend work.
+See [workflow design and acceptance checks](docs/mock-workflow.md) for trust rules, importance thresholds, and fallback behavior. See [Azure setup](docs/azure-setup.md) for deployment verification and troubleshooting. Frontend processing integration follows in Task 7.
 
 ## Regenerate dashboard samples
 

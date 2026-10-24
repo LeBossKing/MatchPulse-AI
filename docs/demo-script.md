@@ -37,10 +37,16 @@ The read endpoints supply the proposed fixture and initial statistics. The eight
 
 Run the Postman collection or use Swagger to process `evt-064`. Expect HTTP 200, length 44.28 normalized units, progression +40, and three measured mock stage traces. Switch to Fan/French and verify unchanged source facts. Process `evt-067` to show missing annotations and a limited validation result; process `evt-065` to preserve the unsuccessful outcome. Return to `evt-064` and confirm its prefix statistics have not increased.
 
-This checkpoint uses deterministic Python rules and templates. No LLM or Azure request is executed. Selecting the future Azure provider returns an explicitly labelled mock fallback. The Task 5 React dashboard uses preloaded samples; its live processing integration follows in Task 7.
+Keep `LLM_PROVIDER=mock` for this checkpoint: it uses deterministic Python rules and templates without an external model request. Task 6 adds an optional Azure provider. The Task 5 React dashboard uses preloaded samples; its live processing integration follows in Task 7.
 
 ## Task 5 checkpoint
 
 The dashboard opens on `evt-064` at 63:24. Show the pitch trajectory and the 44.28 / +40 / 1 metrics, then switch to Fan and French. Open Evidence and Trust notes, select the missing-data event `evt-067`, and inspect its unknown annotations. Select a regain to show a point overlay, then jump back to the key event. Expand a sample agent output and show the sample-data label.
 
 Use replay to step through the source sequence, or filter the timeline by action/player. The dashboard works with FastAPI stopped. Every trace is illustrative and no agent/model is executing in the browser. Keep this distinction explicit in rehearsal; the final connected demo must show technologies actually running after the later integration tasks.
+
+## Task 6 checkpoint
+
+Follow [Azure setup](azure-setup.md), then run `python scripts/check_azure.py --live` from `backend/`. Expect `status: live_verified`, `provider: azure`, and `validation_status: validated`. This explicit check sends one actual request and never substitutes a mock candidate. Check subscription credit and deployment quota separately in Azure.
+
+Set `LLM_PROVIDER=azure`, restart FastAPI, and process `evt-064` through Postman. Inspect `provider: azure` and the tactical trace's actual provider. Geometry and trust checks run locally; Azure supplies the structured candidate and approved templates render the final text. A labelled fallback is a recovery path, not evidence of Azure execution. The dashboard continues to show samples until Task 7 connects its processing requests.

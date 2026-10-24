@@ -12,6 +12,7 @@ from app.agents.trust_personalization import validate_and_personalize
 from app.models.insight import AgentTraceStep, ProcessEventRequest, ProcessEventResponse
 from app.models.match import DemoFixture
 from app.services.providers import MockTacticalProvider, ProviderError, ProviderSelection
+from app.services.provider_messages import provider_hint
 
 logger = logging.getLogger(__name__)
 
@@ -41,10 +42,7 @@ def run_workflow(
         },
     ))
     french = request.language == "fr"
-    warnings = [
-        "Analyse déterministe de démonstration sur données synthétiques ; aucun modèle n'a été appelé."
-        if french else "Deterministic mock analysis of synthetic data; no model was called.",
-    ]
+    warnings = []
     if fixture.review_status == "pending_review":
         warnings.append(
             "Les données et annotations attendent la validation du membre 2."
@@ -53,8 +51,8 @@ def run_workflow(
     fallback_reason = selection.fallback_reason
     if fallback_reason:
         warnings.append(
-            "Le fournisseur Azure n'est pas encore implémenté ; repli sur le mock, sans requête Azure."
-            if french else "Azure is not implemented yet; used the mock fallback without sending an Azure request.",
+            "Configuration Azure incomplète ou invalide ; repli sur le mock, sans requête Azure."
+            if french else "Azure configuration is incomplete or invalid; used the mock fallback without sending an Azure request.",
         )
 
     started = perf_counter()
@@ -69,21 +67,37 @@ def run_workflow(
     except (ProviderError, ValidationError) as error:
         logger.warning("Tactical provider failed (%s); using mock fallback.", type(error).__name__)
         attempts.append({"provider": selection.provider.name, "status": "failed"})
-        fallback_reason = "provider_error"
+        fallback_reason = error.reason if isinstance(error, ProviderError) else "provider_error"
         warnings.append(
-            "Le fournisseur a échoué ou renvoyé une structure invalide ; le mock a pris le relais."
-            if french else "The provider failed or returned an invalid structure; used the mock fallback.",
+            f"Le fournisseur a échoué ({fallback_reason}) ; le mock a pris le relais."
+            if french else f"{provider_hint(fallback_reason)} Used the mock fallback.",
         )
         try:
             candidate = MockTacticalProvider().generate(deepcopy(facts))
         except (ProviderError, ValidationError) as fallback_error:
             raise WorkflowError("No valid tactical candidate is available.") from fallback_error
         attempts.append({"provider": "mock", "status": "completed"})
+    if selection.provider.name == "azure":
+        provenance = (
+            "Le modèle Azure a produit une proposition structurée ; les faits sont calculés localement."
+            if french else "The Azure model produced a structured candidate; event facts were calculated locally."
+        ) if not fallback_reason else (
+            "Proposition mock utilisée après un échec du fournisseur Azure."
+            if french else "A mock candidate was used after an Azure provider failure."
+        )
+    else:
+        provenance = (
+            "Analyse déterministe de démonstration sur données synthétiques ; aucun modèle n'a été appelé."
+            if french else "Deterministic mock analysis of synthetic data; no model was called."
+        )
+    warnings.insert(0, provenance)
     traces.append(AgentTraceStep(
         agent="tactical_explainer", status="completed", duration_ms=elapsed_ms(started),
         summary=(
             "Created a structured tactical candidate using the deterministic mock fallback."
-            if fallback_reason else "Created a structured tactical candidate using the deterministic mock provider."
+            if fallback_reason else "Created a structured tactical candidate using the Azure deployment."
+            if selection.provider.name == "azure" else
+            "Created a structured tactical candidate using the deterministic mock provider."
         ),
         output={
             "requested_provider": selection.requested,

@@ -71,6 +71,6 @@ The browser screenshot in `docs/screenshots/dashboard-desktop.jpg` records the c
 
 ## Remaining milestones
 
-Task 6 verifies Azure subscription/deployment access and backend environment settings. Task 7 replaces preloaded view selection with typed REST requests, loading/error states, cancellation, and stale-response protection while preserving provenance and fallback visibility. It must distinguish runtime results from sample data rather than presenting the stored examples as live AI.
+Task 6 adds the Azure backend adapter and [environment/live-access checks](azure-setup.md); the subscription owner must run the live preflight. Configuring Azure does not change this dashboard's sample mode. Task 7 replaces preloaded view selection with typed REST requests, loading/error states, cancellation, and stale-response protection while preserving provenance and fallback visibility. It must distinguish runtime results from sample data rather than presenting the stored examples as live AI.
 
 Official implementation references: [React effect cleanup](https://react.dev/reference/react/useEffect) and [WAI-ARIA tabs keyboard interaction](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).

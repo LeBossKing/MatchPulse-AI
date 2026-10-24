@@ -15,7 +15,7 @@ export interface paths {
         put?: never;
         /**
          * Process Event
-         * @description Run the three mock stages for a canonical event and presentation preferences.
+         * @description Run the three stages with the selected provider and presentation preferences.
          */
         post: operations["process_event_events_process_post"];
         delete?: never;
@@ -515,7 +515,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Processed event, evidence, validation, and actual mock stage traces. */
+            /** @description Processed event, evidence, validation, and actual provider/stage traces. */
             200: {
                 headers: {
                     [name: string]: unknown;

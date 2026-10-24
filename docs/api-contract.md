@@ -1,6 +1,6 @@
 # MatchPulse AI API contract v1
 
-Contract/schema version: **1.0.0**. Backend application version: **0.3.0**.
+Contract/schema version: **1.0.0**. Backend application version: **0.4.0**.
 Status: implemented technical contract; synthetic fixture and tactical annotations await Member 2 review.
 
 ## Endpoint status
@@ -75,7 +75,9 @@ curl -X POST http://127.0.0.1:8000/events/process \
 
 `audience` defaults to `analyst`; `language` defaults to `en`. Supported values are `fan`/`analyst` and `en`/`fr`. The client submits identifiers and preferences, not replacement event facts. The backend looks up its canonical source event.
 
-Current response for the valid request above: **200**, with `result_source: runtime`, `provider: mock`, calculated statistics, evidence, validation, and actual stage traces. The stages execute Python rules and templates; they do not call a model. A processed result can carry `validation.status: rejected` and `insight: null` if its candidate conflicts with evidence.
+Current response for the valid request above: **200**, with `result_source: runtime`, calculated statistics, evidence, validation, and actual stage traces. Default `LLM_PROVIDER=mock` runs locally. A configured `azure` provider calls one deployment for a structured candidate; calculations, trust checks, and final narrative templates remain local. A processed result can carry `validation.status: rejected` and `insight: null` if its candidate conflicts with evidence.
+
+Azure configuration or provider failures use a visible mock fallback (`provider: fallback`) with a safe `fallback_reason` in the tactical trace. Successful Azure execution uses `provider: azure`; HTTP 200 alone does not verify deployment access. Use the no-fallback live preflight in [Azure setup](azure-setup.md).
 
 ## Successful processing response
 
@@ -99,7 +101,7 @@ The 200 response contains:
 
 Trace order: `match_intelligence`, `tactical_explainer`, `trust_personalization`. Final step statuses are `completed`, `skipped`, or `failed`; the UI can show loading locally while awaiting the REST response.
 
-The schema checks IDs, coordinate overlays, evidence availability and values, evidence references, trace order, and validation/insight consistency. The mock trust stage additionally checks each candidate claim, interpretation category, and importance heuristic before rendering controlled templates. It does not accept or fact-check arbitrary provider-authored prose. Member 2 still reviews the annotations and tactical interpretation. See [workflow design](mock-workflow.md).
+The schema checks IDs, coordinate overlays, evidence availability and values, evidence references, trace order, and validation/insight consistency. The local trust stage additionally checks each candidate claim, interpretation category, and importance heuristic before rendering controlled templates for either provider. It does not accept or fact-check arbitrary provider-authored prose. Member 2 still reviews the annotations and tactical interpretation. See [workflow design](mock-workflow.md).
 
 ### Complete response examples
 

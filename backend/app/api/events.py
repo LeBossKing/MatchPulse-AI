@@ -13,14 +13,14 @@ router = APIRouter(prefix="/events", tags=["events"])
 
 
 def get_provider_selection(settings: Annotated[Settings, Depends(get_settings)]) -> ProviderSelection:
-    return select_provider(settings.llm_provider)
+    return select_provider(settings.llm_provider, settings)
 
 
 @router.post(
     "/process",
     response_model=ProcessEventResponse,
     responses={
-        200: {"description": "Processed event, evidence, validation, and actual mock stage traces."},
+        200: {"description": "Processed event, evidence, validation, and actual provider/stage traces."},
         404: {"model": ErrorResponse, "description": "Unknown match or event."},
         422: {"model": ErrorResponse, "description": "Invalid request."},
         500: {"model": ErrorResponse, "description": "Invalid fixture or unavailable workflow."},
@@ -41,7 +41,7 @@ def process_event(
     ],
     selection: Annotated[ProviderSelection, Depends(get_provider_selection)],
 ) -> ProcessEventResponse:
-    """Run the three mock stages for a canonical event and presentation preferences."""
+    """Run the three stages with the selected provider and presentation preferences."""
     fixture = load_demo_fixture()
     if request.match_id != fixture.match.match_id:
         raise HTTPException(status_code=404, detail={

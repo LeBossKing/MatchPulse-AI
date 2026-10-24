@@ -1091,15 +1091,15 @@
     }
   },
   "info": {
-    "description": "Synthetic football analysis with a deterministic three-stage mock workflow, canonical evidence, audience/language templates, and actual execution traces.",
+    "description": "Synthetic football analysis with mock or Azure structured candidates, canonical evidence, controlled narrative templates, and actual execution traces.",
     "title": "MatchPulse AI API",
-    "version": "0.3.0"
+    "version": "0.4.0"
   },
   "openapi": "3.1.0",
   "paths": {
     "/events/process": {
       "post": {
-        "description": "Run the three mock stages for a canonical event and presentation preferences.",
+        "description": "Run the three stages with the selected provider and presentation preferences.",
         "operationId": "process_event_events_process_post",
         "requestBody": {
           "content": {
@@ -1131,7 +1131,7 @@
                 }
               }
             },
-            "description": "Processed event, evidence, validation, and actual mock stage traces."
+            "description": "Processed event, evidence, validation, and actual provider/stage traces."
           },
           "404": {
             "content": {

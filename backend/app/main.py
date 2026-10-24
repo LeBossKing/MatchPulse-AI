@@ -19,8 +19,8 @@ def create_app() -> FastAPI:
         title="MatchPulse AI API",
         version=__version__,
         description=(
-            "Synthetic football analysis with a deterministic three-stage mock workflow, "
-            "canonical evidence, audience/language templates, and actual execution traces."
+            "Synthetic football analysis with mock or Azure structured candidates, "
+            "canonical evidence, controlled narrative templates, and actual execution traces."
         ),
     )
     application.add_middleware(

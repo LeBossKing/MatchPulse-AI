@@ -4,7 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import SecretStr
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     azure_openai_endpoint: str = ""
     azure_openai_deployment: str = ""
     azure_openai_api_key: SecretStr | None = None
+    azure_openai_timeout_seconds: float = Field(default=15, ge=2, le=60, allow_inf_nan=False)
+    azure_openai_max_output_tokens: int = Field(default=2048, ge=256, le=8192)
 
     @property
     def allowed_origins(self) -> list[str]:

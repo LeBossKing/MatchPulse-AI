@@ -193,7 +193,7 @@ def test_provider_failure_uses_a_visible_mock_fallback_without_leaking_details(c
     assert "do-not-leak-secret" not in result.model_dump_json()
 
 
-def test_azure_configuration_is_honestly_reported_as_unimplemented_fallback(client, monkeypatch):
+def test_missing_azure_configuration_is_honestly_reported_as_fallback(client, monkeypatch):
     monkeypatch.setenv("LLM_PROVIDER", "azure")
     monkeypatch.setenv("AZURE_OPENAI_API_KEY", "do-not-leak-azure-secret")
     get_settings.cache_clear()
@@ -202,6 +202,7 @@ def test_azure_configuration_is_honestly_reported_as_unimplemented_fallback(clie
     assert any("without sending an Azure request" in warning for warning in result.warnings)
     trace = result.agent_trace[1].output
     assert trace["requested_provider"] == "azure" and trace["actual_provider"] == "mock"
+    assert trace["fallback_reason"] == "azure_configuration"
     assert trace["attempts"] == [{"provider": "mock", "status": "completed"}]
     assert "do-not-leak-azure-secret" not in result.model_dump_json()
 

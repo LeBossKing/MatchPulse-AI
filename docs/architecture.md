@@ -1,8 +1,8 @@
 # Architecture
 
-## Implemented through Task 5
+## Implemented through Task 6
 
-React/TypeScript/Vite now renders the match dashboard from checked-in sample responses. Its API URL remains available for the optional backend health panel; processing REST calls follow in Task 7. Backend configuration and future Azure credentials stay on the server.
+React/TypeScript/Vite renders the match dashboard from checked-in sample responses. Its API URL remains available for the optional backend health panel; processing REST calls follow in Task 7. Backend configuration and Azure credentials stay on the server.
 
 The dashboard has a source-coordinate SVG pitch, prefix history trails, an eight-event timeline, timed replay, seeking, filters, an insight/evidence/trust panel, prefix team statistics, and expandable sample stage outputs. Presentation preferences select among the 32 typed examples without changing event facts. Filters change only the visible timeline, not the selected event or its canonical prefix totals. Replay uses source timestamp gaps divided by the selected speed, and stops at the final event. Manual selection, seeking, and reset pause playback.
 
@@ -10,15 +10,19 @@ The dashboard has a source-coordinate SVG pitch, prefix history trails, an eight
 
 FastAPI exposes health, synthetic match metadata, canonical events, and event processing. The fixture repository validates the data with Pydantic, caches it per process, and returns typed read responses without mutating replay state. Invalid requests, fixture-load errors, and unavailable workflows use a common JSON error envelope.
 
-The processing route resolves an ID-based selector against the canonical fixture and executes three request-local mock stages:
+The processing route resolves an ID-based selector against the canonical fixture and executes three request-local stages:
 
 1. **Match Intelligence** copies the selected event, calculates geometry and prefix statistics, and constructs exact source evidence and the overlay.
-2. **Tactical Explainer** calls a provider with an isolated snapshot. The deterministic mock provider proposes structured claims, a constrained interpretation category, and a heuristic importance value.
+2. **Tactical Explainer** calls a provider with an isolated snapshot. Either deterministic mock rules or an Azure deployment proposes structured claims, a constrained interpretation category, and a heuristic importance value.
 3. **Trust & Personalization** checks the candidate against the trusted facts and rules. It rejects conflicting claims or renders controlled templates for the requested audience and language.
 
-The orchestrator records actual elapsed stage durations, summaries, and intermediate JSON outputs. A runtime mock result uses `result_source: runtime` and `provider: mock`. No example response is replayed as live execution, and no model or Azure request is sent. Historical UI fixtures retain `result_source: example`.
+The orchestrator records actual elapsed stage durations, summaries, and intermediate JSON outputs. A runtime result uses `result_source: runtime`; its provider is `mock`, `azure`, or `fallback`. Default mock processing makes no external request. Historical UI fixtures retain `result_source: example`.
 
-The provider boundary currently supports the mock implementation. Configuring `azure` produces an explicitly labelled mock fallback, with a warning that no Azure request was sent. Expected provider failures and malformed structured candidates also use a visible mock fallback. Structurally valid but unsupported claims are rejected by trust rather than silently replaced. Provider exceptions and credential values are not returned to clients.
+The Azure adapter sends one HTTPS request to `/openai/v1/responses`, using the configured deployment name, `text.format` JSON Schema, and `store: false`. It accepts only a completed, parseable structured candidate. The wire schema uses Azure's supported subset; full Pydantic validation and local trust checks still enforce the source contract. It does not request or publish free-form model narrative. There are no automatic retries.
+
+Missing or invalid Azure settings select a visible mock fallback without a network request. Authentication, quota, network, timeout, refusal, and malformed-output failures also use a labelled fallback, with safe reason codes and actual attempt provenance. Structurally valid conflicting claims are rejected by trust rather than replaced. Upstream error bodies and credential values are excluded from client diagnostics.
+
+`check_azure.py` validates settings offline by default. Its explicit `--live` mode sends one actual request without fallback and checks the returned candidate against trusted facts. This can establish deployment access, but does not query subscription balances or quota inventory. The user's subscription remains unverified until that live check is run successfully.
 
 The source fixture is read-only. Prefix statistics are computed afresh for each selection so repeated selection, rewinding, parallel requests, and personalization cannot double-count events. Providers cannot mutate the trusted context or the cached fixture.
 
@@ -28,7 +32,7 @@ Pydantic/FastAPI are the contract source of truth. A script exports JSON Schemas
 
 ## Remaining integration
 
-The Azure adapter must implement the structured provider contract and preserve trust checks, timeout/error handling, and visible fallback behavior. Credentials and deployment access are configured in the later Azure milestone.
+Complete the account-specific steps in [Azure setup](azure-setup.md). The adapter and offline tests do not establish the user's deployment access.
 
 Named TypeScript aliases expose the generated schema types. The dashboard uses those response types today; frontend calls to the new routes follow in Task 7. The optional health connection check still handles unavailable backends, invalid health responses, timeout, and retry.
 

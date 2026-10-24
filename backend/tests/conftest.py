@@ -17,6 +17,8 @@ def fixture_data():
 def client(monkeypatch):
     monkeypatch.setenv("APP_ENV", "test")
     monkeypatch.setenv("LLM_PROVIDER", "mock")
+    for variable in ("AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_DEPLOYMENT", "AZURE_OPENAI_API_KEY"):
+        monkeypatch.setenv(variable, "")
     get_settings.cache_clear()
     load_demo_fixture.cache_clear()
     with TestClient(create_app()) as test_client:

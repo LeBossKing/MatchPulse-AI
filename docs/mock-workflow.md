@@ -1,6 +1,6 @@
 # Task 4: deterministic mock workflow
 
-The backend now executes three Python stages for a canonical match/event selector and returns HTTP 200. No Azure credentials, model SDK, external API, or response-example files are used. Keep `LLM_PROVIDER=mock` for this milestone.
+The backend executes three stages for a canonical match/event selector and returns HTTP 200. With `LLM_PROVIDER=mock`, no Azure credentials, external API, or response-example files are used. Task 6 adds an optional Azure candidate provider; the calculations, trust rules, and templates below apply to both providers.
 
 ## Stage boundaries
 
@@ -41,11 +41,13 @@ Missing pressure or a missing pass line-break annotation produces `limited` vali
 
 ## Provider failures and Azure configuration
 
-`LLM_PROVIDER=azure` currently selects the deterministic mock fallback and reports `provider: fallback`, `requested_provider: azure`, `actual_provider: mock`, and `fallback_reason: azure_not_implemented`. It clearly states that **no Azure request was sent**. It does not claim a deployment was tested.
+`LLM_PROVIDER=azure` selects the Azure Responses adapter when the backend endpoint, deployment, and resource key are configured. A successful candidate reports `provider: azure` and `actual_provider: azure`. Only this stage calls the model; its claims still go through local trust checks and controlled narrative rendering.
 
-An expected `ProviderError` or malformed candidate structure also triggers the mock fallback, records failed/completed attempts, and reports `fallback_reason: provider_error`. Exception text and credentials are excluded from responses and logs. A structurally valid conflicting candidate goes to trust and is rejected; it does not trigger a silent rewrite. If both provider and fallback fail, the route returns the common 500 envelope with `error.code: processing_failed`.
+Missing or invalid settings select the deterministic fallback with `provider: fallback`, `requested_provider: azure`, `actual_provider: mock`, and `fallback_reason: azure_configuration`. Its warning states that no Azure request was sent.
 
-Future Azure adapters should wrap expected upstream failures as `ProviderError`, return the structured candidate contract, and implement bounded external-call timeouts. The current mock code does not make network calls, so no external timeout is needed for this milestone.
+Expected upstream failures or malformed candidate structures also trigger a mock fallback and record failed/completed attempts. Azure failures have safe reason codes such as `azure_auth`, `azure_rate_limit`, or `azure_invalid_response`; other provider failures use `provider_error`. These warnings acknowledge the Azure failure rather than claiming no model was called. Exception text and credentials are excluded from public diagnostics. A structurally valid conflicting candidate goes to trust and is rejected; it does not trigger a silent rewrite. If both provider and fallback fail, the route returns the common 500 envelope with `error.code: processing_failed`.
+
+Azure connection/read timeouts are bounded and requests are not automatically retried. See [Azure setup](azure-setup.md) for configuration, actual-access verification without fallback, and diagnostic codes. A normal processing response with HTTP 200 alone does not establish Azure access.
 
 ## Acceptance checks
 
@@ -69,6 +71,6 @@ python scripts/export_contract.py --check
 
 Testing follows the official [FastAPI TestClient guidance](https://fastapi.tiangolo.com/tutorial/testing/). Cross-field response validation follows the [Pydantic model validator guidance](https://docs.pydantic.dev/latest/concepts/validators/).
 
-## Next milestone
+## Dashboard and next milestone
 
-Task 5 implements the React dashboard against the response structure using clearly labelled sample data; see [dashboard documentation](dashboard.md). Azure access/configuration is Task 6; frontend/backend processing integration is Task 7. Member 2 reviews the data and tactical interpretation; Member 3 can use the collection and acceptance checks to report issues.
+Task 5 implements the React dashboard using clearly labelled sample data; see [dashboard documentation](dashboard.md). Task 6 provides the Azure adapter and environment checks; the subscription owner must complete the live verification. Frontend/backend processing integration is Task 7. Member 2 reviews the data and tactical interpretation; Member 3 can use the collection and acceptance checks to report issues.
