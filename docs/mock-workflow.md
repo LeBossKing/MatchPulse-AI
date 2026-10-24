@@ -71,4 +71,4 @@ Testing follows the official [FastAPI TestClient guidance](https://fastapi.tiang
 
 ## Next milestone
 
-Task 5 builds the React match dashboard against the agreed response structure and sample data. Azure access/configuration is Task 6; frontend/backend processing integration is Task 7. Member 2 reviews the data and tactical interpretation; Member 3 can use the collection and acceptance checks to report issues.
+Task 5 implements the React dashboard against the response structure using clearly labelled sample data; see [dashboard documentation](dashboard.md). Azure access/configuration is Task 6; frontend/backend processing integration is Task 7. Member 2 reviews the data and tactical interpretation; Member 3 can use the collection and acceptance checks to report issues.

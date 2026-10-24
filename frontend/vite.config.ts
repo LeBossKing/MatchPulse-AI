@@ -7,5 +7,7 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
+    // Permit the internal QA host while keeping Vite's host allowlist enabled.
+    allowedHosts: ['terminal.local'],
   },
 })

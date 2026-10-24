@@ -22,12 +22,12 @@ Member 2 provides the validated fixture and expected facts. Member 3 finalizes t
 ## Foundation acceptance check
 
 1. Start both apps with the documented commands.
-2. Open the frontend and verify `Backend connected` with the expected API metadata.
+2. Open the frontend, click **API connection**, and verify `Backend connected` with the expected API metadata.
 3. Stop FastAPI and retry: the UI reports `Backend unavailable`.
 4. Restart FastAPI and retry: the UI recovers.
 5. Verify the page at desktop and mobile widths.
 
-The foundation screen is a development checkpoint. Match analysis and model execution will be demonstrated after the later implementation tasks are complete.
+The optional health panel is a development checkpoint. Its connection state is separate from the dashboard's sample-data mode.
 
 ## Task 3 checkpoint
 
@@ -37,4 +37,10 @@ The read endpoints supply the proposed fixture and initial statistics. The eight
 
 Run the Postman collection or use Swagger to process `evt-064`. Expect HTTP 200, length 44.28 normalized units, progression +40, and three measured mock stage traces. Switch to Fan/French and verify unchanged source facts. Process `evt-067` to show missing annotations and a limited validation result; process `evt-065` to preserve the unsuccessful outcome. Return to `evt-064` and confirm its prefix statistics have not increased.
 
-This checkpoint uses deterministic Python rules and templates. No LLM or Azure request is executed. Selecting the future Azure provider returns an explicitly labelled mock fallback. The React screen still checks the backend connection; dashboard construction and its processing controls follow in Tasks 5 and 7.
+This checkpoint uses deterministic Python rules and templates. No LLM or Azure request is executed. Selecting the future Azure provider returns an explicitly labelled mock fallback. The Task 5 React dashboard uses preloaded samples; its live processing integration follows in Task 7.
+
+## Task 5 checkpoint
+
+The dashboard opens on `evt-064` at 63:24. Show the pitch trajectory and the 44.28 / +40 / 1 metrics, then switch to Fan and French. Open Evidence and Trust notes, select the missing-data event `evt-067`, and inspect its unknown annotations. Select a regain to show a point overlay, then jump back to the key event. Expand a sample agent output and show the sample-data label.
+
+Use replay to step through the source sequence, or filter the timeline by action/player. The dashboard works with FastAPI stopped. Every trace is illustrative and no agent/model is executing in the browser. Keep this distinction explicit in rehearsal; the final connected demo must show technologies actually running after the later integration tasks.

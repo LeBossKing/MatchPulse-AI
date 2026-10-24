@@ -1,8 +1,12 @@
 # Architecture
 
-## Implemented through Task 4
+## Implemented through Task 5
 
-React/TypeScript/Vite retains the foundation connection screen. Its public API URL points to FastAPI. Backend configuration and future Azure credentials stay on the server.
+React/TypeScript/Vite now renders the match dashboard from checked-in sample responses. Its API URL remains available for the optional backend health panel; processing REST calls follow in Task 7. Backend configuration and future Azure credentials stay on the server.
+
+The dashboard has a source-coordinate SVG pitch, prefix history trails, an eight-event timeline, timed replay, seeking, filters, an insight/evidence/trust panel, prefix team statistics, and expandable sample stage outputs. Presentation preferences select among the 32 typed examples without changing event facts. Filters change only the visible timeline, not the selected event or its canonical prefix totals. Replay uses source timestamp gaps divided by the selected speed, and stops at the final event. Manual selection, seeking, and reset pause playback.
+
+`export_dashboard_samples.py` runs the mock workflow at authoring time for every event/language/audience combination, revalidates each response, replaces durations with zero placeholders, and marks every result as `example`. The browser displays persistent sample provenance and never claims these are live timings or agent runs. The generator's `--check` mode detects stale exports. The sample dashboard works without a backend; the health panel mounts only when opened.
 
 FastAPI exposes health, synthetic match metadata, canonical events, and event processing. The fixture repository validates the data with Pydantic, caches it per process, and returns typed read responses without mutating replay state. Invalid requests, fixture-load errors, and unavailable workflows use a common JSON error envelope.
 
@@ -26,6 +30,6 @@ Pydantic/FastAPI are the contract source of truth. A script exports JSON Schemas
 
 The Azure adapter must implement the structured provider contract and preserve trust checks, timeout/error handling, and visible fallback behavior. Credentials and deployment access are configured in the later Azure milestone.
 
-Named TypeScript aliases expose the generated schema types. The match dashboard follows in Task 5; frontend calls to the new routes follow in Task 7. The current health connection check still handles unavailable backends, invalid health responses, timeout, and retry.
+Named TypeScript aliases expose the generated schema types. The dashboard uses those response types today; frontend calls to the new routes follow in Task 7. The optional health connection check still handles unavailable backends, invalid health responses, timeout, and retry.
 
 See [mock workflow rules and acceptance checks](mock-workflow.md) for implementation details and limits.
