@@ -181,3 +181,6 @@ coverage.xml
 Thumbs.db
 tmp/
 .tmp/
+
+# Vitest reports and artifacts
+.vitest/

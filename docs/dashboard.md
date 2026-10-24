@@ -1,76 +1,57 @@
-# Task 5: React dashboard with sample data
+# Match dashboard
 
-The dashboard replaces the foundation landing screen while preserving the optional backend health check. Start it from `frontend/` with `npm ci` and `npm run dev`. FastAPI and Azure are not required for sample mode.
+The responsive React dashboard has two explicit modes. It starts in **API mode**, reading canonical match/events from FastAPI and processing selections at runtime. **Samples** is the offline corpus from Task 5. Both modes retain synthetic-data and team-review provenance.
 
-## Interaction and data
+## Controls
 
-- Initial view: the main pass `evt-064`, Analyst audience, English, replay paused at 63:24. Switching audience/language selects a corresponding preloaded view; source facts and prefix totals remain identical.
-- Pitch: canonical start/end coordinates only. Passes use arrows; unsuccessful attempts are dashed with a cross at the recorded endpoint. Interceptions/recoveries use point markers and null pass metrics. No defender locations or formations are fabricated. The optional previous-action trails stop before the selected event, so future passes never appear early.
-- Metrics: normalized pass length, signed forward progression, and source-annotated line breaks. Unknown annotations show `?`/Unknown; zero is shown as zero. Point events show Not applicable. Failed-pass displacement is not described as a completed gain.
-- Replay: source timestamp gaps divided by 1×, 2×, or 4×. Play from the final event restarts at the first. Playback stops automatically at the final event. Previous/next, timeline selection, slider seeking, Start over, and the key-event shortcut pause playback. Timers are cleaned up on pause, speed changes, selection changes, and unmount.
-- Timeline: search by ID, timestamp, player, team, or translated event label; optionally filter by event type. An empty result offers Clear filters. Filtering changes the list only; it does not rewrite canonical prefix statistics or automatically change the selected event.
-- Analysis: separate Insight, Evidence, and Trust notes tabs. Evidence values map to the event/statistics fields. The raw source event is inspectable. Trust status means consistency with the synthetic source, not external verification. The fixture's pending team-review status remains visible.
-- Sequence snapshot: counts through the selected event only. Accuracy is null/No attempts before a team's first pass. Rewinds and repeated selections use the stored prefix view rather than incrementing totals.
-- Agent workflow: three expandable illustrative outputs. No fake timers or simulated agent activity are displayed. Raw JSON uses the API's field names and source values, even when the surrounding interface is French.
-- API connection: the sidebar opens the existing health check on demand. An unavailable backend does not prevent sample exploration. This is a health request only; no processing endpoint is called in Task 5.
+| Control | Behavior |
+| --- | --- |
+| API mode / Samples | Switches the data source and resets the workspace/cache. API errors never switch sources automatically. |
+| Event timeline, previous/next, seek, key event, reset | Select a canonical event; manual selection pauses replay. |
+| Replay and 1×/2×/4× speed | Use source timestamp gaps divided by speed. API mode also waits for the current result. Stops at the final event; replaying from the end starts at the first event. |
+| Audience and language | Request a runtime result or select the matching sample. Facts and canonical prefix counters remain unchanged. |
+| Previous actions | Shows source-coordinate trails before the selected event. |
+| Search and event-type filter | Affect the visible timeline only; selection and prefix statistics remain canonical. |
+| Insight / Evidence / Trust notes | Explain the accepted result, expose source facts, and show validation, warnings, limitations, and review status. Tabs support arrow/Home/End keyboard navigation. |
+| Run analysis again | API mode only. Forces a new processing request for this selection. |
+| Agent output disclosures | Runtime: actual status, duration, summary, and JSON. Samples: illustrative output without timing claims. |
+| API connection | Optional separate health check. It does not establish Azure access. |
 
-The interface uses responsive layouts, visible keyboard focus, native controls, SVG text descriptions, a skip link, and tabs with Arrow Left/Right and Home/End navigation. Reduced-motion preferences disable transitions and smooth scrolling. UI text, explanations, limitations, and warnings support English/French; the document language follows the preference.
+## Runtime state and provenance
 
-## Sample provenance and regeneration
+The main provider badge is `AZURE · RUNTIME`, `MOCK · RUNTIME`, or `MOCK FALLBACK`. The result bar distinguishes a new API result from a cached result. Before a response arrives, it says API workspace and processing; previous analysis, evidence, counters, and traces are hidden. Source pitch coordinates and authored annotations can still be inspected while waiting.
 
-`frontend/src/data/dashboard-samples.ts` contains 32 typed examples: eight canonical events × two languages × two audiences. The export script runs the deterministic mock workflow at authoring time, marks every result `result_source: example`, resets trace durations to zero placeholders, and replaces runtime wording with sample wording. It does not need Azure or a running API server. No response example is presented as browser-side execution.
+An API error shows a safe message, HTTP/code information where available, Retry, and an explicit sample-mode action. Backend fallback results retain their own warning and mock provenance; they remain runtime executions. A rejected candidate keeps its evidence and trace while withholding the insight. Unknown annotations stay unknown; point events retain null pass metrics.
 
-From `backend/`, with the development environment activated:
+The per-workspace cache holds up to 64 event/preference results and reuses entries younger than five minutes. It retains the original provider and measured times. Reloading or switching modes clears it. There are no automatic retries or background processing prefetches.
+
+## Synthetic pitch semantics
+
+Coordinates are normalized to 0–100 and are not metres. The SVG uses source points only, including failed pass endpoints. Regains use point markers. Trails show recorded event locations, not defender formations or inferred player tracking. Pressure and lines bypassed are authored annotations. Statistics describe the selected sequence prefix, never the full match.
+
+## Offline corpus
+
+`frontend/src/data/dashboard-samples.ts` contains eight events × two languages × two audiences. `backend/scripts/export_dashboard_samples.py` runs the mock workflow at authoring time, revalidates each response, sets `result_source: example`, uses zero placeholder durations, and records sample provenance. The corpus is lazy-loaded only when Samples is selected.
+
+From `backend/`, with the virtual environment active:
 
 ```bash
 python scripts/export_dashboard_samples.py --check
 python scripts/export_dashboard_samples.py
 ```
 
-Use the second command after changing the canonical fixture or mock narrative. Commit the generated TypeScript with those changes, then run frontend lint/build. The generator is deterministic and revalidates every response with Pydantic. Its tests check complete coverage, illustrative provenance, identical facts across preferences, and reproducibility.
+Use the second command after deliberately changing the fixture or narrative. Commit the export alongside source changes and run frontend checks. API mode does not use these examples as processing results.
 
 ## Acceptance checks
 
-| Action | Expected result |
-| --- | --- |
-| Open the frontend with FastAPI stopped | Dashboard works; sample provenance is visible |
-| Select `evt-064` | 44.28 length, +40 progression, one annotated line, Atlas 4/4 passes |
-| Switch Fan/French | French explanation and labels; unchanged geometry, evidence, and totals |
-| Select `evt-063` | Backward progression −7; zero annotated lines stays zero |
-| Select `evt-065` | Failed pass, dashed arrow/cross, no completed gain claimed |
-| Select `evt-066` or `evt-068` | Point marker; pass metrics Not applicable |
-| Select `evt-067` | Right-to-left pass, +16 progression, unknown pressure/lines, limited context |
-| Select final event, then first, then key event | Prefix totals return to 8, 1, and 4 events respectively |
-| Play at 4× | Sequence advances using source gaps and stops at 63:38 |
-| Pause, seek, or select an event | Playback pauses; pitch and all panels show the same event |
-| Search for a nonexistent player | Empty state; Clear filters restores the events |
-| Filter to Recovery | Only `evt-068` appears; selected analysis/totals are unchanged until selection |
-| Use the evidence tabs with arrow keys | Focus and active panel move together |
-| Expand a sample agent output | Inspectable JSON; no live runtime duration claimed |
-| Open API connection with FastAPI stopped | Clear unavailable state; dashboard remains usable |
-| Resize to small mobile/tablet widths | Controls remain usable, with no horizontal page overflow; timeline scrolls within its own track |
+1. Start both apps. API mode opens `evt-064` and eventually displays 44.28 normalized units, progression +40, one annotated line, and Atlas 4/4 prefix passes.
+2. Check the provider badge, new/cached result label, measured trace durations, and warning notes. Azure appears only when the backend actually reports Azure.
+3. Change Fan/Analyst and EN/FR. The selected event and factual metrics remain stable while presentation changes.
+4. Select `evt-065`: preserve the failed pass and cautious endpoint displacement. Select `evt-066` or `evt-068`: show a point and null pass metrics.
+5. Select `evt-067`: right-to-left progression +16, unknown annotations, limited context, and no invented line-break evidence.
+6. Select rapidly while processing. Only the current selection's response may appear. Revisit a selection to show a cached result; rerun to obtain a new execution.
+7. Replay in API mode. The selected event stays in place while its analysis is pending. Manual seeking pauses; final playback stops.
+8. Stop FastAPI and rerun an analysis. Show the error, then deliberately switch to Samples. Restart FastAPI and return to API mode to recover.
+9. Test desktop and mobile widths, keyboard tabs, filters, and empty-filter recovery. Offline sample mode must retain its labels and illustrative traces.
 
-Automated checks:
-
-```bash
-# In frontend/
-npm run lint
-npm run build
-```
-
-```bash
-# In backend/
-python -m pytest -q
-python scripts/export_dashboard_samples.py --check
-python scripts/export_contract.py --check
-```
-
-Browser QA covered the main interaction cases, both presentation preferences, replay completion/pause/seek, evidence keyboard navigation, filters, sample outputs, optional offline diagnostics, and 320/390/768-pixel preview frames plus the desktop layout. A narrow-page overflow defect was corrected during these checks.
-
-The browser screenshot in `docs/screenshots/dashboard-desktop.jpg` records the completed desktop sample view.
-
-## Remaining milestones
-
-Task 6 adds the Azure backend adapter and [environment/live-access checks](azure-setup.md); the subscription owner must run the live preflight. Configuring Azure does not change this dashboard's sample mode. Task 7 replaces preloaded view selection with typed REST requests, loading/error states, cancellation, and stale-response protection while preserving provenance and fallback visibility. It must distinguish runtime results from sample data rather than presenting the stored examples as live AI.
-
-Official implementation references: [React effect cleanup](https://react.dev/reference/react/useEffect) and [WAI-ARIA tabs keyboard interaction](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
+The API transport and source checks are tested separately from the backend's authoritative trust logic. See [integration details](integration.md) for HTTP, CORS, and live Azure verification.

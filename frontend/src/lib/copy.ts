@@ -1,6 +1,51 @@
 import type { Language, MatchEvent } from '../types/match'
 
 const en = {
+  apiMode: 'API mode',
+  sampleMode: 'Samples',
+  dataMode: 'Data mode',
+  apiData: 'API WORKSPACE',
+  runtimeAzure: 'AZURE · RUNTIME',
+  runtimeMock: 'MOCK · RUNTIME',
+  runtimeFallback: 'MOCK FALLBACK',
+  runtimeNote: 'Results from the FastAPI workflow',
+  runtimeHelp:
+    'Selections call the backend. Azure, mock, and fallback results are identified explicitly. Cached results keep their original execution times.',
+  loadingMatch: 'Opening the match workspace',
+  loadingMatchHelp:
+    'Loading canonical match details and the event sequence from the API.',
+  failedMatch: 'The match could not be loaded',
+  processing: 'Processing this event',
+  processingHelp:
+    'Waiting for the backend workflow. Replay waits until this result is ready.',
+  processingFailed: 'This event could not be processed',
+  waitingResult: 'Results appear when the selected event finishes processing.',
+  retry: 'Retry',
+  useSamples: 'Use sample data',
+  refreshAnalysis: 'Run analysis again',
+  refreshHelp: 'Sends a new processing request for this selection.',
+  freshResult: 'New API result',
+  cachedResult: 'Cached API result',
+  cachedHelp:
+    'Reused in this browser session; original run and timings. Refresh to run again.',
+  fallbackHelp:
+    'The backend recovered with mock analysis. Inspect the warnings and provider trace.',
+  runtimeWorkflowNote: 'Actual backend stages and measured times',
+  runtimeOutput: 'Inspect runtime output',
+  runtimeTiming:
+    'Backend stage durations include provider wait time; they exclude browser/network overhead.',
+  stageCompleted: 'Completed',
+  stageSkipped: 'Skipped',
+  stageFailed: 'Failed',
+  warnings: 'Processing notes',
+  firstHalf: '1ST HALF',
+  errorNetwork:
+    'Cannot reach the API. Check that FastAPI is running and the API URL and CORS origin are correct.',
+  errorTimeout:
+    'The API request timed out. Retry when the backend is available.',
+  errorInvalid:
+    'The API returned an invalid or mismatched response. Check that frontend and backend use the same contract.',
+  errorHttp: 'The API could not complete this request.',
   workspace: 'Match workspace',
   evidenceLibrary: 'Evidence library',
   agentWorkflow: 'Agent workflow',
@@ -117,6 +162,53 @@ const en = {
 }
 
 const fr: Record<keyof typeof en, string> = {
+  apiMode: 'Mode API',
+  sampleMode: 'Exemples',
+  dataMode: 'Source des données',
+  apiData: 'ESPACE API',
+  runtimeAzure: 'AZURE · EXÉCUTION',
+  runtimeMock: 'MOCK · EXÉCUTION',
+  runtimeFallback: 'REPLI MOCK',
+  runtimeNote: 'Résultats du workflow FastAPI',
+  runtimeHelp:
+    'Les sélections appellent le backend. Azure, mock et repli sont indiqués explicitement. Les résultats en cache conservent leurs durées d’origine.',
+  loadingMatch: 'Ouverture de l’espace du match',
+  loadingMatchHelp:
+    'Chargement du match canonique et de la séquence depuis l’API.',
+  failedMatch: 'Le match n’a pas pu être chargé',
+  processing: 'Traitement de cette action',
+  processingHelp:
+    'En attente du workflow backend. La lecture attend que le résultat soit prêt.',
+  processingFailed: 'Cette action n’a pas pu être traitée',
+  waitingResult:
+    'Les résultats apparaîtront après le traitement de l’action sélectionnée.',
+  retry: 'Réessayer',
+  useSamples: 'Utiliser les exemples',
+  refreshAnalysis: 'Relancer l’analyse',
+  refreshHelp:
+    'Envoie une nouvelle requête de traitement pour cette sélection.',
+  freshResult: 'Nouveau résultat API',
+  cachedResult: 'Résultat API en cache',
+  cachedHelp:
+    'Réutilisé dans cette session ; exécution et durées d’origine. Relancez pour actualiser.',
+  fallbackHelp:
+    'Le backend a utilisé le mock après un problème fournisseur. Consultez les notes et la trace.',
+  runtimeWorkflowNote: 'Étapes backend réelles et durées mesurées',
+  runtimeOutput: 'Examiner le résultat d’exécution',
+  runtimeTiming:
+    'Les durées backend incluent l’attente du fournisseur et excluent le réseau côté navigateur.',
+  stageCompleted: 'Terminée',
+  stageSkipped: 'Ignorée',
+  stageFailed: 'Échouée',
+  warnings: 'Notes de traitement',
+  firstHalf: '1RE MI-TEMPS',
+  errorNetwork:
+    'API inaccessible. Vérifiez le démarrage de FastAPI, l’adresse API et l’origine CORS.',
+  errorTimeout:
+    'Le délai de la requête API est dépassé. Réessayez lorsque le backend est disponible.',
+  errorInvalid:
+    'Réponse API invalide ou incohérente. Vérifiez que le frontend et le backend utilisent le même contrat.',
+  errorHttp: 'L’API n’a pas pu terminer cette requête.',
   workspace: 'Espace du match',
   evidenceLibrary: 'Bibliothèque de preuves',
   agentWorkflow: 'Parcours des agents',

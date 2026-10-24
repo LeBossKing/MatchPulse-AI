@@ -195,6 +195,16 @@ export function AnalysisPanel({
         hidden={activeTab !== 'checks'}
       >
         <p className="panel-description">{t.trustIntro}</p>
+        {response.warnings.length > 0 && (
+          <>
+            <h3>{t.warnings}</h3>
+            <ul className="limitations-list processing-notes">
+              {response.warnings.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </>
+        )}
         <h3>{t.limitations}</h3>
         <ul className="limitations-list">
           {response.validation.limitations.map((item) => (

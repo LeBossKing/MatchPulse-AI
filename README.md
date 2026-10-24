@@ -2,7 +2,7 @@
 
 Agentic AI prototype transforming synthetic football events into explainable tactical insights, with evidence validation, an interactive dashboard, and personalized Fan/Analyst experiences in English and French.
 
-## Current milestone: Azure environment and provider (Task 6)
+## Current milestone: connected React dashboard (Task 7)
 
 Implemented:
 - A responsive React/Vite match dashboard and FastAPI foundation.
@@ -18,6 +18,9 @@ Implemented:
 - Thirty-two typed, reproducible sample views exported from the canonical mock workflow. Sample mode works without the backend.
 - An Azure OpenAI v1 Responses adapter with strict structured candidates, local trust checks, bounded connection/read timeouts, and visible mock fallback.
 - An offline configuration checker and an explicit one-request live preflight that never substitutes a mock result.
+- API mode that loads match/events from FastAPI and posts selections and preferences for runtime analysis.
+- Schema and source-consistency checks in the browser, loading/error states, explicit retry, cancellation, session caching, and replay that waits for processing.
+- Provider provenance, measured runtime traces, visible backend fallback warnings, and a separate offline sample mode.
 
 `POST /events/process` returns **200** for a valid known event, with `result_source: "runtime"`. The default `LLM_PROVIDER=mock` runs entirely locally. A configured `azure` provider calls one deployment for a structured tactical candidate; geometry, evidence, trust checks, and narrative templates remain local. The static Task 3 examples remain marked `result_source: "example"` and are never loaded as runtime results.
 
@@ -25,7 +28,7 @@ Azure access is **not established by installing this code or by `/health`**. Com
 
 The fixture is **pending Member 2 review**. Geometry and evidence links are checked automatically; tactical interpretations and authored annotations still need team validation.
 
-The Task 5 dashboard uses **preloaded examples**, prominently labelled `SAMPLE DATA`. Selecting events or changing preferences does not call agents, Azure, or `/events/process`. The working backend remains available separately; its dashboard integration follows in Task 7. The optional **API connection** sidebar link opens the existing health check.
+The dashboard starts in **API mode**. It loads the canonical match and events from FastAPI, then processes the selected event and preferences. Results are labelled `AZURE · RUNTIME`, `MOCK · RUNTIME`, or `MOCK FALLBACK`. **Samples** is an explicit separate mode, labelled `SAMPLE DATA`; it works without FastAPI and makes no processing requests. API failures show an error with retry and a deliberate switch to samples. The optional **API connection** link opens a separate health check.
 
 ## Prerequisites
 
@@ -73,9 +76,9 @@ cp .env.example .env
 npm run dev
 ```
 
-Open <http://localhost:5173>. The dashboard starts at the main synthetic event, `evt-064` at 63:24, in Analyst/English mode. Expect length `44.28`, progression `+40`, and one source-annotated line bypassed.
+Open <http://localhost:5173> with FastAPI running. The dashboard loads the main synthetic event, `evt-064` at 63:24, in Analyst/English mode. After processing, expect length `44.28`, progression `+40`, and one source-annotated line bypassed. With `LLM_PROVIDER=azure` and a working deployment, the badge shows `AZURE · RUNTIME`. With the default mock provider, it shows `MOCK · RUNTIME`.
 
-The dashboard works even when FastAPI is stopped. To check the backend separately, click **API connection** in the sidebar. With FastAPI running, that panel should show **Backend connected**, API version `0.4.0`, and environment `development`.
+If FastAPI is stopped, click **Use sample data** to open the offline examples. To check the backend separately, click **API connection** in the sidebar. With FastAPI running, that panel should show **Backend connected**, API version `0.4.0`, and environment `development`.
 
 The dev server uses port 5173 and fails clearly if it is occupied. This keeps it consistent with the backend's allowed origins.
 
@@ -101,6 +104,7 @@ From `backend/`, run `python scripts/check_azure.py` to check configuration with
 
 ```bash
 # In frontend/
+npm run test
 npm run lint
 npm run build
 ```
@@ -110,9 +114,9 @@ npm run build
 curl http://127.0.0.1:8000/health
 ```
 
-Open **API connection**, stop the backend, and click **Check connection**: that panel must show **Backend unavailable** while the sample dashboard keeps working. Restart FastAPI and retry to recover.
+In API mode, stop FastAPI and choose an uncached event/preference combination or click **Run analysis again**. The analysis shows an error and never relabels a stored example as runtime. Restart FastAPI and click **Retry**, or explicitly select **Samples** for offline use. Session-cached results can still be viewed and are labelled as cached.
 
-Select different timeline events, try Fan/French, inspect the evidence and trust tabs, and use replay, pause, speed, and rewind. `evt-065` preserves the failed attempt; `evt-067` shows unknown annotations and limited context. See [dashboard acceptance checks](docs/dashboard.md).
+Select different timeline events, try Fan/French, inspect the evidence and trust tabs, and use replay, pause, speed, and rewind. API mode waits for each result before advancing replay. Revisiting the same event/audience/language uses a five-minute browser-session cache; **Run analysis again** forces a fresh request. `evt-065` preserves the failed attempt; `evt-067` shows unknown annotations and limited context. See [dashboard acceptance checks](docs/dashboard.md).
 
 For `npm run preview`, set `FRONTEND_ORIGIN=http://localhost:4173` in `backend/.env` and restart the backend, since Vite preview uses a different origin.
 
@@ -126,7 +130,7 @@ python -m pytest -q
 python scripts/export_contract.py --check
 ```
 
-After changing backend models, regenerate the checked-in API artifacts:
+After changing backend models, regenerate the checked-in API artifacts, including the browser JSON Schema bundle:
 
 ```bash
 # In backend/
@@ -167,7 +171,7 @@ Change `audience` to `fan`, `language` to `fr`, or `event_id` to `evt-067` to in
 
 Import [the Postman collection](docs/postman/MatchPulse-AI.postman_collection.json) to run the success, personalization, missing-data, failed-pass, regain, 404, and 422 checks. Its `base_url` variable defaults to `http://127.0.0.1:8000`.
 
-See [workflow design and acceptance checks](docs/mock-workflow.md) for trust rules, importance thresholds, and fallback behavior. See [Azure setup](docs/azure-setup.md) for deployment verification and troubleshooting. Frontend processing integration follows in Task 7.
+See [workflow design and acceptance checks](docs/mock-workflow.md) for trust rules, importance thresholds, and fallback behavior. See [Azure setup](docs/azure-setup.md) for deployment verification and troubleshooting. See [runtime integration](docs/integration.md) for request behavior and connected acceptance checks.
 
 ## Regenerate dashboard samples
 
@@ -205,4 +209,4 @@ Use `--check` to detect drift; run the second command only when updating samples
 
 Create one branch per feature and use small pull requests. Include the reason for the change and the checks performed. Agree on the JSON contract with the team before developing the match UI and agent workflow against it.
 
-See [dashboard design and acceptance](docs/dashboard.md), [architecture](docs/architecture.md), [API contract](docs/api-contract.md), and [demo plan](docs/demo-script.md).
+See [runtime integration](docs/integration.md), [dashboard design and acceptance](docs/dashboard.md), [architecture](docs/architecture.md), [API contract](docs/api-contract.md), and [demo plan](docs/demo-script.md).

@@ -12,13 +12,15 @@ sys.path.insert(0, str(BACKEND_DIR))
 from app.main import app  # noqa: E402
 from app.models.event import MatchEvent  # noqa: E402
 from app.models.insight import ProcessEventRequest, ProcessEventResponse  # noqa: E402
-from app.models.match import DemoFixture  # noqa: E402
+from app.models.match import DemoEventsResponse, DemoFixture, DemoMatchResponse  # noqa: E402
 
 
 def contract_documents() -> dict[Path, dict]:
     models = {
         "event": MatchEvent,
         "demo-fixture": DemoFixture,
+        "demo-match-response": DemoMatchResponse,
+        "demo-events-response": DemoEventsResponse,
         "process-request": ProcessEventRequest,
         "process-response": ProcessEventResponse,
     }
@@ -27,9 +29,13 @@ def contract_documents() -> dict[Path, dict]:
         documents[ROOT / "docs" / "schemas" / f"{name}.schema.json"] = {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             **model.model_json_schema(
-                mode="serialization" if model is ProcessEventResponse else "validation"
+                mode="serialization" if model in (ProcessEventResponse, DemoMatchResponse, DemoEventsResponse) else "validation"
             ),
         }
+    documents[ROOT / "frontend" / "src" / "api" / "generated-schemas.json"] = {
+        name: documents[ROOT / "docs" / "schemas" / f"{name}.schema.json"]
+        for name in ("demo-match-response", "demo-events-response", "process-response")
+    }
     return documents
 
 

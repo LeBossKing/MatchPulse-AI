@@ -73,4 +73,4 @@ Testing follows the official [FastAPI TestClient guidance](https://fastapi.tiang
 
 ## Dashboard and next milestone
 
-Task 5 implements the React dashboard using clearly labelled sample data; see [dashboard documentation](dashboard.md). Task 6 provides the Azure adapter and environment checks; the subscription owner must complete the live verification. Frontend/backend processing integration is Task 7. Member 2 reviews the data and tactical interpretation; Member 3 can use the collection and acceptance checks to report issues.
+Task 5 implements the React dashboard using clearly labelled sample data; see [dashboard documentation](dashboard.md). Task 6 provides the Azure adapter and environment checks; the subscription owner must complete the live verification. Task 7 connects the dashboard to runtime processing with explicit API and sample modes; see [runtime integration](integration.md). Task 8 validates the complete team demo scenario. Member 2 reviews the data and tactical interpretation; Member 3 can use the collection and acceptance checks to report issues.

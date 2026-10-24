@@ -153,4 +153,6 @@ Validation messages can differ by Pydantic version; clients use `code`, status, 
 
 Pydantic models are the source of truth. Run `python scripts/export_contract.py` from `backend/`, then `npm run generate:api` from `frontend/`. Commit all outputs together.
 
+Browser runtime validation uses the generated `frontend/src/api/generated-schemas.json` bundle and adds selection/source consistency checks. It complements backend validation. The exporter includes [match read response](schemas/demo-match-response.schema.json) and [events read response](schemas/demo-events-response.schema.json).
+
 Formal schemas: [event](schemas/event.schema.json), [fixture](schemas/demo-fixture.schema.json), [request](schemas/process-request.schema.json), [response](schemas/process-response.schema.json). Generated TypeScript lives in `frontend/src/types/generated-api.d.ts`; named aliases live in `types/api.ts` and `types/match.ts`.

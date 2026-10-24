@@ -2,7 +2,7 @@
 
 The adapter, configuration checks, and simulated integration tests are implemented. Your subscription balance, resource permissions, model quota, and actual deployment access must be checked in your account. No Azure resource is created by this repository.
 
-The default mock workflow and Task 5 sample dashboard continue to work without Azure. Task 7 will connect dashboard selections to backend processing.
+The default mock workflow and Task 5 sample dashboard continue to work without Azure. Task 7 connects dashboard selections to backend processing in API mode; Samples remains an explicit offline option.
 
 ## 1. Check your subscription
 
@@ -104,7 +104,7 @@ Check `result_source: runtime`, `provider: azure`, and `agent_trace[1].output.ac
 
 Only the Tactical Explainer calls Azure. Match Intelligence computes source facts locally; Trust & Personalization checks the candidate locally and renders controlled English/French templates. This milestone does not claim three independent LLM calls or free-form model-generated explanations.
 
-The normal API deliberately recovers from expected Azure failures with `provider: fallback` and a visible reason. HTTP 200 or a healthy `/health` response therefore does not establish Azure access. The dashboard still displays its labelled sample corpus until Task 7 connects processing requests.
+The normal API deliberately recovers from expected Azure failures with `provider: fallback` and a visible reason. HTTP 200 or a healthy `/health` response therefore does not establish Azure access. The dashboard starts in API mode and shows provider provenance. Select Samples explicitly to use the offline corpus. See [runtime integration](integration.md).
 
 ## Diagnostics
 

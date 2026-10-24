@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
-import type { AnalysisTab } from './types/dashboard'
+import type { AnalysisTab, DashboardData, DataMode } from './types/dashboard'
 import type { Audience, Language } from './types/match'
-import { demo, selectSample } from './data/demo'
 import { copy, eventLabel } from './lib/copy'
 import { clock, formatNumber, playerName } from './lib/format'
 import { useReplay } from './hooks/useReplay'
+import { useDemoData } from './hooks/useDemoData'
+import { useAnalysis } from './hooks/useAnalysis'
+import { RequestState } from './components/RequestState'
 import { AgentWorkflow } from './components/AgentWorkflow'
 import { AnalysisPanel } from './components/AnalysisPanel'
 import { ConnectionCard } from './components/ConnectionCard'
@@ -14,20 +16,42 @@ import { Pitch } from './components/Pitch'
 import { SequenceStats } from './components/SequenceStats'
 import './App.css'
 
-function App() {
-  const [language, setLanguage] = useState<Language>('en')
+function Dashboard({
+  data,
+  mode,
+  setMode,
+  language,
+  setLanguage,
+}: {
+  data: DashboardData
+  mode: DataMode
+  setMode: (mode: DataMode) => void
+  language: Language
+  setLanguage: (language: Language) => void
+}) {
   const [audience, setAudience] = useState<Audience>('analyst')
   const [activeTab, setActiveTab] = useState<AnalysisTab>('insight')
   const [showTrails, setShowTrails] = useState(false)
   const [diagnostics, setDiagnostics] = useState(false)
-  const { match } = demo.match
-  const events = demo.events.events
+  const { match } = data.match
+  const events = data.events.events
   const mainIndex = events.findIndex(
-    (event) => event.event_id === demo.events.main_event_id,
+    (event) => event.event_id === data.events.main_event_id,
   )
-  const replay = useReplay(events, mainIndex)
-  const event = events[replay.index]
-  const response = selectSample(event.event_id, audience, language)
+  const [index, setIndex] = useState(mainIndex)
+  const event = events[index]
+  const analysis = useAnalysis(mode, data, {
+    match_id: match.match_id,
+    event_id: event.event_id,
+    audience,
+    language,
+  })
+  const response = analysis.entry?.response ?? null
+  const replay = useReplay(events, index, setIndex, analysis.status === 'ready')
+  const { pause } = replay
+  useEffect(() => {
+    if (analysis.status === 'error') pause()
+  }, [analysis.status, pause])
   const t = copy(language)
 
   useEffect(() => {
@@ -97,7 +121,7 @@ function App() {
           </div>
           <p>{t.synthetic}</p>
           <span>
-            {demo.match.review_status === 'approved' ? t.approved : t.pending}
+            {data.match.review_status === 'approved' ? t.approved : t.pending}
           </span>
           <details className="about-demo">
             <summary>
@@ -105,19 +129,52 @@ function App() {
               <Icon name="chevron" />
             </summary>
             <p>{t.aboutText}</p>
-            <p>{t.sampleHelp}</p>
+            <p>{mode === 'sample' ? t.sampleHelp : t.runtimeHelp}</p>
           </details>
         </div>
-        <span className="sidebar-version">MATCHPULSE / 05</span>
+        <span className="sidebar-version">MATCHPULSE / 07</span>
       </aside>
 
       <main id="match-workspace" className="main-workspace" tabIndex={-1}>
         <header className="workspace-topbar">
           <span className="breadcrumb">{t.breadcrumb}</span>
-          <span className="sample-badge">
-            <span className="small-dot" />
-            {t.sampleData}
-          </span>
+          <div className="mode-toolbar">
+            <div
+              className="segmented mode-selector"
+              role="group"
+              aria-label={t.dataMode}
+            >
+              <button
+                type="button"
+                aria-pressed={mode === 'api'}
+                onClick={() => setMode('api')}
+              >
+                {t.apiMode}
+              </button>
+              <button
+                type="button"
+                aria-pressed={mode === 'sample'}
+                onClick={() => setMode('sample')}
+              >
+                {t.sampleMode}
+              </button>
+            </div>
+            <span
+              className={`sample-badge ${mode === 'api' ? 'runtime-badge' : ''} ${response?.provider === 'fallback' && mode === 'api' ? 'fallback-badge' : ''}`}
+              data-testid="provenance"
+            >
+              <span className="small-dot" />
+              {mode === 'sample'
+                ? t.sampleData
+                : !response
+                  ? t.apiData
+                  : response.provider === 'azure'
+                    ? t.runtimeAzure
+                    : response.provider === 'fallback'
+                      ? t.runtimeFallback
+                      : t.runtimeMock}
+            </span>
+          </div>
         </header>
         <div className="page-heading">
           <div>
@@ -163,6 +220,43 @@ function App() {
           </div>
         </div>
 
+        {mode === 'api' && (
+          <section
+            className={`runtime-bar ${response?.provider === 'fallback' ? 'fallback-notice' : ''}`}
+            aria-label={t.runtimeNote}
+          >
+            <div aria-live="polite">
+              <strong>
+                {analysis.status === 'loading'
+                  ? t.processing
+                  : analysis.status === 'error'
+                    ? t.processingFailed
+                    : analysis.cached
+                      ? t.cachedResult
+                      : t.freshResult}
+              </strong>
+              <span>
+                {response?.provider === 'fallback'
+                  ? t.fallbackHelp
+                  : analysis.cached
+                    ? t.cachedHelp
+                    : t.runtimeNote}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                pause()
+                analysis.refresh()
+              }}
+              disabled={analysis.status === 'loading'}
+              title={t.refreshHelp}
+            >
+              <Icon name="reset" />
+              {analysis.status === 'error' ? t.retry : t.refreshAnalysis}
+            </button>
+          </section>
+        )}
         <section
           className="match-banner panel"
           aria-label={`${match.home_team.name} ${match.score.home}–${match.score.away} ${match.away_team.name}`}
@@ -184,7 +278,7 @@ function App() {
             </div>
             <span className="match-clock" data-testid="match-clock">
               {clock(event)}
-              <span> / {t.secondHalf}</span>
+              <span> / {event.period === 1 ? t.firstHalf : t.secondHalf}</span>
             </span>
           </div>
           <div className="match-team away-team">
@@ -201,8 +295,10 @@ function App() {
               <span className="small-dot" />
               {t.synthetic}
             </span>
-            <span>{t.sampleNote}</span>
-            <span>63:08–63:38</span>
+            <span>{mode === 'sample' ? t.sampleNote : t.runtimeNote}</span>
+            <span>
+              {clock(events[0])}–{clock(events.at(-1)!)}
+            </span>
           </div>
         </section>
 
@@ -267,7 +363,10 @@ function App() {
               <div>
                 <span>{t.passLength}</span>
                 <strong data-testid="pass-length">
-                  {formatNumber(response.statistics.pass_length, language)}
+                  {formatNumber(
+                    response?.statistics.pass_length ?? null,
+                    language,
+                  )}
                 </strong>
                 <small>
                   {event.event_type === 'pass'
@@ -279,7 +378,7 @@ function App() {
                 <span>{t.progression}</span>
                 <strong
                   className={
-                    response.statistics.forward_progression !== null &&
+                    response?.statistics.forward_progression != null &&
                     response.statistics.forward_progression < 0
                       ? 'muted'
                       : 'lime-text'
@@ -287,7 +386,7 @@ function App() {
                   data-testid="progression"
                 >
                   {formatNumber(
-                    response.statistics.forward_progression,
+                    response?.statistics.forward_progression ?? null,
                     language,
                     true,
                   )}
@@ -381,18 +480,37 @@ function App() {
               </button>
             </div>
           </section>
-          <aside className="insight-column">
-            <AnalysisPanel
-              response={response}
-              language={language}
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
-            />
-            <SequenceStats
-              match={match}
-              response={response}
-              language={language}
-            />
+          <aside
+            className="insight-column"
+            aria-busy={analysis.status === 'loading'}
+          >
+            {response ? (
+              <>
+                <AnalysisPanel
+                  response={response}
+                  language={language}
+                  activeTab={activeTab}
+                  onTabChange={setActiveTab}
+                />
+                <SequenceStats
+                  match={match}
+                  response={response}
+                  language={language}
+                />
+              </>
+            ) : (
+              <RequestState
+                language={language}
+                error={analysis.error}
+                title={
+                  analysis.status === 'error'
+                    ? t.processingFailed
+                    : t.processing
+                }
+                onRetry={analysis.refresh}
+                onSamples={() => setMode('sample')}
+              />
+            )}
           </aside>
         </div>
 
@@ -400,11 +518,20 @@ function App() {
           events={events}
           match={match}
           selectedIndex={replay.index}
-          mainEventId={demo.events.main_event_id}
+          mainEventId={data.events.main_event_id}
           language={language}
           onSelect={selectEvent}
         />
-        <AgentWorkflow response={response} language={language} />
+        {response ? (
+          <AgentWorkflow response={response} language={language} />
+        ) : (
+          <section className="agent-section" id="agent-workflow">
+            <div className="section-heading">
+              <h2>{t.workflowTitle}</h2>
+            </div>
+            <p className="timing-note">{t.waitingResult}</p>
+          </section>
+        )}
         {diagnostics && (
           <section
             id="api-connection"
@@ -433,11 +560,72 @@ function App() {
           </span>
           <span>
             {t.synthetic} ·{' '}
-            {demo.match.review_status === 'approved' ? t.approved : t.pending}
+            {data.match.review_status === 'approved' ? t.approved : t.pending}
           </span>
         </footer>
       </main>
     </div>
+  )
+}
+
+function Workspace({
+  mode,
+  setMode,
+  language,
+  setLanguage,
+}: {
+  mode: DataMode
+  setMode: (mode: DataMode) => void
+  language: Language
+  setLanguage: (language: Language) => void
+}) {
+  const source = useDemoData(mode)
+  const t = copy(language)
+  if (!source.data)
+    return (
+      <main className="bootstrap-workspace">
+        <span className="bootstrap-brand">
+          MatchPulse<span> AI</span>
+        </span>
+        <RequestState
+          bootstrap
+          language={language}
+          error={source.error}
+          title={
+            source.status === 'error'
+              ? t.failedMatch
+              : mode === 'sample'
+                ? t.sampleData
+                : t.loadingMatch
+          }
+          description={mode === 'sample' ? t.sampleHelp : undefined}
+          onRetry={source.retry}
+          onSamples={() => setMode('sample')}
+        />
+      </main>
+    )
+  return (
+    <Dashboard
+      data={source.data}
+      mode={mode}
+      setMode={setMode}
+      language={language}
+      setLanguage={setLanguage}
+    />
+  )
+}
+
+function App() {
+  const [mode, setMode] = useState<DataMode>('api')
+  const [language, setLanguage] = useState<Language>('en')
+  return (
+    <Workspace
+      key={mode}
+      mode={mode}
+      setMode={setMode}
+      language={language}
+      setLanguage={setLanguage}
+    />
   )
 }
 

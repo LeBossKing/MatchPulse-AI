@@ -1,12 +1,12 @@
 # Architecture
 
-## Implemented through Task 6
+## Implemented through Task 7
 
-React/TypeScript/Vite renders the match dashboard from checked-in sample responses. Its API URL remains available for the optional backend health panel; processing REST calls follow in Task 7. Backend configuration and Azure credentials stay on the server.
+React/TypeScript/Vite starts in API mode, loads canonical match metadata/events from FastAPI, and sends ID-based processing selections with audience/language preferences. Samples is an explicit separate mode loaded as a separate JavaScript chunk. Backend configuration and Azure credentials stay on the server.
 
-The dashboard has a source-coordinate SVG pitch, prefix history trails, an eight-event timeline, timed replay, seeking, filters, an insight/evidence/trust panel, prefix team statistics, and expandable sample stage outputs. Presentation preferences select among the 32 typed examples without changing event facts. Filters change only the visible timeline, not the selected event or its canonical prefix totals. Replay uses source timestamp gaps divided by the selected speed, and stops at the final event. Manual selection, seeking, and reset pause playback.
+The dashboard has a source-coordinate SVG pitch, prefix history trails, an eight-event timeline, timed replay, seeking, filters, an insight/evidence/trust panel, prefix team statistics, and expandable sample stage outputs. In API mode, preferences request a corresponding runtime response; in sample mode, they select among the 32 typed examples. Event facts remain fixed. Filters change only the visible timeline, not the selected event or its canonical prefix totals. Replay uses source timestamp gaps divided by the selected speed, waits while the current API result is pending, and stops at the final event. Actual API replay can therefore take longer than the source sequence. Manual selection, seeking, and reset pause playback.
 
-`export_dashboard_samples.py` runs the mock workflow at authoring time for every event/language/audience combination, revalidates each response, replaces durations with zero placeholders, and marks every result as `example`. The browser displays persistent sample provenance and never claims these are live timings or agent runs. The generator's `--check` mode detects stale exports. The sample dashboard works without a backend; the health panel mounts only when opened.
+`export_dashboard_samples.py` runs the mock workflow at authoring time for every event/language/audience combination, revalidates each response, replaces durations with zero placeholders, and marks every result as `example`. The browser displays persistent sample provenance and never claims these are live timings or agent runs. The generator's `--check` mode detects stale exports. The sample dashboard works without a backend; the health panel mounts only when opened. API errors never switch to examples automatically.
 
 FastAPI exposes health, synthetic match metadata, canonical events, and event processing. The fixture repository validates the data with Pydantic, caches it per process, and returns typed read responses without mutating replay state. Invalid requests, fixture-load errors, and unavailable workflows use a common JSON error envelope.
 
@@ -30,10 +30,16 @@ Separate known facts from interpretation. Coordinates alone do not establish def
 
 Pydantic/FastAPI are the contract source of truth. A script exports JSON Schemas and OpenAPI. A pinned isolated OpenAPI TypeScript CLI generates checked-in browser types from that export. Generation needs no running backend or Azure credentials.
 
-## Remaining integration
+## Browser request boundary
 
-Complete the account-specific steps in [Azure setup](azure-setup.md). The adapter and offline tests do not establish the user's deployment access.
+The contract exporter also writes read-response schemas and `frontend/src/api/generated-schemas.json`. Ajv validates payload shapes without coercing values or inserting defaults. Additional checks bind processing responses to the requested event/preferences and the API-loaded canonical sequence, including geometry, overlays, evidence links, prefix counters, trace order, and provider provenance. These browser checks supplement the backend's authoritative Pydantic and trust validators.
 
-Named TypeScript aliases expose the generated schema types. The dashboard uses those response types today; frontend calls to the new routes follow in Task 7. The optional health connection check still handles unavailable backends, invalid health responses, timeout, and retry.
+The client has read and processing deadlines, preserves structured HTTP codes, and exposes safe errors. Requests are never retried automatically. Effects abort obsolete browser requests and guard against late replies even if a transport ignores cancellation. A 200 ms delay coalesces rapid selections and StrictMode setup/cleanup before a potentially billable POST. Browser cancellation does not guarantee that an already-started Azure operation stops.
+
+Each mounted API workspace keeps up to 64 result entries for five minutes, keyed by match/event/audience/language. Revisited entries retain original traces and are visibly labelled cached. Explicit rerun bypasses the selected entry. Switching mode or reloading the page discards this cache. The UI hides analysis from a different selection while the new result is pending or failed.
+
+## Remaining validation
+
+Complete account-specific checks in [Azure setup](azure-setup.md). Runtime frontend tests cover Azure/fallback presentation with simulated transports; an opt-in integration test launches real local FastAPI in mock mode and exercises all 32 variants over HTTP. A live Azure dashboard check still runs on the configured developer machine. Task 8 covers the final team scenario and bug fixing. The optional health check remains separate from processing and does not verify Azure.
 
 See [mock workflow rules and acceptance checks](mock-workflow.md) for implementation details and limits.

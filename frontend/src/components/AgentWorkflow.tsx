@@ -1,6 +1,7 @@
 import type { Language, ProcessEventResponse } from '../types/match'
 import { copy } from '../lib/copy'
 import { Icon } from './Icon'
+import { formatNumber } from '../lib/format'
 import type { IconName } from './Icon'
 
 export function AgentWorkflow({
@@ -11,6 +12,7 @@ export function AgentWorkflow({
   language: Language
 }) {
   const t = copy(language)
+  const runtime = response.result_source === 'runtime'
   const labels = [t.intelligence, t.explainer, t.trust]
   const descriptions = [
     t.intelligenceDescription,
@@ -28,7 +30,7 @@ export function AgentWorkflow({
         <h2 id="workflow-title">{t.workflowTitle}</h2>
         <span>
           <span className="small-dot" />
-          {t.workflowNote}
+          {runtime ? t.runtimeWorkflowNote : t.workflowNote}
         </span>
       </div>
       <div className="workflow-grid">
@@ -37,21 +39,28 @@ export function AgentWorkflow({
             <div className="agent-card-top">
               <span className="agent-number">0{index + 1}</span>
               <Icon name={icons[index]} />
-              <span className="sample-trace-label">{t.sampleTrace}</span>
+              <span
+                className={`sample-trace-label ${runtime ? 'stage-tag' : ''}`}
+              >
+                {runtime
+                  ? `${step.status === 'completed' ? t.stageCompleted : step.status === 'skipped' ? t.stageSkipped : t.stageFailed} · ${formatNumber(step.duration_ms, language)} ms`
+                  : t.sampleTrace}
+              </span>
             </div>
             <h3>{labels[index]}</h3>
             <p>{descriptions[index]}</p>
+            {runtime && <p className="runtime-step-summary">{step.summary}</p>}
             <details className="json-details">
               <summary>
-                {t.inspectOutput}
+                {runtime ? t.runtimeOutput : t.inspectOutput}
                 <Icon name="chevron" />
               </summary>
-              <pre>{JSON.stringify(step.output, null, 2)}</pre>
+              <pre>{JSON.stringify(runtime ? step : step.output, null, 2)}</pre>
             </details>
           </article>
         ))}
       </div>
-      <p className="timing-note">{t.noTimings}</p>
+      <p className="timing-note">{runtime ? t.runtimeTiming : t.noTimings}</p>
     </section>
   )
 }
