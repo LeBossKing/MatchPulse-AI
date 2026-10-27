@@ -1,0 +1,46 @@
+﻿story_id,index,event_id,time,team,player,type,under_pressure,pass_outcome,shot_outcome,360_available
+story_001,3337,8b11c6ba-46fc-4a66-a352-7f8d7edd2403,00:33:24.849,Italy,Domenico Berardi,Interception,False,,,True
+story_001,3338,fa8725f3-0a3e-49fc-b487-3e6ac9ba72fa,00:33:24.849,Italy,Domenico Berardi,Carry,False,,,True
+story_001,3339,02f0c006-9792-49a4-aa88-d2be05ebb344,00:33:26.712,Italy,Domenico Berardi,Pass,False,Complete (no outcome recorded),,True
+story_001,3340,238dc6af-c77a-4802-9903-0e0bc012f3af,00:33:27.295,Italy,Nicolò Barella,Ball Receipt*,False,,,True
+story_001,3341,f87ed094-21f3-4100-a600-719e5ed58aa3,00:33:27.295,Italy,Nicolò Barella,Carry,True,,,True
+story_001,3342,017315fd-4c53-47c9-9a6a-a29125cc0d96,00:33:27.578,Turkey,Hakan Çalhanoğlu,Pressure,False,,,True
+story_001,3343,21768782-26d2-4d8a-9d23-e792a2c93093,00:33:27.996,Italy,Nicolò Barella,Pass,True,Complete (no outcome recorded),,True
+story_001,3344,0f76d320-86a3-4ac3-a595-de3d4638f996,00:33:28.425,Italy,Ciro Immobile,Ball Receipt*,False,,,True
+story_001,3345,8de73eda-5cd9-4398-bf6f-94f616342dc0,00:33:28.425,Italy,Ciro Immobile,Carry,False,,,True
+story_001,3346,8cf74027-41db-4a3f-8c62-959e607ae02c,00:33:29.092,Italy,Ciro Immobile,Pass,False,Complete (no outcome recorded),,True
+story_001,3347,e3860219-99e0-410c-8966-a5fdce777e7c,00:33:30.321,Italy,Lorenzo Insigne,Ball Receipt*,False,,,True
+story_001,3348,ead96180-5c0c-4ccb-b926-d215ba883fcb,00:33:30.395,Italy,Lorenzo Insigne,Shot,False,,Goal,True
+story_002,1964,431f45c0-fdb5-412c-9f74-0872c955888f,00:44:17.224,Italy,Jorge Luiz Frello Filho,Interception,False,,,True
+story_002,1965,eafc6963-85cb-4cc0-8f2f-8a19abdccb8f,00:44:17.710,Italy,Nicolò Barella,Pass,False,Complete (no outcome recorded),,True
+story_002,1966,f2e58235-9fee-47f8-bf61-c6526b73110f,00:44:18.241,Italy,Jorge Luiz Frello Filho,Ball Receipt*,False,,,True
+story_002,1967,f31c7042-9f79-4735-a943-71a04a92415e,00:44:18.241,Italy,Jorge Luiz Frello Filho,Carry,False,,,True
+story_002,1968,30a8d952-cd9f-46b6-824e-6cbf0ff8a0a0,00:44:21.120,Italy,Jorge Luiz Frello Filho,Pass,False,Complete (no outcome recorded),,True
+story_002,1969,9a69b6bc-f41c-4024-ba18-1c3af4777396,00:44:21.648,Italy,Lorenzo Insigne,Ball Receipt*,False,,,True
+story_002,1970,09157a6b-c08e-41fa-b973-ba4aa0ed910b,00:44:21.648,Italy,Lorenzo Insigne,Pass,False,Complete (no outcome recorded),,True
+story_002,1971,2d608181-8a2e-4342-91ef-4afed633f369,00:44:22.500,Italy,Jorge Luiz Frello Filho,Ball Receipt*,False,,,True
+story_002,1972,9354c005-9274-4512-978f-f52451e766da,00:44:22.500,Italy,Jorge Luiz Frello Filho,Carry,True,,,True
+story_002,1973,f79dd1f5-4317-4988-8065-5a13cbcab851,00:44:24.591,Turkey,Ozan Tufan,Pressure,False,,,True
+story_002,1974,7cc5672d-c843-4351-b20c-3a9f79085238,00:44:25.099,Italy,Jorge Luiz Frello Filho,Pass,True,Complete (no outcome recorded),,True
+story_002,1975,2c0dcc45-319b-47e7-8167-adb6ab3c4361,00:44:26.225,Italy,Leonardo Spinazzola,Ball Receipt*,False,,,True
+story_002,1976,9534c008-b89d-44c5-b108-66f76c9f4434,00:44:26.225,Italy,Leonardo Spinazzola,Carry,False,,,True
+story_002,1977,1a06e58d-dc86-4202-8d54-5482254486ec,00:44:30.047,Italy,Leonardo Spinazzola,Pass,False,Complete (no outcome recorded),,True
+story_002,1978,53a7a67c-e1ce-4f41-8778-1450e11e458e,00:44:31.268,Italy,Jorge Luiz Frello Filho,Ball Receipt*,False,,,True
+story_002,1979,912ff0ca-9e7e-4539-ab4d-420b2c7ba134,00:44:31.268,Italy,Jorge Luiz Frello Filho,Carry,False,,,True
+story_002,1980,d646d6a0-b62c-4040-bf93-88ccde45fe95,00:44:32.043,Italy,Jorge Luiz Frello Filho,Pass,False,Complete (no outcome recorded),,True
+story_002,1981,cef726ef-de2c-4c8f-bc9b-3e951c4039bc,00:44:33.605,Italy,Domenico Berardi,Ball Receipt*,False,,,True
+story_002,1982,c07133d1-fa88-45f8-8a40-7be381ddffd1,00:44:33.641,Italy,Domenico Berardi,Shot,False,,Off T,True
+story_003,2233,8f7289ec-7fa1-4f1d-a33e-fb1966a072a3,00:06:45.518,Turkey,Ozan Tufan,Ball Recovery,False,,,True
+story_003,2234,b6838723-7360-463c-b81b-60aa48e1e9e5,00:06:45.518,Turkey,Ozan Tufan,Carry,True,,,True
+story_003,2235,2c802a98-3293-4eca-88d9-1002d4b3ac03,00:06:45.740,Italy,Ciro Immobile,Pressure,False,,,True
+story_003,2236,6056f09b-9f99-49b5-9aae-b6d00321b963,00:06:46.644,Turkey,Ozan Tufan,Pass,True,Complete (no outcome recorded),,False
+story_003,2237,62742164-cb1b-4c29-a230-c7b47d2d1f18,00:06:47.531,Turkey,Cengiz Umut Meraş,Ball Receipt*,False,,,False
+story_003,2238,08460e1d-f0f6-4ed4-ac56-5df9291d5ac5,00:06:47.531,Turkey,Cengiz Umut Meraş,Carry,True,,,False
+story_003,2239,d583b280-f45d-4eee-903b-d34adeeadcc6,00:06:47.537,Italy,Domenico Berardi,Pressure,False,,,True
+story_003,2240,a12edd4d-73fd-4bdc-9c2f-85b70fb3cbae,00:06:48.272,Turkey,Cengiz Umut Meraş,Pass,True,Complete (no outcome recorded),,True
+story_003,2241,415ee56b-4559-4176-968a-dcdae96c3aaf,00:06:48.723,Italy,Ciro Immobile,Pressure,False,,,True
+story_003,2242,234f744b-dced-4f23-8fef-efc7f605fc72,00:06:49.365,Turkey,Caglar Söyüncü,Ball Receipt*,True,,,True
+story_003,2243,c2b46866-5874-491a-81eb-1bffb406c47d,00:06:49.365,Turkey,Caglar Söyüncü,Pass,True,Complete (no outcome recorded),,True
+story_003,2244,873bcc05-3c60-4771-ae89-5c53d0c55cda,00:06:51.749,Italy,Leonardo Bonucci,Pressure,False,,,True
+story_003,2245,ed33ef9e-d44e-4724-a077-7681feb22408,00:06:51.904,Turkey,Burak Yılmaz,Ball Receipt*,True,,,True
+story_003,2246,029a40f3-5754-4aa2-b306-b58fd1c4b7e8,00:06:51.904,Turkey,Burak Yılmaz,Miscontrol,True,,,True

@@ -1,0 +1,81 @@
+{
+  "contract_status": "PROPOSAL_REQUIRES_MEMBER1_APPROVAL",
+  "schema_version": "1.0-proposed",
+  "request_example": {
+    "method": "POST",
+    "path": "/stories/process",
+    "body": {
+      "match_id": "3788741",
+      "story_id": "story_001",
+      "audience": "analyst",
+      "language": "en"
+    }
+  },
+  "response_example": {
+    "match_id": "3788741",
+    "story_id": "story_001",
+    "category": "shot_creation",
+    "source": "StatsBomb Open Data",
+    "event_ids": [
+      "8b11c6ba-46fc-4a66-a352-7f8d7edd2403",
+      "fa8725f3-0a3e-49fc-b487-3e6ac9ba72fa",
+      "02f0c006-9792-49a4-aa88-d2be05ebb344",
+      "238dc6af-c77a-4802-9903-0e0bc012f3af",
+      "f87ed094-21f3-4100-a600-719e5ed58aa3",
+      "017315fd-4c53-47c9-9a6a-a29125cc0d96",
+      "21768782-26d2-4d8a-9d23-e792a2c93093",
+      "0f76d320-86a3-4ac3-a595-de3d4638f996",
+      "8de73eda-5cd9-4398-bf6f-94f616342dc0",
+      "8cf74027-41db-4a3f-8c62-959e607ae02c",
+      "e3860219-99e0-410c-8966-a5fdce777e7c",
+      "ead96180-5c0c-4ccb-b926-d215ba883fcb"
+    ],
+    "start_event_id": "8b11c6ba-46fc-4a66-a352-7f8d7edd2403",
+    "end_event_id": "ead96180-5c0c-4ccb-b926-d215ba883fcb",
+    "facts": {
+      "team": "Italy",
+      "outcome": "goal",
+      "event_count": 12,
+      "evidence_status": "source_traced"
+    },
+    "explanation": {
+      "text": "Italy regained the ball and the possession ended with a recorded goal by Insigne.",
+      "mode": "analyst",
+      "language": "en",
+      "generation_mode": "reference_template_not_live_llm"
+    },
+    "evidence": [
+      {
+        "event_id": "8b11c6ba-46fc-4a66-a352-7f8d7edd2403",
+        "field": "type.name",
+        "expected": "Interception"
+      },
+      {
+        "event_id": "ead96180-5c0c-4ccb-b926-d215ba883fcb",
+        "field": "type.name",
+        "expected": "Shot"
+      }
+    ],
+    "validation": {
+      "status": "reference_requires_runtime_check",
+      "unsupported_claims": [],
+      "warnings": [
+        "A possession-sequence explanation does not prove causality."
+      ]
+    },
+    "agent_trace": [
+      {
+        "agent": "match_intelligence",
+        "status": "not_run"
+      },
+      {
+        "agent": "tactical_explainer",
+        "status": "not_run"
+      },
+      {
+        "agent": "trust_personalization",
+        "status": "not_run"
+      }
+    ]
+  }
+}

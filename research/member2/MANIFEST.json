@@ -1,0 +1,156 @@
+{
+  "version": "1.0",
+  "validation": {
+    "events": 3803,
+    "three_sixty": 3370,
+    "stories": 3,
+    "story_event_id_errors": []
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 656,
+      "sha256": "181582491a3351a3546d019d2c4dbb7b4c5e4a1bf822ea46a152a0c552286e4f"
+    },
+    {
+      "path": "contracts/api_contract.md",
+      "bytes": 842,
+      "sha256": "7716cdea6dae6700a47891c1b26e8e6056cef1edeca68d29a37437312a8585ee"
+    },
+    {
+      "path": "contracts/api_example.json",
+      "bytes": 2326,
+      "sha256": "a787cd330590b5a9aae76f8a41d0b0ef7488a42992bed5c94f2f9fbf6351116f"
+    },
+    {
+      "path": "data/expected_agent_facts.json",
+      "bytes": 7336,
+      "sha256": "7bcd5b5d3d0b054fe6cbfe9ee8fee921ef67fe1ff5fed0258c6ceb554b79a6f0"
+    },
+    {
+      "path": "data/metrics_validation.csv",
+      "bytes": 1355,
+      "sha256": "aa1a0b186c4bd1ea03ffe88b9320db7cc0df9a3e3a5c12c08aa40b781d1e6f4e"
+    },
+    {
+      "path": "data/player_summary.csv",
+      "bytes": 1948,
+      "sha256": "794a7bc74f5116ac618da127ff2bad70e51672e28497047935d647aca6a1da70"
+    },
+    {
+      "path": "data/story_candidates.csv",
+      "bytes": 2969,
+      "sha256": "bfae42d10591be8a1798e96b9fee405cb87eaf3806e0420e2eae6f1e4f9c1425"
+    },
+    {
+      "path": "data/story_events.csv",
+      "bytes": 5500,
+      "sha256": "2cf9a2c27764a2b35fc013f1ffa976207a7792af1a3fce3c38a245202cb87306"
+    },
+    {
+      "path": "data/team_pass_summary.csv",
+      "bytes": 131,
+      "sha256": "2defa1a3756d837665c632b230be93bfacc7c0c4b9f18b28904e811997e7382c"
+    },
+    {
+      "path": "data/team_summary.csv",
+      "bytes": 302,
+      "sha256": "15f78f52de1dbe398fe05a38679b40b573f2444e9a7956a21c66dbe2358e6128"
+    },
+    {
+      "path": "data/three_tactical_stories.json",
+      "bytes": 35802,
+      "sha256": "7b46182b7062a63bef32094c88e7fca99b6807cbc04e12a7d0be71312a11e58e"
+    },
+    {
+      "path": "discovery/story_discovery_rules.md",
+      "bytes": 4421,
+      "sha256": "2219840c218307c8d56b483277d57c67f04d28d8ed66ca03c55dea4702c74dce"
+    },
+    {
+      "path": "discovery/story_ranking_rules.json",
+      "bytes": 1590,
+      "sha256": "6f1a09d20f1516373803e0ad216dc62bc74405ceeeca93867c5cc6bbabe2a236"
+    },
+    {
+      "path": "explanations/expected_explanations.json",
+      "bytes": 23587,
+      "sha256": "d93c652d93143f36f4f02363a642209c12e3a0054a5af6fd571a0cdfd8d3bf63"
+    },
+    {
+      "path": "explanations/methodology.md",
+      "bytes": 3447,
+      "sha256": "aa8a5630234e4e69023dafbce8d23dcedd1a84835517010ebd8b30973c05e2e0"
+    },
+    {
+      "path": "reports/CONSOLIDATED_REPORT.md",
+      "bytes": 5010,
+      "sha256": "2b9db72ab675be0a099e8b679ae20adec75f02c945e003609a9e41acb3dc155d"
+    },
+    {
+      "path": "reports/football_metrics.md",
+      "bytes": 5947,
+      "sha256": "582c0665fbb0f1228720da0442848cde91514eba7a515f212a7f46c2c7ab3bac"
+    },
+    {
+      "path": "validation/ai_test_cases.json",
+      "bytes": 16601,
+      "sha256": "ae61300d5109b879b313ce113bb3ffac3430fc7622db73189edcb190fb3f3156"
+    },
+    {
+      "path": "validation/ai_validation_rules.md",
+      "bytes": 5001,
+      "sha256": "f268413b2b2ff41b84a1ef8521d215a7c02560390d99ad03ea219a0ac944d645"
+    },
+    {
+      "path": "validation/api_smoke_test.py",
+      "bytes": 1011,
+      "sha256": "b08dd22a27c0dc091e04b4571feec690c076e090987cc0e55114b0a1cf5a7100"
+    },
+    {
+      "path": "validation/test_matrix.csv",
+      "bytes": 4867,
+      "sha256": "bc6f87a945e991dc293b49cff1285d38bdd110e040c1a8c2e39fd869676b0c6f"
+    },
+    {
+      "path": "validation/validate_metrics.py",
+      "bytes": 795,
+      "sha256": "058b253d5bfa1e8251dbf012429f9ff193b1d0b2f25d507c8d91f65736ede555"
+    },
+    {
+      "path": "visuals/pass_network_italy.png",
+      "bytes": 274946,
+      "sha256": "cbd9a8e641e1bd911f4a24f2f0ed4abfbaecd57e9e4f99b4d174bf046335e4c2"
+    },
+    {
+      "path": "visuals/pass_network_turkey.png",
+      "bytes": 211950,
+      "sha256": "844833c35ee5fdb94d3c3b93fcd70392f320e479ea64a4c3ce3092be4eb691d4"
+    },
+    {
+      "path": "visuals/pressure_map.png",
+      "bytes": 289050,
+      "sha256": "6ce3309f1e5c865c9ae7f7cfad2aaf206a7d4bd8ec55b7939a735ffb4834cdf7"
+    },
+    {
+      "path": "visuals/shot_map.png",
+      "bytes": 87210,
+      "sha256": "39413482dfcffceb6c5eedd324ade4ce086efb280b6ea1a0e3ddb1c02efc5b0a"
+    },
+    {
+      "path": "visuals/story_1_replay.png",
+      "bytes": 100266,
+      "sha256": "818addc581b83df2b70f7a226c4bd4bb09f0f222b723e39fb0aea926fb324658"
+    },
+    {
+      "path": "visuals/story_2_replay.png",
+      "bytes": 116037,
+      "sha256": "97073d5beeef2de47d7e0fc4dfd0d5088c21cd13a661f0362f4e8ce9c0f733f2"
+    },
+    {
+      "path": "visuals/story_3_replay.png",
+      "bytes": 100971,
+      "sha256": "0f42d73ce372471542c1a7bd4dd381d0a81a30ac2ee91baae4b83fbed5df8b89"
+    }
+  ]
+}

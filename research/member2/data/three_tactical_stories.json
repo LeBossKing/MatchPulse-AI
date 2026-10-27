@@ -1,0 +1,1254 @@
+{
+  "dataset_version": "1.0",
+  "research_status": "source-traced, interpretation requires human review",
+  "stories": [
+    {
+      "story_id": "story_001",
+      "category": "Attacking buildup",
+      "title": "Italy interception and passing combination ending in a goal",
+      "source": {
+        "provider": "StatsBomb Open Data",
+        "match_id": "3788741",
+        "fixture": "Turkey vs Italy",
+        "event_file": "3788741_events.json",
+        "three_sixty_file": "3788741.json",
+        "coordinate_system": "StatsBomb native 120x80, not meters"
+      },
+      "possession_id": 162,
+      "time_window": {
+        "first": "00:33:24.849",
+        "last": "00:33:30.395",
+        "start_minute": 78,
+        "start_second": 24,
+        "end_minute": 78,
+        "end_second": 30
+      },
+      "outcome": "goal",
+      "verified_observations": [
+        "Berardi made an interception at 78:24.",
+        "Barella made a pass while under_pressure=true.",
+        "Immobile passed to Insigne at 78:29.",
+        "Insigne shot at 78:30; the provider records outcome Goal."
+      ],
+      "interpretation": "Italy interception and passing combination ending in a goal. The sequence illustrates how match context can be explained without treating temporal sequence as causation.",
+      "limitations": [
+        "Do not claim the goal was caused exclusively by any one action.",
+        "Do not call any pass line-breaking without separate geometry validation.",
+        "360 player positions may be incomplete; line-breaking status not classified."
+      ],
+      "event_count": 12,
+      "events": [
+        {
+          "event_id": "8b11c6ba-46fc-4a66-a352-7f8d7edd2403",
+          "index": 3337,
+          "period": 2,
+          "minute": 78,
+          "second": 24,
+          "timestamp": "00:33:24.849",
+          "team": "Italy",
+          "player": "Domenico Berardi",
+          "event_type": "Interception",
+          "location": [
+            86.7,
+            56.3
+          ],
+          "under_pressure": false,
+          "possession": 162,
+          "freeze_frame": {
+            "visible_player_count": 10,
+            "visible_opponents": 6,
+            "available": true
+          }
+        },
+        {
+          "event_id": "fa8725f3-0a3e-49fc-b487-3e6ac9ba72fa",
+          "index": 3338,
+          "period": 2,
+          "minute": 78,
+          "second": 24,
+          "timestamp": "00:33:24.849",
+          "team": "Italy",
+          "player": "Domenico Berardi",
+          "event_type": "Carry",
+          "location": [
+            86.7,
+            56.3
+          ],
+          "under_pressure": false,
+          "possession": 162,
+          "carry_end_location": [
+            89.4,
+            53.4
+          ],
+          "freeze_frame": {
+            "visible_player_count": 10,
+            "visible_opponents": 6,
+            "available": true
+          }
+        },
+        {
+          "event_id": "02f0c006-9792-49a4-aa88-d2be05ebb344",
+          "index": 3339,
+          "period": 2,
+          "minute": 78,
+          "second": 26,
+          "timestamp": "00:33:26.712",
+          "team": "Italy",
+          "player": "Domenico Berardi",
+          "event_type": "Pass",
+          "location": [
+            89.4,
+            53.4
+          ],
+          "under_pressure": false,
+          "possession": 162,
+          "pass": {
+            "recipient": "Nicolò Barella",
+            "end_location": [
+              88.4,
+              46.3
+            ],
+            "outcome": "Complete (no outcome recorded)",
+            "assisted_shot_id": null
+          },
+          "freeze_frame": {
+            "visible_player_count": 9,
+            "visible_opponents": 5,
+            "available": true
+          }
+        },
+        {
+          "event_id": "238dc6af-c77a-4802-9903-0e0bc012f3af",
+          "index": 3340,
+          "period": 2,
+          "minute": 78,
+          "second": 27,
+          "timestamp": "00:33:27.295",
+          "team": "Italy",
+          "player": "Nicolò Barella",
+          "event_type": "Ball Receipt*",
+          "location": [
+            88.4,
+            46.3
+          ],
+          "under_pressure": false,
+          "possession": 162,
+          "freeze_frame": {
+            "visible_player_count": 10,
+            "visible_opponents": 6,
+            "available": true
+          }
+        },
+        {
+          "event_id": "f87ed094-21f3-4100-a600-719e5ed58aa3",
+          "index": 3341,
+          "period": 2,
+          "minute": 78,
+          "second": 27,
+          "timestamp": "00:33:27.295",
+          "team": "Italy",
+          "player": "Nicolò Barella",
+          "event_type": "Carry",
+          "location": [
+            88.4,
+            46.3
+          ],
+          "under_pressure": true,
+          "possession": 162,
+          "carry_end_location": [
+            92.7,
+            46.5
+          ],
+          "freeze_frame": {
+            "visible_player_count": 10,
+            "visible_opponents": 6,
+            "available": true
+          }
+        },
+        {
+          "event_id": "017315fd-4c53-47c9-9a6a-a29125cc0d96",
+          "index": 3342,
+          "period": 2,
+          "minute": 78,
+          "second": 27,
+          "timestamp": "00:33:27.578",
+          "team": "Turkey",
+          "player": "Hakan Çalhanoğlu",
+          "event_type": "Pressure",
+          "location": [
+            25.7,
+            31.9
+          ],
+          "under_pressure": false,
+          "possession": 162,
+          "freeze_frame": {
+            "visible_player_count": 10,
+            "visible_opponents": 4,
+            "available": true
+          }
+        },
+        {
+          "event_id": "21768782-26d2-4d8a-9d23-e792a2c93093",
+          "index": 3343,
+          "period": 2,
+          "minute": 78,
+          "second": 27,
+          "timestamp": "00:33:27.996",
+          "team": "Italy",
+          "player": "Nicolò Barella",
+          "event_type": "Pass",
+          "location": [
+            92.7,
+            46.5
+          ],
+          "under_pressure": true,
+          "possession": 162,
+          "pass": {
+            "recipient": "Ciro Immobile",
+            "end_location": [
+              95.3,
+              39.9
+            ],
+            "outcome": "Complete (no outcome recorded)",
+            "assisted_shot_id": null
+          },
+          "freeze_frame": {
+            "visible_player_count": 10,
+            "visible_opponents": 6,
+            "available": true
+          }
+        },
+        {
+          "event_id": "0f76d320-86a3-4ac3-a595-de3d4638f996",
+          "index": 3344,
+          "period": 2,
+          "minute": 78,
+          "second": 28,
+          "timestamp": "00:33:28.425",
+          "team": "Italy",
+          "player": "Ciro Immobile",
+          "event_type": "Ball Receipt*",
+          "location": [
+            95.3,
+            39.9
+          ],
+          "under_pressure": false,
+          "possession": 162,
+          "freeze_frame": {
+            "visible_player_count": 10,
+            "visible_opponents": 6,
+            "available": true
+          }
+        },
+        {
+          "event_id": "8de73eda-5cd9-4398-bf6f-94f616342dc0",
+          "index": 3345,
+          "period": 2,
+          "minute": 78,
+          "second": 28,
+          "timestamp": "00:33:28.425",
+          "team": "Italy",
+          "player": "Ciro Immobile",
+          "event_type": "Carry",
+          "location": [
+            95.3,
+            39.9
+          ],
+          "under_pressure": false,
+          "possession": 162,
+          "carry_end_location": [
+            95.8,
+            39.9
+          ],
+          "freeze_frame": {
+            "visible_player_count": 10,
+            "visible_opponents": 6,
+            "available": true
+          }
+        },
+        {
+          "event_id": "8cf74027-41db-4a3f-8c62-959e607ae02c",
+          "index": 3346,
+          "period": 2,
+          "minute": 78,
+          "second": 29,
+          "timestamp": "00:33:29.092",
+          "team": "Italy",
+          "player": "Ciro Immobile",
+          "event_type": "Pass",
+          "location": [
+            95.8,
+            39.9
+          ],
+          "under_pressure": false,
+          "possession": 162,
+          "pass": {
+            "recipient": "Lorenzo Insigne",
+            "end_location": [
+              107.7,
+              29.4
+            ],
+            "outcome": "Complete (no outcome recorded)",
+            "assisted_shot_id": "ead96180-5c0c-4ccb-b926-d215ba883fcb"
+          },
+          "freeze_frame": {
+            "visible_player_count": 10,
+            "visible_opponents": 6,
+            "available": true
+          }
+        },
+        {
+          "event_id": "e3860219-99e0-410c-8966-a5fdce777e7c",
+          "index": 3347,
+          "period": 2,
+          "minute": 78,
+          "second": 30,
+          "timestamp": "00:33:30.321",
+          "team": "Italy",
+          "player": "Lorenzo Insigne",
+          "event_type": "Ball Receipt*",
+          "location": [
+            107.7,
+            29.4
+          ],
+          "under_pressure": false,
+          "possession": 162,
+          "freeze_frame": {
+            "visible_player_count": 10,
+            "visible_opponents": 6,
+            "available": true
+          }
+        },
+        {
+          "event_id": "ead96180-5c0c-4ccb-b926-d215ba883fcb",
+          "index": 3348,
+          "period": 2,
+          "minute": 78,
+          "second": 30,
+          "timestamp": "00:33:30.395",
+          "team": "Italy",
+          "player": "Lorenzo Insigne",
+          "event_type": "Shot",
+          "location": [
+            107.9,
+            29.5
+          ],
+          "under_pressure": false,
+          "possession": 162,
+          "shot": {
+            "outcome": "Goal",
+            "statsbomb_xg": 0.19177714
+          },
+          "freeze_frame": {
+            "visible_player_count": 10,
+            "visible_opponents": 6,
+            "available": true
+          }
+        }
+      ]
+    },
+    {
+      "story_id": "story_002",
+      "category": "Defensive regain and attack",
+      "title": "Jorginho interception preceding sustained attacking pressure and a shot",
+      "source": {
+        "provider": "StatsBomb Open Data",
+        "match_id": "3788741",
+        "fixture": "Turkey vs Italy",
+        "event_file": "3788741_events.json",
+        "three_sixty_file": "3788741.json",
+        "coordinate_system": "StatsBomb native 120x80, not meters"
+      },
+      "possession_id": 108,
+      "time_window": {
+        "first": "00:44:17.224",
+        "last": "00:44:33.641",
+        "start_minute": 44,
+        "start_second": 17,
+        "end_minute": 44,
+        "end_second": 33
+      },
+      "outcome": "shot_off_target",
+      "verified_observations": [
+        "Jorginho intercepted the ball at 44:17.",
+        "Italy passed the ball multiple times before Berardi shot at 44:33.",
+        "The shot is recorded as Off T."
+      ],
+      "interpretation": "Jorginho interception preceding sustained attacking pressure and a shot. The sequence illustrates how match context can be explained without treating temporal sequence as causation.",
+      "limitations": [
+        "This is a continuous provider possession, not proof that the interception caused the shot.",
+        "The shot is off target; do not claim goal or saved shot.",
+        "360 player positions may be incomplete; line-breaking status not classified."
+      ],
+      "event_count": 19,
+      "events": [
+        {
+          "event_id": "431f45c0-fdb5-412c-9f74-0872c955888f",
+          "index": 1964,
+          "period": 1,
+          "minute": 44,
+          "second": 17,
+          "timestamp": "00:44:17.224",
+          "team": "Italy",
+          "player": "Jorge Luiz Frello Filho",
+          "event_type": "Interception",
+          "location": [
+            86.1,
+            32.3
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "freeze_frame": {
+            "visible_player_count": 15,
+            "visible_opponents": 9,
+            "available": true
+          }
+        },
+        {
+          "event_id": "eafc6963-85cb-4cc0-8f2f-8a19abdccb8f",
+          "index": 1965,
+          "period": 1,
+          "minute": 44,
+          "second": 17,
+          "timestamp": "00:44:17.710",
+          "team": "Italy",
+          "player": "Nicolò Barella",
+          "event_type": "Pass",
+          "location": [
+            87.3,
+            37.4
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "pass": {
+            "recipient": "Jorge Luiz Frello Filho",
+            "end_location": [
+              85.6,
+              33.3
+            ],
+            "outcome": "Complete (no outcome recorded)",
+            "assisted_shot_id": null
+          },
+          "freeze_frame": {
+            "visible_player_count": 15,
+            "visible_opponents": 9,
+            "available": true
+          }
+        },
+        {
+          "event_id": "f2e58235-9fee-47f8-bf61-c6526b73110f",
+          "index": 1966,
+          "period": 1,
+          "minute": 44,
+          "second": 18,
+          "timestamp": "00:44:18.241",
+          "team": "Italy",
+          "player": "Jorge Luiz Frello Filho",
+          "event_type": "Ball Receipt*",
+          "location": [
+            85.6,
+            33.3
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "freeze_frame": {
+            "visible_player_count": 16,
+            "visible_opponents": 9,
+            "available": true
+          }
+        },
+        {
+          "event_id": "f31c7042-9f79-4735-a943-71a04a92415e",
+          "index": 1967,
+          "period": 1,
+          "minute": 44,
+          "second": 18,
+          "timestamp": "00:44:18.241",
+          "team": "Italy",
+          "player": "Jorge Luiz Frello Filho",
+          "event_type": "Carry",
+          "location": [
+            85.6,
+            33.3
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "carry_end_location": [
+            85.4,
+            33.8
+          ],
+          "freeze_frame": {
+            "visible_player_count": 16,
+            "visible_opponents": 9,
+            "available": true
+          }
+        },
+        {
+          "event_id": "30a8d952-cd9f-46b6-824e-6cbf0ff8a0a0",
+          "index": 1968,
+          "period": 1,
+          "minute": 44,
+          "second": 21,
+          "timestamp": "00:44:21.120",
+          "team": "Italy",
+          "player": "Jorge Luiz Frello Filho",
+          "event_type": "Pass",
+          "location": [
+            85.4,
+            33.8
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "pass": {
+            "recipient": "Lorenzo Insigne",
+            "end_location": [
+              92.4,
+              28.3
+            ],
+            "outcome": "Complete (no outcome recorded)",
+            "assisted_shot_id": null
+          },
+          "freeze_frame": {
+            "visible_player_count": 16,
+            "visible_opponents": 9,
+            "available": true
+          }
+        },
+        {
+          "event_id": "9a69b6bc-f41c-4024-ba18-1c3af4777396",
+          "index": 1969,
+          "period": 1,
+          "minute": 44,
+          "second": 21,
+          "timestamp": "00:44:21.648",
+          "team": "Italy",
+          "player": "Lorenzo Insigne",
+          "event_type": "Ball Receipt*",
+          "location": [
+            92.4,
+            28.3
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "freeze_frame": {
+            "visible_player_count": 17,
+            "visible_opponents": 9,
+            "available": true
+          }
+        },
+        {
+          "event_id": "09157a6b-c08e-41fa-b973-ba4aa0ed910b",
+          "index": 1970,
+          "period": 1,
+          "minute": 44,
+          "second": 21,
+          "timestamp": "00:44:21.648",
+          "team": "Italy",
+          "player": "Lorenzo Insigne",
+          "event_type": "Pass",
+          "location": [
+            92.4,
+            28.3
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "pass": {
+            "recipient": "Jorge Luiz Frello Filho",
+            "end_location": [
+              84.9,
+              33.8
+            ],
+            "outcome": "Complete (no outcome recorded)",
+            "assisted_shot_id": null
+          },
+          "freeze_frame": {
+            "visible_player_count": 17,
+            "visible_opponents": 9,
+            "available": true
+          }
+        },
+        {
+          "event_id": "2d608181-8a2e-4342-91ef-4afed633f369",
+          "index": 1971,
+          "period": 1,
+          "minute": 44,
+          "second": 22,
+          "timestamp": "00:44:22.500",
+          "team": "Italy",
+          "player": "Jorge Luiz Frello Filho",
+          "event_type": "Ball Receipt*",
+          "location": [
+            84.9,
+            33.8
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "freeze_frame": {
+            "visible_player_count": 16,
+            "visible_opponents": 9,
+            "available": true
+          }
+        },
+        {
+          "event_id": "9354c005-9274-4512-978f-f52451e766da",
+          "index": 1972,
+          "period": 1,
+          "minute": 44,
+          "second": 22,
+          "timestamp": "00:44:22.500",
+          "team": "Italy",
+          "player": "Jorge Luiz Frello Filho",
+          "event_type": "Carry",
+          "location": [
+            84.9,
+            33.8
+          ],
+          "under_pressure": true,
+          "possession": 108,
+          "carry_end_location": [
+            93.5,
+            29.0
+          ],
+          "freeze_frame": {
+            "visible_player_count": 16,
+            "visible_opponents": 9,
+            "available": true
+          }
+        },
+        {
+          "event_id": "f79dd1f5-4317-4988-8065-5a13cbcab851",
+          "index": 1973,
+          "period": 1,
+          "minute": 44,
+          "second": 24,
+          "timestamp": "00:44:24.591",
+          "team": "Turkey",
+          "player": "Ozan Tufan",
+          "event_type": "Pressure",
+          "location": [
+            27.2,
+            44.9
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "freeze_frame": {
+            "visible_player_count": 17,
+            "visible_opponents": 7,
+            "available": true
+          }
+        },
+        {
+          "event_id": "7cc5672d-c843-4351-b20c-3a9f79085238",
+          "index": 1974,
+          "period": 1,
+          "minute": 44,
+          "second": 25,
+          "timestamp": "00:44:25.099",
+          "team": "Italy",
+          "player": "Jorge Luiz Frello Filho",
+          "event_type": "Pass",
+          "location": [
+            93.5,
+            29.0
+          ],
+          "under_pressure": true,
+          "possession": 108,
+          "pass": {
+            "recipient": "Leonardo Spinazzola",
+            "end_location": [
+              101.9,
+              13.9
+            ],
+            "outcome": "Complete (no outcome recorded)",
+            "assisted_shot_id": null
+          },
+          "freeze_frame": {
+            "visible_player_count": 17,
+            "visible_opponents": 10,
+            "available": true
+          }
+        },
+        {
+          "event_id": "2c0dcc45-319b-47e7-8167-adb6ab3c4361",
+          "index": 1975,
+          "period": 1,
+          "minute": 44,
+          "second": 26,
+          "timestamp": "00:44:26.225",
+          "team": "Italy",
+          "player": "Leonardo Spinazzola",
+          "event_type": "Ball Receipt*",
+          "location": [
+            101.9,
+            13.9
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "freeze_frame": {
+            "visible_player_count": 17,
+            "visible_opponents": 10,
+            "available": true
+          }
+        },
+        {
+          "event_id": "9534c008-b89d-44c5-b108-66f76c9f4434",
+          "index": 1976,
+          "period": 1,
+          "minute": 44,
+          "second": 26,
+          "timestamp": "00:44:26.225",
+          "team": "Italy",
+          "player": "Leonardo Spinazzola",
+          "event_type": "Carry",
+          "location": [
+            101.9,
+            13.9
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "carry_end_location": [
+            105.0,
+            12.5
+          ],
+          "freeze_frame": {
+            "visible_player_count": 17,
+            "visible_opponents": 10,
+            "available": true
+          }
+        },
+        {
+          "event_id": "1a06e58d-dc86-4202-8d54-5482254486ec",
+          "index": 1977,
+          "period": 1,
+          "minute": 44,
+          "second": 30,
+          "timestamp": "00:44:30.047",
+          "team": "Italy",
+          "player": "Leonardo Spinazzola",
+          "event_type": "Pass",
+          "location": [
+            105.0,
+            12.5
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "pass": {
+            "recipient": "Jorge Luiz Frello Filho",
+            "end_location": [
+              90.0,
+              21.8
+            ],
+            "outcome": "Complete (no outcome recorded)",
+            "assisted_shot_id": null
+          },
+          "freeze_frame": {
+            "visible_player_count": 15,
+            "visible_opponents": 10,
+            "available": true
+          }
+        },
+        {
+          "event_id": "53a7a67c-e1ce-4f41-8778-1450e11e458e",
+          "index": 1978,
+          "period": 1,
+          "minute": 44,
+          "second": 31,
+          "timestamp": "00:44:31.268",
+          "team": "Italy",
+          "player": "Jorge Luiz Frello Filho",
+          "event_type": "Ball Receipt*",
+          "location": [
+            90.0,
+            21.8
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "freeze_frame": {
+            "visible_player_count": 17,
+            "visible_opponents": 10,
+            "available": true
+          }
+        },
+        {
+          "event_id": "912ff0ca-9e7e-4539-ab4d-420b2c7ba134",
+          "index": 1979,
+          "period": 1,
+          "minute": 44,
+          "second": 31,
+          "timestamp": "00:44:31.268",
+          "team": "Italy",
+          "player": "Jorge Luiz Frello Filho",
+          "event_type": "Carry",
+          "location": [
+            90.0,
+            21.8
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "carry_end_location": [
+            90.7,
+            23.5
+          ],
+          "freeze_frame": {
+            "visible_player_count": 17,
+            "visible_opponents": 10,
+            "available": true
+          }
+        },
+        {
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "index": 1980,
+          "period": 1,
+          "minute": 44,
+          "second": 32,
+          "timestamp": "00:44:32.043",
+          "team": "Italy",
+          "player": "Jorge Luiz Frello Filho",
+          "event_type": "Pass",
+          "location": [
+            90.7,
+            23.5
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "pass": {
+            "recipient": "Domenico Berardi",
+            "end_location": [
+              110.1,
+              27.3
+            ],
+            "outcome": "Complete (no outcome recorded)",
+            "assisted_shot_id": "c07133d1-fa88-45f8-8a40-7be381ddffd1"
+          },
+          "freeze_frame": {
+            "visible_player_count": 17,
+            "visible_opponents": 10,
+            "available": true
+          }
+        },
+        {
+          "event_id": "cef726ef-de2c-4c8f-bc9b-3e951c4039bc",
+          "index": 1981,
+          "period": 1,
+          "minute": 44,
+          "second": 33,
+          "timestamp": "00:44:33.605",
+          "team": "Italy",
+          "player": "Domenico Berardi",
+          "event_type": "Ball Receipt*",
+          "location": [
+            110.1,
+            27.3
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "freeze_frame": {
+            "visible_player_count": 15,
+            "visible_opponents": 10,
+            "available": true
+          }
+        },
+        {
+          "event_id": "c07133d1-fa88-45f8-8a40-7be381ddffd1",
+          "index": 1982,
+          "period": 1,
+          "minute": 44,
+          "second": 33,
+          "timestamp": "00:44:33.641",
+          "team": "Italy",
+          "player": "Domenico Berardi",
+          "event_type": "Shot",
+          "location": [
+            109.2,
+            30.1
+          ],
+          "under_pressure": false,
+          "possession": 108,
+          "shot": {
+            "outcome": "Off T",
+            "statsbomb_xg": 0.12888117
+          },
+          "freeze_frame": {
+            "visible_player_count": 15,
+            "visible_opponents": 10,
+            "available": true
+          }
+        }
+      ]
+    },
+    {
+      "story_id": "story_003",
+      "category": "Playing under pressure",
+      "title": "Turkey ball recovery followed by pressured passing and a miscontrol",
+      "source": {
+        "provider": "StatsBomb Open Data",
+        "match_id": "3788741",
+        "fixture": "Turkey vs Italy",
+        "event_file": "3788741_events.json",
+        "three_sixty_file": "3788741.json",
+        "coordinate_system": "StatsBomb native 120x80, not meters"
+      },
+      "possession_id": 124,
+      "time_window": {
+        "first": "00:06:45.518",
+        "last": "00:06:51.904",
+        "start_minute": 51,
+        "start_second": 45,
+        "end_minute": 51,
+        "end_second": 51
+      },
+      "outcome": "miscontrol",
+      "verified_observations": [
+        "Ozan Tufan recovered the ball at 51:45.",
+        "Turkey made three passes marked under_pressure=true, including the 51:49 Söyüncü pass.",
+        "Burak Yılmaz miscontrolled the ball at 51:51."
+      ],
+      "interpretation": "Turkey ball recovery followed by pressured passing and a miscontrol. The sequence illustrates how match context can be explained without treating temporal sequence as causation.",
+      "limitations": [
+        "A pass without pass.outcome is provider-recorded complete, but a subsequent miscontrol means the overall sequence did not produce controlled progression.",
+        "Pressure is categorical annotation, not a pressure intensity measurement.",
+        "360 player positions may be incomplete; line-breaking status not classified."
+      ],
+      "event_count": 14,
+      "events": [
+        {
+          "event_id": "8f7289ec-7fa1-4f1d-a33e-fb1966a072a3",
+          "index": 2233,
+          "period": 2,
+          "minute": 51,
+          "second": 45,
+          "timestamp": "00:06:45.518",
+          "team": "Turkey",
+          "player": "Ozan Tufan",
+          "event_type": "Ball Recovery",
+          "location": [
+            35.3,
+            37.1
+          ],
+          "under_pressure": false,
+          "possession": 124,
+          "freeze_frame": {
+            "visible_player_count": 14,
+            "visible_opponents": 6,
+            "available": true
+          }
+        },
+        {
+          "event_id": "b6838723-7360-463c-b81b-60aa48e1e9e5",
+          "index": 2234,
+          "period": 2,
+          "minute": 51,
+          "second": 45,
+          "timestamp": "00:06:45.518",
+          "team": "Turkey",
+          "player": "Ozan Tufan",
+          "event_type": "Carry",
+          "location": [
+            35.3,
+            37.1
+          ],
+          "under_pressure": true,
+          "possession": 124,
+          "carry_end_location": [
+            36.9,
+            35.9
+          ],
+          "freeze_frame": {
+            "visible_player_count": 14,
+            "visible_opponents": 6,
+            "available": true
+          }
+        },
+        {
+          "event_id": "2c802a98-3293-4eca-88d9-1002d4b3ac03",
+          "index": 2235,
+          "period": 2,
+          "minute": 51,
+          "second": 45,
+          "timestamp": "00:06:45.740",
+          "team": "Italy",
+          "player": "Ciro Immobile",
+          "event_type": "Pressure",
+          "location": [
+            82.0,
+            40.6
+          ],
+          "under_pressure": false,
+          "possession": 124,
+          "freeze_frame": {
+            "visible_player_count": 14,
+            "visible_opponents": 8,
+            "available": true
+          }
+        },
+        {
+          "event_id": "6056f09b-9f99-49b5-9aae-b6d00321b963",
+          "index": 2236,
+          "period": 2,
+          "minute": 51,
+          "second": 46,
+          "timestamp": "00:06:46.644",
+          "team": "Turkey",
+          "player": "Ozan Tufan",
+          "event_type": "Pass",
+          "location": [
+            36.9,
+            35.9
+          ],
+          "under_pressure": true,
+          "possession": 124,
+          "pass": {
+            "recipient": "Cengiz Umut Meraş",
+            "end_location": [
+              28.4,
+              26.4
+            ],
+            "outcome": "Complete (no outcome recorded)",
+            "assisted_shot_id": null
+          },
+          "freeze_frame": {
+            "available": false
+          }
+        },
+        {
+          "event_id": "62742164-cb1b-4c29-a230-c7b47d2d1f18",
+          "index": 2237,
+          "period": 2,
+          "minute": 51,
+          "second": 47,
+          "timestamp": "00:06:47.531",
+          "team": "Turkey",
+          "player": "Cengiz Umut Meraş",
+          "event_type": "Ball Receipt*",
+          "location": [
+            28.4,
+            26.4
+          ],
+          "under_pressure": false,
+          "possession": 124,
+          "freeze_frame": {
+            "available": false
+          }
+        },
+        {
+          "event_id": "08460e1d-f0f6-4ed4-ac56-5df9291d5ac5",
+          "index": 2238,
+          "period": 2,
+          "minute": 51,
+          "second": 47,
+          "timestamp": "00:06:47.531",
+          "team": "Turkey",
+          "player": "Cengiz Umut Meraş",
+          "event_type": "Carry",
+          "location": [
+            28.4,
+            26.4
+          ],
+          "under_pressure": true,
+          "possession": 124,
+          "carry_end_location": [
+            29.1,
+            25.0
+          ],
+          "freeze_frame": {
+            "available": false
+          }
+        },
+        {
+          "event_id": "d583b280-f45d-4eee-903b-d34adeeadcc6",
+          "index": 2239,
+          "period": 2,
+          "minute": 51,
+          "second": 47,
+          "timestamp": "00:06:47.537",
+          "team": "Italy",
+          "player": "Domenico Berardi",
+          "event_type": "Pressure",
+          "location": [
+            88.4,
+            57.3
+          ],
+          "under_pressure": false,
+          "possession": 124,
+          "freeze_frame": {
+            "visible_player_count": 14,
+            "visible_opponents": 8,
+            "available": true
+          }
+        },
+        {
+          "event_id": "a12edd4d-73fd-4bdc-9c2f-85b70fb3cbae",
+          "index": 2240,
+          "period": 2,
+          "minute": 51,
+          "second": 48,
+          "timestamp": "00:06:48.272",
+          "team": "Turkey",
+          "player": "Cengiz Umut Meraş",
+          "event_type": "Pass",
+          "location": [
+            29.1,
+            25.0
+          ],
+          "under_pressure": true,
+          "possession": 124,
+          "pass": {
+            "recipient": "Caglar Söyüncü",
+            "end_location": [
+              14.5,
+              27.1
+            ],
+            "outcome": "Complete (no outcome recorded)",
+            "assisted_shot_id": null
+          },
+          "freeze_frame": {
+            "visible_player_count": 13,
+            "visible_opponents": 6,
+            "available": true
+          }
+        },
+        {
+          "event_id": "415ee56b-4559-4176-968a-dcdae96c3aaf",
+          "index": 2241,
+          "period": 2,
+          "minute": 51,
+          "second": 48,
+          "timestamp": "00:06:48.723",
+          "team": "Italy",
+          "player": "Ciro Immobile",
+          "event_type": "Pressure",
+          "location": [
+            95.6,
+            53.7
+          ],
+          "under_pressure": false,
+          "possession": 124,
+          "freeze_frame": {
+            "visible_player_count": 13,
+            "visible_opponents": 7,
+            "available": true
+          }
+        },
+        {
+          "event_id": "234f744b-dced-4f23-8fef-efc7f605fc72",
+          "index": 2242,
+          "period": 2,
+          "minute": 51,
+          "second": 49,
+          "timestamp": "00:06:49.365",
+          "team": "Turkey",
+          "player": "Caglar Söyüncü",
+          "event_type": "Ball Receipt*",
+          "location": [
+            14.5,
+            27.1
+          ],
+          "under_pressure": true,
+          "possession": 124,
+          "freeze_frame": {
+            "visible_player_count": 12,
+            "visible_opponents": 5,
+            "available": true
+          }
+        },
+        {
+          "event_id": "c2b46866-5874-491a-81eb-1bffb406c47d",
+          "index": 2243,
+          "period": 2,
+          "minute": 51,
+          "second": 49,
+          "timestamp": "00:06:49.365",
+          "team": "Turkey",
+          "player": "Caglar Söyüncü",
+          "event_type": "Pass",
+          "location": [
+            15.3,
+            27.6
+          ],
+          "under_pressure": true,
+          "possession": 124,
+          "pass": {
+            "recipient": "Burak Yılmaz",
+            "end_location": [
+              58.4,
+              27.6
+            ],
+            "outcome": "Complete (no outcome recorded)",
+            "assisted_shot_id": null
+          },
+          "freeze_frame": {
+            "visible_player_count": 12,
+            "visible_opponents": 5,
+            "available": true
+          }
+        },
+        {
+          "event_id": "873bcc05-3c60-4771-ae89-5c53d0c55cda",
+          "index": 2244,
+          "period": 2,
+          "minute": 51,
+          "second": 51,
+          "timestamp": "00:06:51.749",
+          "team": "Italy",
+          "player": "Leonardo Bonucci",
+          "event_type": "Pressure",
+          "location": [
+            58.6,
+            53.2
+          ],
+          "under_pressure": false,
+          "possession": 124,
+          "freeze_frame": {
+            "visible_player_count": 15,
+            "visible_opponents": 7,
+            "available": true
+          }
+        },
+        {
+          "event_id": "ed33ef9e-d44e-4724-a077-7681feb22408",
+          "index": 2245,
+          "period": 2,
+          "minute": 51,
+          "second": 51,
+          "timestamp": "00:06:51.904",
+          "team": "Turkey",
+          "player": "Burak Yılmaz",
+          "event_type": "Ball Receipt*",
+          "location": [
+            58.4,
+            27.6
+          ],
+          "under_pressure": true,
+          "possession": 124,
+          "freeze_frame": {
+            "visible_player_count": 14,
+            "visible_opponents": 7,
+            "available": true
+          }
+        },
+        {
+          "event_id": "029a40f3-5754-4aa2-b306-b58fd1c4b7e8",
+          "index": 2246,
+          "period": 2,
+          "minute": 51,
+          "second": 51,
+          "timestamp": "00:06:51.904",
+          "team": "Turkey",
+          "player": "Burak Yılmaz",
+          "event_type": "Miscontrol",
+          "location": [
+            58.1,
+            28.3
+          ],
+          "under_pressure": true,
+          "possession": 124,
+          "freeze_frame": {
+            "visible_player_count": 14,
+            "visible_opponents": 7,
+            "available": true
+          }
+        }
+      ]
+    }
+  ]
+}

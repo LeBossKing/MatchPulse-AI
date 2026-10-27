@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0-proposed",
+  "status": "engineering_heuristic_not_scientific_probability",
+  "match_id": 3788741,
+  "eligible_categories": [
+    "shot_creation",
+    "defensive_regain_attack",
+    "under_pressure_sequence",
+    "buildup_progression",
+    "possession_breakdown"
+  ],
+  "features": {
+    "goal": {
+      "weight": 8,
+      "evidence": "shot.outcome.name == Goal"
+    },
+    "shot": {
+      "weight": 4,
+      "evidence": "Shot event"
+    },
+    "regain": {
+      "weight": 3,
+      "evidence": "valid Interception or Ball Recovery event"
+    },
+    "under_pressure_action": {
+      "weight": 2,
+      "evidence": "under_pressure == true on ball action"
+    },
+    "completed_pass": {
+      "weight": 1,
+      "evidence": "Pass without outcome / permitted completion outcomes"
+    },
+    "net_progression_20_units": {
+      "weight": 2,
+      "evidence": "verified x coordinate change in native units"
+    },
+    "unknown_required_evidence": {
+      "weight": -4,
+      "evidence": "missing required outcome/location data"
+    }
+  },
+  "score_formula": "sum(weight for each feature present once per story); not a probability",
+  "thresholds": {
+    "min_score_for_review": 3,
+    "max_candidate_seconds": 20,
+    "min_buildup_actions": 3,
+    "min_buildup_net_progression_native_units": 20,
+    "deduplicate_jaccard_event_overlap_greater_than": 0.7
+  },
+  "tie_break": [
+    "higher_score",
+    "more_verified_evidence_fields",
+    "earlier_event_index"
+  ],
+  "disclaimer": "All coefficients are configurable MVP heuristics, not calibrated or provider-approved."
+}

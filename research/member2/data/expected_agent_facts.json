@@ -1,0 +1,277 @@
+{
+  "schema_version": "1.0",
+  "match_id": 3788741,
+  "source": "StatsBomb Open Data",
+  "facts_scope": "five shortlisted event IDs",
+  "events": [
+    {
+      "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "match_id": 3788741,
+      "team": "Italy",
+      "passer": "Jorge Luiz Frello Filho",
+      "recipient": "Domenico Berardi",
+      "time": "44:32",
+      "facts": {
+        "pass_completed": true,
+        "provider_length": 19.768661,
+        "computed_distance_coordinate_units": 19.7687,
+        "forward_progression_coordinate_units": 19.4,
+        "under_pressure_annotated": null,
+        "has_360": true,
+        "shot_assist": true,
+        "linked_shot_id": "c07133d1-fa88-45f8-8a40-7be381ddffd1",
+        "linked_shot_outcome": "Off T",
+        "line_breaking": null
+      },
+      "evidence": [
+        {
+          "field": "type.name",
+          "value": "Pass"
+        },
+        {
+          "field": "location",
+          "value": [
+            90.7,
+            23.5
+          ]
+        },
+        {
+          "field": "pass.end_location",
+          "value": [
+            110.1,
+            27.3
+          ]
+        },
+        {
+          "field": "pass.outcome",
+          "value": null
+        },
+        {
+          "field": "pass.length",
+          "value": 19.768661
+        },
+        {
+          "field": "pass.assisted_shot_id",
+          "value": "c07133d1-fa88-45f8-8a40-7be381ddffd1"
+        }
+      ],
+      "warnings": [
+        "StatsBomb coordinates and pass length are provider scale, not independently confirmed physical metres",
+        "Absence of under_pressure is not a quantitative zero-pressure measurement",
+        "Line breaking not validated"
+      ]
+    },
+    {
+      "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+      "match_id": 3788741,
+      "team": "Italy",
+      "passer": "Alessandro Florenzi",
+      "recipient": "Domenico Berardi",
+      "time": "02:02",
+      "facts": {
+        "pass_completed": true,
+        "provider_length": 73.95133,
+        "computed_distance_coordinate_units": 73.9513,
+        "forward_progression_coordinate_units": 73.6,
+        "under_pressure_annotated": null,
+        "has_360": true,
+        "shot_assist": false,
+        "linked_shot_id": null,
+        "linked_shot_outcome": null,
+        "line_breaking": null
+      },
+      "evidence": [
+        {
+          "field": "type.name",
+          "value": "Pass"
+        },
+        {
+          "field": "location",
+          "value": [
+            44.9,
+            60.2
+          ]
+        },
+        {
+          "field": "pass.end_location",
+          "value": [
+            118.5,
+            67.4
+          ]
+        },
+        {
+          "field": "pass.outcome",
+          "value": null
+        },
+        {
+          "field": "pass.length",
+          "value": 73.95133
+        }
+      ],
+      "warnings": [
+        "StatsBomb coordinates and pass length are provider scale, not independently confirmed physical metres",
+        "Absence of under_pressure is not a quantitative zero-pressure measurement",
+        "Line breaking not validated"
+      ]
+    },
+    {
+      "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+      "match_id": 3788741,
+      "team": "Italy",
+      "passer": "Manuel Locatelli",
+      "recipient": "Lorenzo Insigne",
+      "time": "30:25",
+      "facts": {
+        "pass_completed": true,
+        "provider_length": 35.47464,
+        "computed_distance_coordinate_units": 35.4746,
+        "forward_progression_coordinate_units": 29.7,
+        "under_pressure_annotated": null,
+        "has_360": true,
+        "shot_assist": false,
+        "linked_shot_id": null,
+        "linked_shot_outcome": null,
+        "line_breaking": null
+      },
+      "evidence": [
+        {
+          "field": "type.name",
+          "value": "Pass"
+        },
+        {
+          "field": "location",
+          "value": [
+            71.3,
+            25.4
+          ]
+        },
+        {
+          "field": "pass.end_location",
+          "value": [
+            101.0,
+            6.0
+          ]
+        },
+        {
+          "field": "pass.outcome",
+          "value": null
+        },
+        {
+          "field": "pass.length",
+          "value": 35.47464
+        }
+      ],
+      "warnings": [
+        "StatsBomb coordinates and pass length are provider scale, not independently confirmed physical metres",
+        "Absence of under_pressure is not a quantitative zero-pressure measurement",
+        "Line breaking not validated"
+      ]
+    },
+    {
+      "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+      "match_id": 3788741,
+      "team": "Italy",
+      "passer": "Leonardo Bonucci",
+      "recipient": "Lorenzo Insigne",
+      "time": "27:43",
+      "facts": {
+        "pass_completed": true,
+        "provider_length": 32.379776,
+        "computed_distance_coordinate_units": 32.3798,
+        "forward_progression_coordinate_units": 29.1,
+        "under_pressure_annotated": null,
+        "has_360": true,
+        "shot_assist": false,
+        "linked_shot_id": null,
+        "linked_shot_outcome": null,
+        "line_breaking": null
+      },
+      "evidence": [
+        {
+          "field": "type.name",
+          "value": "Pass"
+        },
+        {
+          "field": "location",
+          "value": [
+            53.9,
+            43.4
+          ]
+        },
+        {
+          "field": "pass.end_location",
+          "value": [
+            83.0,
+            29.2
+          ]
+        },
+        {
+          "field": "pass.outcome",
+          "value": null
+        },
+        {
+          "field": "pass.length",
+          "value": 32.379776
+        }
+      ],
+      "warnings": [
+        "StatsBomb coordinates and pass length are provider scale, not independently confirmed physical metres",
+        "Absence of under_pressure is not a quantitative zero-pressure measurement",
+        "Line breaking not validated"
+      ]
+    },
+    {
+      "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+      "match_id": 3788741,
+      "team": "Turkey",
+      "passer": "Mehmet Zeki Çelik",
+      "recipient": "Burak Yılmaz",
+      "time": "11:07",
+      "facts": {
+        "pass_completed": true,
+        "provider_length": 59.42163,
+        "computed_distance_coordinate_units": 59.4216,
+        "forward_progression_coordinate_units": 59.3,
+        "under_pressure_annotated": null,
+        "has_360": true,
+        "shot_assist": false,
+        "linked_shot_id": null,
+        "linked_shot_outcome": null,
+        "line_breaking": null
+      },
+      "evidence": [
+        {
+          "field": "type.name",
+          "value": "Pass"
+        },
+        {
+          "field": "location",
+          "value": [
+            40.9,
+            73.6
+          ]
+        },
+        {
+          "field": "pass.end_location",
+          "value": [
+            100.2,
+            69.8
+          ]
+        },
+        {
+          "field": "pass.outcome",
+          "value": null
+        },
+        {
+          "field": "pass.length",
+          "value": 59.42163
+        }
+      ],
+      "warnings": [
+        "StatsBomb coordinates and pass length are provider scale, not independently confirmed physical metres",
+        "Absence of under_pressure is not a quantitative zero-pressure measurement",
+        "Line breaking not validated"
+      ]
+    }
+  ]
+}

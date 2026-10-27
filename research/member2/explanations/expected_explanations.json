@@ -1,0 +1,646 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Reference explanations for evaluation, not observed AI model outputs",
+  "source_match_id": 3788741,
+  "sources": [
+    "StatsBomb Open Data events 3788741",
+    "StatsBomb 360 3788741",
+    "Member 2 Step 4 expected_agent_facts.json"
+  ],
+  "notes": [
+    "StatsBomb units are not metres.",
+    "No line-breaking classification is asserted.",
+    "No under-pressure claim is asserted for these five event records.",
+    "Translations preserve facts; wording may differ."
+  ],
+  "examples": [
+    {
+      "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "match_time": "44:32",
+      "team": "Italy",
+      "audience": "analyst",
+      "language": "en",
+      "text": "Jorginho completed a pass to Domenico Berardi, advancing the ball 19.4 StatsBomb coordinate units. The event is explicitly linked to Berardi’s subsequent off-target shot.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 19.4,
+          "unit": "StatsBomb coordinate units"
+        },
+        {
+          "claim": "shot followed from the pass",
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "source_path": "pass.assisted_shot_id",
+          "observed": "c07133d1-fa88-45f8-8a40-7be381ddffd1"
+        },
+        {
+          "claim": "subsequent shot off target",
+          "event_id": "c07133d1-fa88-45f8-8a40-7be381ddffd1",
+          "source_path": "shot.outcome.name",
+          "observed": "Off T"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "match_time": "44:32",
+      "team": "Italy",
+      "audience": "analyst",
+      "language": "fr",
+      "text": "Jorginho a réussi une passe vers Domenico Berardi, faisant progresser le ballon de 19,4 unités de coordonnées StatsBomb. Cet événement est explicitement lié au tir ultérieur de Berardi, non cadré.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 19.4,
+          "unit": "StatsBomb coordinate units"
+        },
+        {
+          "claim": "shot followed from the pass",
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "source_path": "pass.assisted_shot_id",
+          "observed": "c07133d1-fa88-45f8-8a40-7be381ddffd1"
+        },
+        {
+          "claim": "subsequent shot off target",
+          "event_id": "c07133d1-fa88-45f8-8a40-7be381ddffd1",
+          "source_path": "shot.outcome.name",
+          "observed": "Off T"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "match_time": "44:32",
+      "team": "Italy",
+      "audience": "fan",
+      "language": "en",
+      "text": "Jorginho found Berardi with a forward pass, and Berardi then shot wide.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 19.4,
+          "unit": "StatsBomb coordinate units"
+        },
+        {
+          "claim": "shot followed from the pass",
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "source_path": "pass.assisted_shot_id",
+          "observed": "c07133d1-fa88-45f8-8a40-7be381ddffd1"
+        },
+        {
+          "claim": "subsequent shot off target",
+          "event_id": "c07133d1-fa88-45f8-8a40-7be381ddffd1",
+          "source_path": "shot.outcome.name",
+          "observed": "Off T"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "match_time": "44:32",
+      "team": "Italy",
+      "audience": "fan",
+      "language": "fr",
+      "text": "Jorginho a trouvé Berardi avec une passe vers l’avant, puis Berardi a tiré hors du cadre.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 19.4,
+          "unit": "StatsBomb coordinate units"
+        },
+        {
+          "claim": "shot followed from the pass",
+          "event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+          "source_path": "pass.assisted_shot_id",
+          "observed": "c07133d1-fa88-45f8-8a40-7be381ddffd1"
+        },
+        {
+          "claim": "subsequent shot off target",
+          "event_id": "c07133d1-fa88-45f8-8a40-7be381ddffd1",
+          "source_path": "shot.outcome.name",
+          "observed": "Off T"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+      "match_time": "02:02",
+      "team": "Italy",
+      "audience": "analyst",
+      "language": "en",
+      "text": "Alessandro Florenzi completed a pass to Domenico Berardi with 73.6 StatsBomb coordinate units of forward progression. This indicates substantial forward ball movement, but does not independently establish a broken defensive line.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 73.6,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+      "match_time": "02:02",
+      "team": "Italy",
+      "audience": "analyst",
+      "language": "fr",
+      "text": "Alessandro Florenzi a réussi une passe vers Domenico Berardi avec une progression de 73,6 unités de coordonnées StatsBomb. Cela indique une avancée importante du ballon, sans prouver à lui seul le franchissement d’une ligne défensive.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 73.6,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+      "match_time": "02:02",
+      "team": "Italy",
+      "audience": "fan",
+      "language": "en",
+      "text": "Florenzi played a long forward pass to Berardi.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 73.6,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+      "match_time": "02:02",
+      "team": "Italy",
+      "audience": "fan",
+      "language": "fr",
+      "text": "Florenzi a adressé une longue passe vers l’avant à Berardi.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 73.6,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+      "match_time": "30:25",
+      "team": "Italy",
+      "audience": "analyst",
+      "language": "en",
+      "text": "Manuel Locatelli completed a pass to Lorenzo Insigne, advancing the ball 29.7 StatsBomb coordinate units. The pass outcome is recorded as completed; its line-breaking status remains unverified.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 29.7,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+      "match_time": "30:25",
+      "team": "Italy",
+      "audience": "analyst",
+      "language": "fr",
+      "text": "Manuel Locatelli a réussi une passe vers Lorenzo Insigne, faisant progresser le ballon de 29,7 unités de coordonnées StatsBomb. La passe est enregistrée comme réussie ; son éventuel caractère briseur de ligne reste non vérifié.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 29.7,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+      "match_time": "30:25",
+      "team": "Italy",
+      "audience": "fan",
+      "language": "en",
+      "text": "Locatelli moved the ball forward to Insigne with a completed pass.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 29.7,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+      "match_time": "30:25",
+      "team": "Italy",
+      "audience": "fan",
+      "language": "fr",
+      "text": "Locatelli a fait avancer le ballon vers Insigne grâce à une passe réussie.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 29.7,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+      "match_time": "27:43",
+      "team": "Italy",
+      "audience": "analyst",
+      "language": "en",
+      "text": "Leonardo Bonucci completed a pass to Lorenzo Insigne, with 29.1 StatsBomb coordinate units of forward progression. The available event evidence supports ball progression, not a specific claim about defensive lines.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 29.1,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+      "match_time": "27:43",
+      "team": "Italy",
+      "audience": "analyst",
+      "language": "fr",
+      "text": "Leonardo Bonucci a réussi une passe vers Lorenzo Insigne, avec 29,1 unités de coordonnées StatsBomb de progression vers l’avant. Les données disponibles établissent la progression du ballon, mais pas le franchissement d’un nombre précis de lignes défensives.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 29.1,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+      "match_time": "27:43",
+      "team": "Italy",
+      "audience": "fan",
+      "language": "en",
+      "text": "Bonucci found Insigne with a forward pass.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 29.1,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+      "match_time": "27:43",
+      "team": "Italy",
+      "audience": "fan",
+      "language": "fr",
+      "text": "Bonucci a trouvé Insigne avec une passe vers l’avant.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 29.1,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+      "match_time": "11:07",
+      "team": "Turkey",
+      "audience": "analyst",
+      "language": "en",
+      "text": "Mehmet Zeki Çelik completed a pass to Burak Yılmaz, advancing the ball 59.3 StatsBomb coordinate units. The long forward movement is documented by the start and end positions; pressure and line-breaking are not established.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 59.3,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+      "match_time": "11:07",
+      "team": "Turkey",
+      "audience": "analyst",
+      "language": "fr",
+      "text": "Mehmet Zeki Çelik a réussi une passe vers Burak Yılmaz, faisant progresser le ballon de 59,3 unités de coordonnées StatsBomb. Cette avancée est étayée par les positions de départ et d’arrivée ; la pression et le franchissement des lignes ne sont pas établis.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 59.3,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+      "match_time": "11:07",
+      "team": "Turkey",
+      "audience": "fan",
+      "language": "en",
+      "text": "Zeki Çelik sent a long forward pass to Burak Yılmaz.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 59.3,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    },
+    {
+      "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+      "match_time": "11:07",
+      "team": "Turkey",
+      "audience": "fan",
+      "language": "fr",
+      "text": "Zeki Çelik a envoyé une longue passe vers l’avant à Burak Yılmaz.",
+      "evidence": [
+        {
+          "claim": "completed pass",
+          "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+          "source_path": "type.name + pass.outcome (absent)",
+          "observed": "Pass; no outcome key"
+        },
+        {
+          "claim": "forward progression",
+          "event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+          "source_path": "location[0], pass.end_location[0]",
+          "observed": 59.3,
+          "unit": "StatsBomb coordinate units"
+        }
+      ],
+      "validation_status": "reference_supported",
+      "prohibited_inferences": [
+        "broke one or more defensive lines",
+        "high pressure at passing moment",
+        "resulted in a goal"
+      ]
+    }
+  ]
+}

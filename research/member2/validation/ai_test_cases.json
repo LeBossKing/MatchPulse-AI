@@ -1,0 +1,650 @@
+{
+  "schema_version": "1.0",
+  "source_match_id": 3788741,
+  "status": "proposed_test_specifications_not_execution_results",
+  "cases": [
+    {
+      "test_id": "EV-01",
+      "category": "normal",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": null,
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent1": "facts_supported",
+        "agent2": "evidence_grounded",
+        "agent3": "validated",
+        "must_preserve": [
+          "passer",
+          "recipient",
+          "pass_completed",
+          "forward_progression_coordinate_units"
+        ],
+        "line_breaking": null
+      },
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R06",
+        "R07"
+      ],
+      "notes": "Reference explanation for this event exists in Step 5."
+    },
+    {
+      "test_id": "EV-02",
+      "category": "normal",
+      "source_event_id": "62907dbc-6797-44a3-b7d8-675992cbefd0",
+      "input_mutation": null,
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent1": "facts_supported",
+        "agent2": "evidence_grounded",
+        "agent3": "validated",
+        "must_preserve": [
+          "passer",
+          "recipient",
+          "pass_completed",
+          "forward_progression_coordinate_units"
+        ],
+        "line_breaking": null
+      },
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R06",
+        "R07"
+      ],
+      "notes": "Reference explanation for this event exists in Step 5."
+    },
+    {
+      "test_id": "EV-03",
+      "category": "normal",
+      "source_event_id": "425e7fd4-2b3b-4c36-ad8a-883b4c4155a1",
+      "input_mutation": null,
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent1": "facts_supported",
+        "agent2": "evidence_grounded",
+        "agent3": "validated",
+        "must_preserve": [
+          "passer",
+          "recipient",
+          "pass_completed",
+          "forward_progression_coordinate_units"
+        ],
+        "line_breaking": null
+      },
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R06",
+        "R07"
+      ],
+      "notes": "Reference explanation for this event exists in Step 5."
+    },
+    {
+      "test_id": "EV-04",
+      "category": "normal",
+      "source_event_id": "44a68ffc-31e8-47db-969c-d93f45c955e5",
+      "input_mutation": null,
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent1": "facts_supported",
+        "agent2": "evidence_grounded",
+        "agent3": "validated",
+        "must_preserve": [
+          "passer",
+          "recipient",
+          "pass_completed",
+          "forward_progression_coordinate_units"
+        ],
+        "line_breaking": null
+      },
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R06",
+        "R07"
+      ],
+      "notes": "Reference explanation for this event exists in Step 5."
+    },
+    {
+      "test_id": "EV-05",
+      "category": "normal",
+      "source_event_id": "97279038-a2eb-4fee-be0b-e3e61d7e1422",
+      "input_mutation": null,
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent1": "facts_supported",
+        "agent2": "evidence_grounded",
+        "agent3": "validated",
+        "must_preserve": [
+          "passer",
+          "recipient",
+          "pass_completed",
+          "forward_progression_coordinate_units"
+        ],
+        "line_breaking": null
+      },
+      "rule_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R06",
+        "R07"
+      ],
+      "notes": "Reference explanation for this event exists in Step 5."
+    },
+    {
+      "test_id": "CL-01",
+      "category": "hallucination",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": null,
+      "request": {
+        "audience": "fan",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "Jorginho scored the goal.",
+      "expected": {
+        "agent3": "reject_or_rewrite",
+        "forbidden_claims": [
+          "goal by Jorginho"
+        ]
+      },
+      "rule_ids": [
+        "R01",
+        "R04"
+      ],
+      "notes": "Linked shot is not a goal."
+    },
+    {
+      "test_id": "CL-02",
+      "category": "hallucination",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": null,
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "The pass broke exactly two defensive lines.",
+      "expected": {
+        "agent3": "reject_or_rewrite",
+        "line_breaking": null
+      },
+      "rule_ids": [
+        "R01",
+        "R05"
+      ],
+      "notes": "No validated line-breaking count in provided open data."
+    },
+    {
+      "test_id": "CL-03",
+      "category": "hallucination",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": null,
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "This was completed under very high defensive pressure.",
+      "expected": {
+        "agent3": "reject_or_rewrite"
+      },
+      "rule_ids": [
+        "R01",
+        "R05"
+      ],
+      "notes": "Pressure category is not established for selected event."
+    },
+    {
+      "test_id": "CL-04",
+      "category": "units",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": null,
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "The pass was 19.77 metres long.",
+      "expected": {
+        "agent3": "reject_or_rewrite",
+        "expected_unit": "StatsBomb coordinate units"
+      },
+      "rule_ids": [
+        "R03"
+      ],
+      "notes": "No physical pitch conversion validated."
+    },
+    {
+      "test_id": "CL-05",
+      "category": "interpretation",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": null,
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "This pass guaranteed a goal.",
+      "expected": {
+        "agent3": "reject_or_rewrite"
+      },
+      "rule_ids": [
+        "R04",
+        "R08"
+      ],
+      "notes": "Shot was off target, and causal certainty unsupported."
+    },
+    {
+      "test_id": "CL-06",
+      "category": "grounded",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": null,
+      "request": {
+        "audience": "fan",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "Jorginho passed to Berardi, who then shot off target.",
+      "expected": {
+        "agent3": "validated"
+      },
+      "rule_ids": [
+        "R01",
+        "R04"
+      ],
+      "notes": "Supported by assisted_shot_id and linked shot outcome."
+    },
+    {
+      "test_id": "MD-01",
+      "category": "missing_data",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "remove": [
+          "pass.assisted_shot_id"
+        ]
+      },
+      "request": {
+        "audience": "fan",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "The pass led directly to a shot.",
+      "expected": {
+        "agent3": "reject_or_rewrite",
+        "must_omit": [
+          "linked shot"
+        ]
+      },
+      "rule_ids": [
+        "R01",
+        "R06"
+      ],
+      "notes": "Treat as amended fixture, not altered original StatsBomb record."
+    },
+    {
+      "test_id": "MD-02",
+      "category": "missing_data",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "remove": [
+          "pass.end_location"
+        ]
+      },
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "The pass moved forward 19.4 units.",
+      "expected": {
+        "agent1": "insufficient_data",
+        "agent3": "reject_or_rewrite"
+      },
+      "rule_ids": [
+        "R02",
+        "R03"
+      ],
+      "notes": "Missing end coordinate prevents progression calculation."
+    },
+    {
+      "test_id": "MD-03",
+      "category": "missing_data",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "remove": [
+          "location"
+        ]
+      },
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "The pass travelled 19.77 units.",
+      "expected": {
+        "agent1": "insufficient_data",
+        "agent3": "reject_or_rewrite"
+      },
+      "rule_ids": [
+        "R02",
+        "R03"
+      ],
+      "notes": "Missing start coordinate prevents recomputation."
+    },
+    {
+      "test_id": "MD-04",
+      "category": "missing_data",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "remove": [
+          "under_pressure"
+        ]
+      },
+      "request": {
+        "audience": "fan",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "The pass was pressure-free.",
+      "expected": {
+        "agent3": "reject_or_rewrite"
+      },
+      "rule_ids": [
+        "R05"
+      ],
+      "notes": "Absent annotation must not be interpreted as measured absence of pressure."
+    },
+    {
+      "test_id": "MD-05",
+      "category": "missing_data",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "remove": [
+          "360_frame"
+        ]
+      },
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "The pass split the defending line.",
+      "expected": {
+        "agent3": "reject_or_rewrite"
+      },
+      "rule_ids": [
+        "R05"
+      ],
+      "notes": "Explicit missing frame fixture; no positional support."
+    },
+    {
+      "test_id": "IV-01",
+      "category": "invalid",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "set": {
+          "location": [
+            125,
+            40
+          ]
+        }
+      },
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent1": "input_error",
+        "agent2": "skipped"
+      },
+      "rule_ids": [
+        "R02"
+      ],
+      "notes": "Bad coordinate on 120x80 scale."
+    },
+    {
+      "test_id": "IV-02",
+      "category": "invalid",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "set": {
+          "pass.end_location": [
+            80,
+            -1
+          ]
+        }
+      },
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent1": "input_error",
+        "agent2": "skipped"
+      },
+      "rule_ids": [
+        "R02"
+      ],
+      "notes": "Invalid y."
+    },
+    {
+      "test_id": "IV-03",
+      "category": "invalid",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "set": {
+          "id": "not-a-real-event-id"
+        }
+      },
+      "request": {
+        "audience": "analyst",
+        "language": "en"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent1": "input_error",
+        "agent2": "skipped"
+      },
+      "rule_ids": [
+        "R02"
+      ],
+      "notes": "Tampered event ID not in source dataset."
+    },
+    {
+      "test_id": "CT-01",
+      "category": "contradiction",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "set": {
+          "pass.outcome": {
+            "id": 9,
+            "name": "Incomplete"
+          }
+        }
+      },
+      "request": {
+        "audience": "fan",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "Jorginho completed the pass.",
+      "expected": {
+        "agent3": "reject_or_rewrite",
+        "completion": false
+      },
+      "rule_ids": [
+        "R01",
+        "R02"
+      ],
+      "notes": "Fixture override: modified outcome means incomplete."
+    },
+    {
+      "test_id": "CT-02",
+      "category": "contradiction",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "set": {
+          "pass.assisted_shot_id": "nonexistent-shot-id"
+        }
+      },
+      "request": {
+        "audience": "fan",
+        "language": "en"
+      },
+      "candidate_claim_or_text": "It led directly to a shot.",
+      "expected": {
+        "agent1": "flag_inconsistent_reference",
+        "agent3": "reject_or_rewrite"
+      },
+      "rule_ids": [
+        "R01",
+        "R02"
+      ],
+      "notes": "An unresolvable link must not be trusted."
+    },
+    {
+      "test_id": "I18N-01",
+      "category": "personalization",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": null,
+      "request": {
+        "audience": "fan",
+        "language": "fr"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent3": "validated",
+        "language": "fr",
+        "fact_invariance": true
+      },
+      "rule_ids": [
+        "R07"
+      ],
+      "notes": "Check correct French, same underlying facts."
+    },
+    {
+      "test_id": "I18N-02",
+      "category": "personalization",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": null,
+      "request": {
+        "audience": "analyst",
+        "language": "fr"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent3": "validated",
+        "language": "fr",
+        "fact_invariance": true
+      },
+      "rule_ids": [
+        "R07"
+      ],
+      "notes": "Check correct French, same underlying facts."
+    },
+    {
+      "test_id": "I18N-03",
+      "category": "personalization",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": null,
+      "request": {
+        "audience": "fan",
+        "language": "en"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent3": "validated",
+        "fact_invariance": true
+      },
+      "rule_ids": [
+        "R07"
+      ],
+      "notes": "Comparing Analyst vs Fan must not change metrics."
+    },
+    {
+      "test_id": "FB-01",
+      "category": "reliability",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "provider_status": "timeout"
+      },
+      "request": {
+        "audience": "fan",
+        "language": "en"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent2": "fallback",
+        "provider": "mock_or_template",
+        "must_label_fallback": true
+      },
+      "rule_ids": [
+        "R09"
+      ],
+      "notes": "An Azure failure must not be reported as live AI success."
+    },
+    {
+      "test_id": "FB-02",
+      "category": "reliability",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "provider_status": "no_credentials"
+      },
+      "request": {
+        "audience": "analyst",
+        "language": "fr"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "agent2": "fallback",
+        "provider": "mock_or_template",
+        "must_label_fallback": true
+      },
+      "rule_ids": [
+        "R09"
+      ],
+      "notes": "Keep offline demonstration viable."
+    },
+    {
+      "test_id": "STATE-01",
+      "category": "state_consistency",
+      "source_event_id": "d646d6a0-b62c-4040-bf93-88ccde45fe95",
+      "input_mutation": {
+        "ui_action": "switch_audience_or_language"
+      },
+      "request": {
+        "audience": "fan",
+        "language": "fr"
+      },
+      "candidate_claim_or_text": null,
+      "expected": {
+        "selected_event_unchanged": true,
+        "metrics_unchanged": true,
+        "statistics_not_double_counted": true
+      },
+      "rule_ids": [
+        "R07",
+        "R10"
+      ],
+      "notes": "Same event selection, no increment on presentation-only changes."
+    }
+  ]
+}

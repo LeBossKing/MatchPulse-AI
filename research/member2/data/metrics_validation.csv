@@ -1,0 +1,6 @@
+event_id,period,minute,second,team,passer,recipient,start_x,start_y,end_x,end_y,provider_length,computed_distance_coordinate_units,length_absolute_difference,forward_delta_x_coordinate_units,completed_by_outcome_absence,pass_outcome,pressure_annotated_true,pressure_field_present,has_360,assisted_shot_id,linked_shot_found,linked_shot_outcome,line_breaking_status
+d646d6a0-b62c-4040-bf93-88ccde45fe95,1,44,32,Italy,Jorge Luiz Frello Filho,Domenico Berardi,90.7,23.5,110.1,27.3,19.768661,19.768662,1e-06,19.4,True,<absent>,False,False,True,c07133d1-fa88-45f8-8a40-7be381ddffd1,True,Off T,undetermined
+62907dbc-6797-44a3-b7d8-675992cbefd0,1,2,2,Italy,Alessandro Florenzi,Domenico Berardi,44.9,60.2,118.5,67.4,73.95133,73.951335,5e-06,73.6,True,<absent>,False,False,True,,False,,undetermined
+425e7fd4-2b3b-4c36-ad8a-883b4c4155a1,1,30,25,Italy,Manuel Locatelli,Lorenzo Insigne,71.3,25.4,101.0,6.0,35.47464,35.474639,1e-06,29.7,True,<absent>,False,False,True,,False,,undetermined
+44a68ffc-31e8-47db-969c-d93f45c955e5,1,27,43,Italy,Leonardo Bonucci,Lorenzo Insigne,53.9,43.4,83.0,29.2,32.379776,32.379778,2e-06,29.1,True,<absent>,False,False,True,,False,,undetermined
+97279038-a2eb-4fee-be0b-e3e61d7e1422,1,11,7,Turkey,Mehmet Zeki Çelik,Burak Yılmaz,40.9,73.6,100.2,69.8,59.42163,59.421629,1e-06,59.3,True,<absent>,False,False,True,,False,,undetermined

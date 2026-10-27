@@ -1,0 +1,4 @@
+# Preserve the original handoff bytes so its SHA-256 manifest stays valid.
+* -text
+# The supplied CSV files use CRLF; treat CR as part of the line ending.
+*.csv whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
