@@ -2,6 +2,8 @@
 
 Use this checkpoint after the Task 7 integration works. Member 1 owns technical checks and fixes, Member 2 validates the source annotations and tactical claims, and Member 3 rehearses and records acceptance results.
 
+The [Member 2 validation guide](member2-validation.md) maps the imported 27 proposals to 19 current-MVP controls and 8 deferred source cases. The full runner also verifies this scope map and the original handoff's manifest. Record human source/tactical review in [the pending review form](data-validation.md).
+
 ## Run the automated checks
 
 Install development dependencies once:
@@ -22,7 +24,7 @@ Then, from the repository root:
 python scripts/verify_demo.py
 ```
 
-The runner stops on the first failed check and returns a nonzero exit code. It checks backend tests, generated contracts, generated samples, frontend tests with real HTTP enabled, lint, and the production build. It does not install packages or edit configuration.
+The runner stops on the first failed check and returns a nonzero exit code. Its seven checks cover Member 2 scope/manifest consistency, backend tests, generated contracts, generated samples, frontend tests with real HTTP enabled, lint, and the production build. It does not install packages or edit configuration.
 
 The test processes override provider settings and credentials. Mock workflow tests and an intentionally unconfigured Azure fallback are local; no model request is sent. Your running development backend and its environment file are left alone. Integration tests allocate temporary local ports and stop only the processes they start.
 
@@ -61,6 +63,8 @@ If Azure falls back during the main check, record the fallback reason and fix de
 Development verification on 2026-10-24 passed: 170 backend tests, 37 frontend tests including all five opt-in connected tests, contract and sample checks, lint, and production build. The 32 request variants are exercised inside the HTTP tests. No application defect was reproduced in this automated rehearsal. The sample-mode regression test now waits for the loaded dashboard's provenance badge instead of accepting the bootstrap heading as completion.
 
 These results use local mock/configuration-fallback execution. The manual live-Azure, browser-layout, source-review, and final video rehearsal gates remain separate.
+
+The Member 2 rule update was verified on 2026-10-27: all seven runner checks passed, with 195 backend tests and 37 frontend tests. The 19 adapted controls refer to current-MVP coverage; the eight source-specific cases remain deferred. This does not change the original research test matrix or complete the human review.
 
 For each failure, record the commit, language/audience, event ID, steps, expected/actual behavior, browser, HTTP status, and safe provider reason. Keep one issue per reproducible bug. Recheck the failed scenario after a fix and rerun the automated runner when code or contracts change. Do not include keys or authorization headers in bug reports.
 

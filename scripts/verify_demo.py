@@ -34,6 +34,7 @@ def main() -> int:
         "MATCHPULSE_RUN_API_TESTS": "1",
     }
     checks = [
+        ("Member 2 scope mapping and handoff integrity", ROOT, [str(python), "scripts/check_member2_mapping.py"]),
         ("Backend tests", backend, [str(python), "-m", "pytest", "-q"]),
         ("OpenAPI and browser schema consistency", backend, [str(python), "scripts/export_contract.py", "--check"]),
         ("Dashboard sample consistency", backend, [str(python), "scripts/export_dashboard_samples.py", "--check"]),

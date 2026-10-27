@@ -1,0 +1,225 @@
+{
+  "schema_version": "1.0",
+  "task": 8,
+  "status": "scope_mapping_not_original_case_execution",
+  "source_cases": "research/member2/validation/ai_test_cases.json",
+  "notes": [
+    "adapted_mvp links applicable controls to tests of the current synthetic structured-candidate workflow; it is not a pass result for the literal source specification.",
+    "deferred_source_integration requires source/shot-link support beyond the current MVP.",
+    "Run scripts/verify_demo.py for current test execution. Member 2 review and live Azure acceptance are separate."
+  ],
+  "cases": [
+    {
+      "test_id": "EV-01",
+      "status": "deferred_source_integration",
+      "scope_note": "Original StatsBomb UUID, coordinate units, and expected facts require a source adapter. The runtime currently accepts only synthetic fixture selectors. Raw reference calculations were checked separately; these source API cases have not run.",
+      "coverage": []
+    },
+    {
+      "test_id": "EV-02",
+      "status": "deferred_source_integration",
+      "scope_note": "Original StatsBomb UUID, coordinate units, and expected facts require a source adapter. The runtime currently accepts only synthetic fixture selectors. Raw reference calculations were checked separately; these source API cases have not run.",
+      "coverage": []
+    },
+    {
+      "test_id": "EV-03",
+      "status": "deferred_source_integration",
+      "scope_note": "Original StatsBomb UUID, coordinate units, and expected facts require a source adapter. The runtime currently accepts only synthetic fixture selectors. Raw reference calculations were checked separately; these source API cases have not run.",
+      "coverage": []
+    },
+    {
+      "test_id": "EV-04",
+      "status": "deferred_source_integration",
+      "scope_note": "Original StatsBomb UUID, coordinate units, and expected facts require a source adapter. The runtime currently accepts only synthetic fixture selectors. Raw reference calculations were checked separately; these source API cases have not run.",
+      "coverage": []
+    },
+    {
+      "test_id": "EV-05",
+      "status": "deferred_source_integration",
+      "scope_note": "Original StatsBomb UUID, coordinate units, and expected facts require a source adapter. The runtime currently accepts only synthetic fixture selectors. Raw reference calculations were checked separately; these source API cases have not run.",
+      "coverage": []
+    },
+    {
+      "test_id": "CL-01",
+      "status": "adapted_mvp",
+      "scope_note": "Adapted to rejecting a structured goal_scored claim absent from canonical synthetic evidence. Unchecked provider prose is blocked at the schema boundary; this does not implement a general natural-language validator.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_unsupported_scoring_claims_are_rejected",
+        "backend/tests/test_member2_rules.py::test_unchecked_provider_prose_cannot_be_added_to_an_otherwise_valid_candidate"
+      ]
+    },
+    {
+      "test_id": "CL-02",
+      "status": "adapted_mvp",
+      "scope_note": "An invented positive line count for synthetic evt-067 is rejected. No StatsBomb line-breaking classifier or 360 inference is implemented.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_unknown_annotations_cannot_be_promoted_to_known_claims"
+      ]
+    },
+    {
+      "test_id": "CL-03",
+      "status": "adapted_mvp",
+      "scope_note": "An unknown synthetic pressure annotation cannot be promoted to high pressure. This tests structured claim grounding, not parsing an arbitrary sentence.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_unknown_annotations_cannot_be_promoted_to_known_claims"
+      ]
+    },
+    {
+      "test_id": "CL-04",
+      "status": "adapted_mvp",
+      "scope_note": "The current API and controlled EN/FR narratives retain normalized pitch units. Unchecked prose claiming metres is excluded by the schema. Native StatsBomb distances are not evaluated by this adaptation.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_published_metrics_and_narrative_keep_normalized_units",
+        "backend/tests/test_member2_rules.py::test_unchecked_provider_prose_cannot_be_added_to_an_otherwise_valid_candidate"
+      ]
+    },
+    {
+      "test_id": "CL-05",
+      "status": "adapted_mvp",
+      "scope_note": "Unsupported guaranteed_goal evidence is rejected and provider free text is not accepted. The supplied free-form text case remains outside the public candidate contract.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_unsupported_scoring_claims_are_rejected",
+        "backend/tests/test_member2_rules.py::test_unchecked_provider_prose_cannot_be_added_to_an_otherwise_valid_candidate"
+      ]
+    },
+    {
+      "test_id": "CL-06",
+      "status": "deferred_source_integration",
+      "scope_note": "Accepting the linked real-match shot statement requires StatsBomb shot/assist linkage and a corresponding evidence model. The current synthetic pass/regain workflow cannot establish that claim.",
+      "coverage": []
+    },
+    {
+      "test_id": "MD-01",
+      "status": "deferred_source_integration",
+      "scope_note": "Removing StatsBomb assisted_shot_id requires an isolated source-adapter fixture. The public API accepts IDs/preferences, not caller-authored event facts.",
+      "coverage": []
+    },
+    {
+      "test_id": "MD-02",
+      "status": "adapted_mvp",
+      "scope_note": "Adapted missing start/end fields use a temporary copy of the server synthetic fixture. The API returns typed 500 invalid_fixture and the tactical provider is not invoked; this differs from a successful response carrying insufficient_data.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_invalid_fixture_stops_before_tactical_generation"
+      ]
+    },
+    {
+      "test_id": "MD-03",
+      "status": "adapted_mvp",
+      "scope_note": "Adapted missing start/end fields use a temporary copy of the server synthetic fixture. The API returns typed 500 invalid_fixture and the tactical provider is not invoked; this differs from a successful response carrying insufficient_data.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_invalid_fixture_stops_before_tactical_generation"
+      ]
+    },
+    {
+      "test_id": "MD-04",
+      "status": "adapted_mvp",
+      "scope_note": "For an unannotated synthetic event, neither high nor low pressure can be introduced as a known claim; ordinary output preserves the missing annotation.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_unknown_annotations_cannot_be_promoted_to_known_claims",
+        "backend/tests/test_mock_workflow.py::test_backward_failed_and_missing_context_are_not_misrepresented"
+      ]
+    },
+    {
+      "test_id": "MD-05",
+      "status": "adapted_mvp",
+      "scope_note": "The applicable control rejects an invented line count when annotation evidence is absent. There is no 360 input seam in the current MVP, so the literal frame-removal mutation is not executed.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_unknown_annotations_cannot_be_promoted_to_known_claims"
+      ]
+    },
+    {
+      "test_id": "IV-01",
+      "status": "adapted_mvp",
+      "scope_note": "Adapted coordinate violations use the normalized 0-100 contract, not native 120x80 bounds. Corrupt server fixture coordinates cause invalid_fixture before tactical generation.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_invalid_fixture_stops_before_tactical_generation",
+        "backend/tests/test_event_contract.py::test_coordinates_reject_invalid_values"
+      ]
+    },
+    {
+      "test_id": "IV-02",
+      "status": "adapted_mvp",
+      "scope_note": "Adapted coordinate violations use the normalized 0-100 contract, not native 120x80 bounds. Corrupt server fixture coordinates cause invalid_fixture before tactical generation.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_invalid_fixture_stops_before_tactical_generation",
+        "backend/tests/test_event_contract.py::test_coordinates_reject_invalid_values"
+      ]
+    },
+    {
+      "test_id": "IV-03",
+      "status": "adapted_mvp",
+      "scope_note": "The public selector API rejects an unknown event with typed HTTP 404 before running the workflow. It does not accept a raw StatsBomb event mutation.",
+      "coverage": [
+        "backend/tests/test_api_contract.py::test_unknown_match_and_event_have_distinct_errors"
+      ]
+    },
+    {
+      "test_id": "CT-01",
+      "status": "adapted_mvp",
+      "scope_note": "A temporary synthetic failed-pass fixture cannot produce an accepted candidate that changes successful=false to true. Original source and canonical fixture files stay untouched.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_a_failed_attempt_cannot_be_rewritten_as_a_completed_pass"
+      ]
+    },
+    {
+      "test_id": "CT-02",
+      "status": "deferred_source_integration",
+      "scope_note": "Resolving a nonexistent StatsBomb assisted_shot_id requires future source-adapter and shot-link support; a valid-looking link alone must not establish a chance.",
+      "coverage": []
+    },
+    {
+      "test_id": "I18N-01",
+      "status": "adapted_mvp",
+      "scope_note": "Existing synthetic EN/FR and Fan/Analyst runs preserve event, metrics, prefix counts, and evidence while changing presentation. Original StatsBomb event wording is not executed.",
+      "coverage": [
+        "backend/tests/test_mock_workflow.py::test_variants_preserve_facts_but_change_presentation",
+        "backend/tests/test_member2_rules.py::test_published_metrics_and_narrative_keep_normalized_units"
+      ]
+    },
+    {
+      "test_id": "I18N-02",
+      "status": "adapted_mvp",
+      "scope_note": "Existing synthetic EN/FR and Fan/Analyst runs preserve event, metrics, prefix counts, and evidence while changing presentation. Original StatsBomb event wording is not executed.",
+      "coverage": [
+        "backend/tests/test_mock_workflow.py::test_variants_preserve_facts_but_change_presentation",
+        "backend/tests/test_member2_rules.py::test_published_metrics_and_narrative_keep_normalized_units"
+      ]
+    },
+    {
+      "test_id": "I18N-03",
+      "status": "adapted_mvp",
+      "scope_note": "Existing synthetic EN/FR and Fan/Analyst runs preserve event, metrics, prefix counts, and evidence while changing presentation. Original StatsBomb event wording is not executed.",
+      "coverage": [
+        "backend/tests/test_mock_workflow.py::test_variants_preserve_facts_but_change_presentation",
+        "backend/tests/test_member2_rules.py::test_published_metrics_and_narrative_keep_normalized_units"
+      ]
+    },
+    {
+      "test_id": "FB-01",
+      "status": "adapted_mvp",
+      "scope_note": "An injected Azure timeout exercises the actual API fallback path without any network/model request; provenance names Azure as requested and mock as actual.",
+      "coverage": [
+        "backend/tests/test_member2_rules.py::test_azure_timeout_is_visible_as_fallback_at_the_api_boundary"
+      ]
+    },
+    {
+      "test_id": "FB-02",
+      "status": "adapted_mvp",
+      "scope_note": "The API and rendered dashboard explicitly report mock fallback when Azure configuration is missing. This covers fallback provenance; the literal StatsBomb/French source case is not executed.",
+      "coverage": [
+        "backend/tests/test_mock_workflow.py::test_missing_azure_configuration_is_honestly_reported_as_fallback",
+        "frontend/tests/demo-scenario.test.tsx::labels actual backend configuration fallback and exposes its provider reason"
+      ]
+    },
+    {
+      "test_id": "STATE-01",
+      "status": "adapted_mvp",
+      "scope_note": "Existing rendered React/real-FastAPI rehearsal checks personalization and rewind without accumulating counts. Backend preference variants preserve event/evidence and initial state.",
+      "coverage": [
+        "backend/tests/test_mock_workflow.py::test_variants_preserve_facts_but_change_presentation",
+        "backend/tests/test_mock_workflow.py::test_replay_and_rewind_do_not_double_count_or_mutate_the_fixture",
+        "frontend/tests/demo-scenario.test.tsx::rehearses personalization, evidence, failed/missing/regain events, filters, and rewind without accumulating statistics"
+      ]
+    }
+  ]
+}

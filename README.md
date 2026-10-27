@@ -112,6 +112,8 @@ python scripts/verify_demo.py
 
 This runs backend and frontend tests, real HTTP scenario tests, contract/sample checks, lint, and the production build without Azure model calls. See [scenario testing and the manual demo checklist](docs/testing.md) for final acceptance.
 
+The runner also checks [Member 2's validation scope map](docs/member2-validation.md) and the archived research manifest: 19 controls are adapted to the current MVP; 8 source-specific cases require later StatsBomb integration. Record the actual synthetic-fixture review in [the pending review form](docs/data-validation.md).
+
 ```bash
 # In frontend/
 npm run test
